@@ -1,0 +1,17 @@
+--bgcolor: black;
+--color1: dark_gray;
+--color2: gray;
+--textcolor: white;
+
+h1 {
+    margin: 0;
+    background-color: var(--bgcolor);
+    color: var(--textcolor);
+}
+
+.navigation {
+    <--!overflow: hidden;-->
+    position: absolute;
+    background-color: #f2dede;
+    z-index: 999;
+}
