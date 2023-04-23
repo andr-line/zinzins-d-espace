@@ -2,6 +2,7 @@
 --color1: dark_gray;
 --color2: gray;
 --textcolor: white;
+}
 
 h1 {
     margin: 0;
@@ -14,4 +15,19 @@ h1 {
     position: absolute;
     background-color: #f2dede;
     z-index: 999;
+}
+/* Other */
+.cardcontainer {
+    display: flex;
+    wrap: nowrap;
+    width: 100%;
+    height: auto;
+    overflow-x: auto;
+}
+.card {
+    flex: 1 0 40%;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 1em;
+    background: var(--color1);
 }
