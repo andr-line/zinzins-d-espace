@@ -55,6 +55,24 @@ body {
 .navigation.spacer {
     height: var(--navigationbarheight);
 }
+.line {
+    transition: all 0.2s;
+    width: 5px
+}
+.line.open.top {
+    width: 6.7px;
+    transform-origin: -2px -2px;
+    transform: rotate(45deg);
+}
+.line.open.middle {
+    width: 1px;
+    x: -0.5px;
+}
+.line.open.bottom {
+    width: 6.7px;
+    transform-origin: -2px 2px;
+    transform: rotate(-45deg);
+}
 
 /* Cards ------------------------------------------------- */
 .cardcontainer {
