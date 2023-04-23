@@ -1,17 +1,50 @@
---bgcolor: black;
---color1: dark_gray;
---color2: gray;
---textcolor: white;
-
-h1 {
+body {
+    --bgcolor: #000;
+    --color1: #222;
+    --color2: #444;
+    --textcolor: #fff;
     margin: 0;
     background-color: var(--bgcolor);
     color: var(--textcolor);
 }
 
+/* navigation bar */
 .navigation {
-    <--!overflow: hidden;-->
+    border: 1px solid #f00;
+}
+.navigation.container {
     position: absolute;
-    background-color: #f2dede;
-    z-index: 999;
+    background-color: var(--color1);
+    width: 100%;
+    --navigationbarheight: 5em;
+    height: var(--navigationbarheight);
+}
+.navigation.breadcrums {
+    width: calc(100%-var(--navigationbarheight));
+    float: left;
+    height: 1em;
+    font-size: calc(var(--navigationbarheight)*0.5);
+}
+.navigation.button {
+    background-color: var(--color2);
+    float: right;
+    height: var(--navigationbarheight);
+}
+.navigation.hamburger {
+    width: var(--navigationbarheight);
+    height: var(--navigationbarheight);
+}
+.navigation.navmenu {
+    position: absolute;
+    /*top: var(--navigationbarheight);*/
+    right: 0;
+    border: 1px solid var(--color2);
+    font-size: calc(var(--navigationbarheight)*0.4);
+}
+.navigation.category {
+    padding: 0.5em;
+    border: 1px solid var(--color2);
+}
+.navigation.item {
+    padding-left: 1em;
 }
