@@ -47,4 +47,21 @@ body {
 }
 .navigation.item {
     padding-left: 1em;
+    background-color: #f2dede;
+    z-index: 999;
+}
+/* Other */
+.cardcontainer {
+    display: flex;
+    wrap: nowrap;
+    width: 100%;
+    height: auto;
+    overflow-x: auto;
+}
+.card {
+    flex: 1 0 40%;
+    padding: 1em;
+    margin: 0.5em;
+    border-radius: 1em;
+    background: var(--color1);
 }
