@@ -1,7 +1,7 @@
 body {
     --bgImage: url('images/beer.jpg');
     --bgcolor: #000;
-    --color1: #222;
+    --color1: rgb(32, 32, 32, 0.8);
     --color2: #444;
     --textcolor: #fff;
     --navigationbarheight: 5rem;
@@ -12,49 +12,33 @@ body {
 }
 
 /* navigation bar ---------------------------------------- */
-.navigation.container {
+.navigation.navmenu {
+    height: var(--navigationbarheight);
+    width: var(--navigationbarheight);
+    border-radius: 0.5em;
     position: absolute;
+    left: 50%;
+    font-size: 1.3em;
+    text-align: center;
+    white-space: nowrap;
+    transform: translate(-50%, 0);
+    display: inline-block;
     background-color: var(--color1);
-    width: 100%;
-    height: var(--navigationbarheight);
-}
-.navigation.breadcrums {
-    position: absolute;
-    font-size: calc(var(--navigationbarheight) / 2);
-    left: 1em;
-    top: 0.5em;
-}
-.navigation.button {
-    position: absolute;
-    background-color: var(--color2);
-    top: 0;
-    right: 0;
-    height: var(--navigationbarheight);
+    opacity: 0.7;
+    transition: all 0.2s;
+    overflow: hidden;
 }
 .navigation.hamburger {
     width: var(--navigationbarheight);
     height: var(--navigationbarheight);
 }
-.navigation.navmenu {
-    position: absolute;
-    top: var(--navigationbarheight);
-    right: 0;
-    box-shadow: inset 0 0 0 1px var(--color2);
-    background-color: var(--color1);
-    font-size: calc(var(--navigationbarheight)*0.4);
-    overflow: hidden;
-    height: 0;
-    transition: height 0.2s;
-}
 .navigation.navmenu.open {
-    height: 7.3em;
+    width: 7.5em;
+    height: 11em;
 }
 .navigation.item {
     margin: 0.5em;
     height: 25%;
-}
-.navigation.spacer {
-    height: var(--navigationbarheight);
 }
 .line {
     transition: all 0.2s;
@@ -97,8 +81,8 @@ body {
     background-position:center;
     transition: all 0.2s;
 }
-.cardText > h3 {
-
+.cardText {
+    box-shadow: 0px 0px 2em var(--color1);
 }
 .card:not(.active) {
     width: calc(100% / 10);

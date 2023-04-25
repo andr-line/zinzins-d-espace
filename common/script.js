@@ -11,22 +11,12 @@ hamburgerButton.addEventListener('click', (e) => {
 
 // Cards
 let cards = document.querySelectorAll(".card")
-console.log(cards)
 cards.forEach((e, i) => {
     e.addEventListener('click', (ev) => {
-        console.log(ev)
         let cards = document.querySelectorAll(".card")
         cards.forEach((elem, ind) => {
             elem.classList.remove('active')
         })
         cards[i].classList.add('active')
-        console.log(cards)
     })
 })
-// for(i=0; i<cards.length; i++) {
-//     cards[i].addEventListener('click', (e) => {
-//         console.log(this.className)
-        
-//         this.classList.add("active")
-//     })
-// }
