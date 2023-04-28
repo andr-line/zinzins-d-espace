@@ -24,12 +24,12 @@ function update_graph(new_data) {
                         .attr("y", (d) => h - yScale(d))
                         .attr("width", xScale.bandwidth())
                         .attr("height", (d) => yScale(d))
-                        .attr("fill", (d) => "rgb(0, 0, " + (d * 10) + ")"),
+                        .attr("fill", (d) => "rgb(" + (50+d) + ", " + (d * 10) + "," + 10+d + " )"),
           (update) => update.transition()
                         .duration(1000)
                         .attr("y", (d) => h - yScale(d))
                         .attr("height", (d) => yScale(d))
-                        .attr("fill", (d) => "rgb(0," + (d * 10) + ", 0"),
+                        .attr("fill", (d) => "rgb(1," + (d * 20) + ", " + 5*d + ""),
           (exit) => exit.transition()
                           .duration(1000)
                         .attr("y",h)
