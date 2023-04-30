@@ -6,10 +6,14 @@ var xScale;
 var yScale;
 
 var dataset = [];
-var dataset1 = [];
 var body=d3.select("body");
 d3.csv("../data/PSCompPars_2023.04.25_07.07.02.csv")
-
+d3.csv("../data/exoplanet_data.csv", function(data) {
+    for (var i = 0; i < data.length; i++) {
+        dataset.push(data[i].discoverymethod);
+   
+    }
+});
 
 d3.csv("../data/exoplanet_data.csv")
 //Create SVG element
@@ -18,8 +22,8 @@ const svg = d3.select("body")
             .attr("width", w)
             .attr("height", h);
 
-function update_graph(new_data,new_data1) {
-    
+function update_graph(new_data) {
+
     //Work with bars
     svg.selectAll("rect")
     .data(new_data)
@@ -44,7 +48,7 @@ function update_graph(new_data,new_data1) {
 
     //Work with labels
     svg.selectAll("text")
-    .data(new_data1)
+    .data(new_data)
     .join((enter) => enter.append("text")
                         .transition()
                         .duration(1000)
@@ -71,55 +75,25 @@ function update_graph(new_data,new_data1) {
 d3.select("#method")
     .on("click", function() {
 
-        d3.csv("../data/exoplanet_data.csv", function(data) {
-            for (var i = 0; i < data.length; i++) {
-                dataset.push(String (data[i].discoverymethod)); //Array avec les methodes.
-            }
-        });
-        dataset1=[];
-        dataset1.push(dataset[0]);
-        for (var i=1 ; i < dataset.length; i++) {
-            var c=0;
-            for (var j=0 ; j < dataset1.length; j++){
-                
-                if(dataset[i]===dataset1[j]){
-                     var c=c+1;
-                }
-            if (c===0){
-                dataset1.push(dataset[i]); //Array avec les methodes sans doubles
-            } 
-        
+        //New values for dataset
+        const numValues = 20;						
+        dataset = [];  						 				//Initialize empty array
+        for (var i = 0; i < numValues; i++) {				//Loop numValues times
+            var newNumber = Math.floor(Math.random() * 20 + 5); //New random integer (0-25)
+            dataset.push(newNumber);			 			//Add new number to array
         }
-        }
-            var dataset2=[];
-            
-
-        for (var i=0 ; i < dataset1.length; i++) {
-            var c=0;
-            for (var j=0 ; j < dataset.length; j++){
-                
-                if(dataset[i]===dataset1[j]){
-                   var c=c+1;
-                }
-            }
-            
-                dataset2.push(c); //Array avec les quNTITÉS DE CHAQUE METHODE
-        }
-            
-            
-        
 
         xScale = d3.scaleBand()
-                        .domain(d3.range(dataset1.length))
+                        .domain(d3.range(dataset.length))
                         .padding(.05)
                         .range([0, w]);
 
         yScale = d3.scaleLinear()
-                        .domain([0, d3.max(dataset2)])
+                        .domain([0, d3.max(dataset)])
                         .range([0, h]);
 
         //Update all rects
-        update_graph(dataset2,dataset1)
+        update_graph(dataset)
     
     });
 
@@ -128,6 +102,5 @@ d3.select("#method")
 
         dataset = [];  						 				//Initialize empty array
         update_graph(dataset)
-        
     
     });
