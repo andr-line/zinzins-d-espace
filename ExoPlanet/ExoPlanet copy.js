@@ -1,4 +1,4 @@
-//Width and height
+//Width and height aussi
 const w = 600;
 const h = 250;
 
