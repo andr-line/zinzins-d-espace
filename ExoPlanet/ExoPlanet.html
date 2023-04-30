@@ -19,34 +19,51 @@
             </svg>
         </div>-->
         <div class="navigation menu">
-            <div  href=".\solar-system\solar-system.html" >Solar system</div>
-            <div class="navigation item">Exoplanets</div>
-            <div class="navigation item">Bar charts?</div>
-            <div class="navigation item">About</div>
+            <a href="../home/index.html">Home</a>
+            <a href="../presentation/presentation.html">Présentation</a>
+            
+            <a href="Observatoires.html">Observatoires</a>
+            <a href="ExoPlanet.html">ExoPlanets</a>
+            
+            <a href="../solar-system/solar-system.html">Solar System</a>
+           
         </div>
 
     </div>
     
     
     <h1>
-        Exo-Planets Informations:
+        Search for  Exo-Planets
     </h1>
+
+
+    
+    <form action="/action_page.php">
+        <label for="stars">Number of stars</label><br>
+        <input type="number" id="stars" name="stars" value=""><br>
+        <label for="planets">Number of planets</label><br>
+        <input type="number" id="planets" name="planets" value=""><br><br>
+        <input type="submit" value="Submit">
+      </form> 
+
+
+
 
     <img src="TychoLight.svg" height="100%" width="100%"/>
     
-    <!--
-        
-        <object type="image/svg+xml" data="TychoLight.svg">
-         Your fall back here 
-        <img src="TychoLight.svg" />
-        </object>
-    -->
+    
     
 
+
+
+   <!--     
     <div>
         <button id="method">Discovery Method</button><button id="year">Discovery Year</button><br><br>
     </div> 
-    
+     -->  
+
+
+
     <script type="text/javascript" src="../common/script.js"></script>
     <script src="ExoPlanet.js"></script>
 
