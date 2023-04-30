@@ -69,12 +69,17 @@ body {
     overflow: auto;
     flex-direction: row;
 }
+.cardContainer.vertical {
+    flex-direction: column;
+}
 .card {
     --closedWidth: calc(100dvw / 10);
     --openWidth: calc(100dvw / 10 * 6);
+    --closedHeight: 16em;
+    --openHeight: 16em;
     position: relative;
     width: var(--closedWidth);
-    height: 30em;
+    height: var(--closedHeight);
     margin: 0.5em;
     border-radius: var(--closedWidth);
     background: var(--bgImage);
@@ -84,17 +89,29 @@ body {
     box-shadow: inset 0px 0px 1em var(--color1);
     transition: all 0.5s;
 }
+.card.vertical {
+    --closedWidth: 90%;
+    --openWidth: 90%;
+    --closedHeight: 3em;
+    --openHeight: 16em;
+    border-radius: var(--closedHeight);
+}
 .card.active {
     width: var(--openWidth);
+    height: var(--openHeight);
 }
 .cardText {
     position: absolute;
     width: var(--openWidth);
+    height: var(--openHeight);
     opacity: 0;
     top: 4em;
     padding: 3em;
     transition: all 0.5s ease;
     transition-delay: 0s;
+}
+.cardText.vertical {
+    padding: 1em;
 }
 .card.active .cardText {
     opacity: 1;
@@ -112,8 +129,16 @@ body {
     transform: rotate(90deg) translate(0, calc(var(--closedWidth) / -2 - 0.5em));
     transition: all 0.5s ease;
 }
+.cardTitle h3.vertical {
+    font-size: 1em;
+    transform: rotate(0deg) translate(1em, 0);
+}
 .card.active .cardTitle > h3 {
     font-size: 3em;
     left: 3em;
     transform: rotate(0deg) translate(1em, 0);
+}
+.card.active .cardTitle > h3.vertical {
+    font-size: 2em;
+    left: 0.7em;
 }
