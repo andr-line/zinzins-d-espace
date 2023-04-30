@@ -1,0 +1,30 @@
+body {
+    background-color: #1c1c1c;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.galaxy {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.7) 20%, rgba(100, 100, 255, 0.5) 50%, rgba(0, 0, 50, 0.9) 80%, rgba(0, 0, 0, 1) 100%);
+}
+
+.logo-text {
+    margin-top: 20px;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+}
