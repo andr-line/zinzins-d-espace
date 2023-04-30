@@ -1,9 +1,27 @@
-div {
+ div {
     position: relative;
-    display: inline;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+        
   }
-  .imtip {
+    .outtip {
+        position: absolute;
+        
+    }
+    .imtip {
+    
     position: absolute;
-    bottom: 0;
-    right: 0;
+    display: inline;
+    margin-left: 100px;
+    margin-top: -300px;
+}
+ 
+  
+
+  img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
   }
+
