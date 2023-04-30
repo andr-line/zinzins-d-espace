@@ -1,3 +1,4 @@
+/* The json file was translated from csv (https://exoplanetarchive.ipac.caltech.edu/cgi-bin/TblView/nph-tblView?app=ExoTbls&config=PSCompPars) using the (https://csvjson.com/csv2json) website */
 //Width and height
 const w = 600;
 const h = 250;
