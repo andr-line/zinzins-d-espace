@@ -75,8 +75,8 @@ body {
 .card {
     --closedWidth: calc(100dvw / 10);
     --openWidth: calc(100dvw / 10 * 6);
-    --closedHeight: 16em;
-    --openHeight: 16em;
+    --closedHeight: 20em;
+    --openHeight: 20em;
     position: relative;
     width: var(--closedWidth);
     height: var(--closedHeight);
