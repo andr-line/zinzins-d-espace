@@ -1,0 +1,9 @@
+div {
+    position: relative;
+    display: inline;
+  }
+  .imtip {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+  }
