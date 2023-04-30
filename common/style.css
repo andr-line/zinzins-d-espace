@@ -1,3 +1,10 @@
+html {
+    display: table;
+    margin: auto;
+    height: 100%;
+    <!-- horizontal centering -->
+}
+
 body {
     --bgImage: url('images/beer.jpg');
     --bgcolor: #000;
@@ -5,6 +12,9 @@ body {
     --color2: #444;
     --textcolor: #fff;
     --navigationbarheight: 5rem;
+    height: 100%;
+    display: table-cell;
+    vertical-align: middle;
     margin: 0;
     background-color: var(--bgcolor);
     color: var(--textcolor);
@@ -68,13 +78,14 @@ body {
     overflow-x: auto;
     overflow: auto;
     flex-direction: row;
+    justify-content: center;
 }
 .cardContainer.vertical {
     flex-direction: column;
 }
 .card {
-    --closedWidth: calc(100dvw / 10);
-    --openWidth: calc(100dvw / 10 * 6);
+    --closedWidth: 4em;
+    --openWidth: 24em;
     --closedHeight: 24em;
     --openHeight: 24em;
     position: relative;
@@ -101,7 +112,6 @@ body {
     height: var(--openHeight);
 }
 .cardText {
-    position: absolute;
     width: var(--openWidth);
     height: var(--openHeight);
     opacity: 0;
@@ -115,18 +125,17 @@ body {
 }
 .card.active .cardText {
     opacity: 1;
-    top: 5em;
     transition-delay: 0.3s;
 }
 .cardTitle {
-    position: absolute;
     width: var(--openWidth);
-    height: 100%;
+    height: 1em;
 }
 .cardTitle h3 {
+    overflow: hidden;
     font-size: 2em;
     transform-origin: left top;
-    transform: rotate(90deg) translate(0, calc(var(--closedWidth) / -2 - 0.5em));
+    transform: rotate(90deg) translate(0, calc(var(--closedWidth) / -2 + 0.5em));
     transition: all 0.5s ease;
 }
 .cardTitle h3.vertical {
