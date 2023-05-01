@@ -1,0 +1,28 @@
+#d3_canvas
+{
+    height: auto;
+    width: auto;
+    overflow: visible;
+    transform: translate(50%, 50%);
+}
+
+#container
+{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: none;
+    padding: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+}
+
+path
+{
+    stroke-width: 0.5;
+    stroke: white;
+}
