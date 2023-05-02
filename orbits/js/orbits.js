@@ -34,7 +34,7 @@ function generate_orbit_points(num_point, e, a) {
 
 // Draw an orbit using D3.js
 function draw_orbit(ctx, e, a) {
-    const points = generate_orbit_points(100, e, a);
+    const points = generate_orbit_points(10000, e, a);
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
