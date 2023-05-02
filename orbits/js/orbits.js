@@ -77,7 +77,6 @@ function on_fully_loaded() {
             const eccentricity = element.eccentricity;
             const semimajorAxis = element.semimajorAxis;
             const isPlanet = element.isPlanet;
-            console.log(index)
     
             // TODO: process moons
             if (isPlanet === "TRUE") {
@@ -95,15 +94,16 @@ function on_fully_loaded() {
 }
 
 // Scale the SVG when scrolling
-function on_scroll() {
-    const scroll = window.scrollY;
-    const scale = 1 + scroll * 1e-5;
+function zoom() {
+    const zoom = this.value;
+    const scale = 1 + zoom *1e-2;//* 1e-5;
     console.log(scale);
-    d3.select("#d3_canvas").attr("transform", "scale(" + scale + ")");
+    d3.select("#d3_canvas").style("transform", "scale(" + scale + ") translate(50%, 50%)");
 }
 
 // Add the scroll event listener
-window.addEventListener("scroll", on_scroll);
+var slider = document.getElementById("zoomSlider");
+zoomSlider.addEventListener('input', zoom)
 
 // Wait for the page to load before starting the animation
-window.onload = on_fully_loaded;
+on_fully_loaded();
