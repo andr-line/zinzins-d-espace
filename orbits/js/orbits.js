@@ -3,6 +3,22 @@ function distance_to_center(angle, e, a) {
     return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
 }
 
+//Array of 12 Arbitrary colors for planets
+const planetColors = [
+    "#FFC857", // Yellow
+    "#E9724C", // Coral
+    "#C5283D", // Red
+    "#481D24", // Dark Red
+    "#255C99", // Blue
+    "#2A9D8F", // Turquoise
+    "#264653", // Dark Blue
+    "#F4A261", // Light Orange
+    "#8ECAE6", // Light Blue
+    "#95B8D1", // Grey Blue
+    "#6A994E", // Green
+    "#F2E205"  // Bright Yellow
+  ];
+
 // Convert polar coordinates to cartesian coordinates
 function polar_to_cartesian(angle, distance) {
     return {
