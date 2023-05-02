@@ -50,7 +50,7 @@ function generate_orbit_points(num_point, e, a) {
 
 // Draw an orbit using D3.js
 function draw_orbit(ctx, e, a) {
-    const points = generate_orbit_points(10000, e, a);
+    const points = generate_orbit_points(100, e, a);
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
@@ -73,10 +73,11 @@ function on_fully_loaded() {
 
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
-        data.forEach(element => {
+        data.forEach((element, index) => {
             const eccentricity = element.eccentricity;
             const semimajorAxis = element.semimajorAxis;
             const isPlanet = element.isPlanet;
+            console.log(index)
     
             // TODO: process moons
             if (isPlanet === "TRUE") {
@@ -84,7 +85,7 @@ function on_fully_loaded() {
                 draw_orbit(ctx, eccentricity, semimajorAxis);
                 d3_canvas.append("path")
                     .attr("d", ctx)
-                    .attr("stroke", "blue")
+                    .attr("stroke", planetColors[index%12])
                     .attr("stroke-width", 1)
                     .attr("fill", "none");
             }
