@@ -49,7 +49,18 @@ function generate_orbit_points(num_point, e, a) {
 }
 
 // Draw an orbit using D3.js
-function draw_orbit(ctx, e, a) {
+function draw_orbit(d3_canvas, element, index) {
+    const e = element.eccentricity;
+    const a = element.semimajorAxis;
+    var classes = ""
+    if (element.isPlanet === "TRUE") {
+        classes += "isPlanet";
+    } else if (element.orbit_type === "Secondary") {
+        classes += "isMoon";
+    } else {
+        classes += "isAsteroid hidden";
+    }
+    const ctx = d3.path()
     const points = generate_orbit_points(100, e, a);
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
@@ -57,6 +68,12 @@ function draw_orbit(ctx, e, a) {
         ctx.lineTo(point.x, point.y);
     }
     ctx.closePath();
+    d3_canvas.append("path")
+                    .attr("d", ctx)
+                    .attr("stroke", planetColors[index%12])
+                    .attr("stroke-width", 1)
+                    .attr("fill", "none")
+                    .attr("class", classes)
 }
 
 
@@ -74,21 +91,9 @@ function on_fully_loaded() {
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
         data.forEach((element, index) => {
-            const eccentricity = element.eccentricity;
-            const semimajorAxis = element.semimajorAxis;
-            const isPlanet = element.isPlanet;
     
             // TODO: process moons
-            if (isPlanet === "TRUE") {
-                const ctx = d3.path()
-                draw_orbit(ctx, eccentricity, semimajorAxis);
-                d3_canvas.append("path")
-                    .attr("d", ctx)
-                    .attr("stroke", planetColors[index%12])
-                    .attr("stroke-width", 1)
-                    .attr("fill", "none");
-            }
-            
+            draw_orbit(d3_canvas, element, index);
         });
     });
 }
@@ -97,13 +102,21 @@ function on_fully_loaded() {
 function zoom() {
     const zoom = this.value;
     const scale = 1 + zoom *1e-2;//* 1e-5;
-    console.log(scale);
     d3.select("#d3_canvas").style("transform", "scale(" + scale + ") translate(50%, 50%)");
 }
 
-// Add the scroll event listener
+function toggleAsteroids() {
+    d3.selectAll(".isAsteroid")
+        .classed("hidden", !this.checked)
+}
+
+// Add the zoom slider event listener
 var slider = document.getElementById("zoomSlider");
-zoomSlider.addEventListener('input', zoom)
+zoomSlider.addEventListener('input', zoom);
+
+// Add the asteroids check button event listener
+var asteroidsButton = document.getElementById("asteroidsButton")
+asteroidsButton.addEventListener('change', toggleAsteroids)
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();

@@ -23,7 +23,15 @@ path {
     stroke-width: 0.5;
 }
 
-.slidecontainer {
+.controls {
     position: absolute;
     z-index: 2;
+}
+
+path {
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    opacity: 0;
 }
