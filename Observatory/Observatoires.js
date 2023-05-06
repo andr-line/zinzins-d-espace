@@ -85,7 +85,7 @@ d3.json("world.json",).then((topology) => {
                 
                 .attr("cx",cx)
                 .attr("cy",cy)
-                .attr("r", 5)
+                .attr("r", 3)
                 .style("fill", "red")
 
             })  
