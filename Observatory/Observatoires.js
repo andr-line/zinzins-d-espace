@@ -80,13 +80,14 @@ d3.json("world.json",).then((topology) => {
                 //cx = parseFloat(element.Coordonnées.split(", ")[0])
                 //cy = parseFloat(element.Coordonnées.split(", ")[1])
                 console.log(cx, cy)
+                color=element.Couleur
 
                 enter.append("circle")
                 
                 .attr("cx",cx)
                 .attr("cy",cy)
                 .attr("r", 3)
-                .style("fill", "red")
+                .style("fill", color)
 
             })  
         })
