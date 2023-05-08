@@ -39,7 +39,7 @@ body {
     transition: all 0.2s;
     overflow: hidden;
 }
-.navigation a{
+.navigation a {
     vertical-align: middle;
     text-align: center;
     text-decoration: none;
@@ -48,20 +48,20 @@ body {
 .navigation a:hover {
     font-weight: bold;
     color: var(--textcolor);
-  }
-  
-  /* Add a color to the active/current link */
-  .navigation a.active {
-    
+}
+
+/* Add a color to the active/current link */
+.navigation a.active {
     color: rgb(12,150,160);
-  }
+}
+
 .navigation.hamburger {
     width: var(--navigationbarheight);
     height: var(--navigationbarheight);
 }
 .navigation.navmenu.open {
     width: 7.5em;
-    height: 11em;
+    height: 10em;
     border-radius: 1em;
 }
 .navigation.item {
