@@ -3,6 +3,7 @@
     width: auto;
     overflow: visible;
     transform: translate(50%, 50%);
+    z-index: 1;
 }
 
 #container {
@@ -17,6 +18,7 @@
     justify-content: center;
     align-items: center;
     background-color: black;
+    z-index: 1;
 }
 
 path {

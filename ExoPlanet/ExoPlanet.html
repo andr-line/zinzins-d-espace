@@ -4,13 +4,13 @@
     <meta charset="utf-8">
     <title>Exo-Planets</title>
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <!--<link rel="stylesheet" href="../common/style.css" type="text/css" />-->
-    <!--<link rel="stylesheet" href="ExoPlanet.css" type="text/css" />  -->
+    <link rel="stylesheet" href="../common/style.css" type="text/css" />
+    <link rel="stylesheet" href="ExoPlanet.css" type="text/css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
-    <!--<div class="navigation navmenu" id="navMenu">
+    <div class="navigation navmenu" id="navMenu">
         <div class="navigation button" id="hamburgerButton">
             <svg class="navigation hamburger" id="hamburgerGraphic" viewBox="-4.5 -4.5 9 9" xmlns="http://www.w3.org/2000/svg">
                 <rect x="-2.5" y="-2.5" width="5" height="1" rx="0.5" ry="0.5" fill="white" class="line top" />
@@ -19,42 +19,56 @@
             </svg>
         </div>
         <div class="navigation menu">
-            <a href="../home/index.html">Home</a>
-            <a href="../presentation/presentation.html">Présentation</a>
-            
-            <a href="Observatoires.html">Observatoires</a>
-            <a href="ExoPlanet.html">ExoPlanets</a>
-            
-            <a href="../solar-system/solar-system.html">Solar System</a>
-           
+            <a class="active" href="../home/index.html">Home</a> <br>
+            <a href="../Observatory/Observatoires.html">Observatory</a> <br>
+            <a href="../orbits/index.html">Solar system</a> <br>
+            <a href="../ExoPlanet/ExoPlanet.html">Exoplanets</a> <br>
+            <a href="../presentation/presentation.html">About</a> <br>
         </div>
-
-    </div>-->
+    </div>
     
     
     <h1>
-        Search for  Exo-Planets
+        Search for Exo-Planets
     </h1>
 
 
+    <table class="controls">
+        <tr>
+            <td>Minimum size</td>
+            <td>
+                <input type="number" id="minsize" />
+            </td>
+        </tr>
+        <tr>
+            <td>Number of planets</td>
+            <td>
+                <input type="number" id="planets" />
+            </td>
+        </tr>
+        <tr>
+            <td>Number of stars</td>
+            <td>
+                <input class="stars" type="number" />
+            </td>
+        </tr>
+        <tr>
+            <td>Discovery method</td>
+            <td><input type="text" id="discoverymethod" /></td>
+        </tr>
+    </table>
     
-    <form action="/action_page.php">
+    <!--
+    <form action="/action_page.php">p
         <label for="stars">Number of stars</label><br>
         <input type="number" id="stars" name="stars" value=""><br>
         <label for="planets">Number of planets</label><br>
         <input type="number" id="planets" name="planets" value=""><br><br>
         <input type="submit" value="Submit">
-      </form> 
+    </form>
+    -->
 
-
-
-
-    <img src="TychoLight.svg" height="100%" width="100%"/>
-    
-    
-    
-
-
+    <img src="TychoLight.svg"/>
 
    <!--     
     <div>
@@ -62,15 +76,7 @@
     </div> 
      -->  
 
-
-
     <script type="text/javascript" src="../common/script.js"></script>
     <script src="ExoPlanet.js"></script>
-
-
-
-
-
-
 </body>
 </html>
