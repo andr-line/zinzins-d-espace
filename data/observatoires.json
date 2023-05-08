@@ -1,138 +1,172 @@
 [
   {
     "Observatoires": "Anglo-Australian Telescope",
-    "Coordonnées": "-31.27534207526749, 149.0672846662633"
+    "Coordonnées": "-31.27534207526749, 149.0672846662633",
+    "Couleur": "rgb(173, 216, 218)"
   },
   {
     "Observatoires": "Apache Point Observatory",
-    "Coordonnées": "32.780636318295734, -105.81999584630083"
+    "Coordonnées": "32.780636318295734, -105.81999584630083",
+    "Couleur": "rgb(255, 0, 0)"
   },
   {
     "Observatoires": "Arecibo Observatory",
-    "Coordonnées": "18.34601216093795, -66.75255684158272"
+    "Coordonnées": "18.34601216093795, -66.75255684158272",
+    "Couleur": "rgb(255, 165, 0)"
   },
   {
     "Observatoires": "Atacama Large Millimeter Array (ALMA)",
-    "Coordonnées": "-23.023147826197164, -67.75387641968857"
+    "Coordonnées": "-23.023147826197164, -67.75387641968857",
+    "Couleur": "rgb(255, 255, 0)"
   },
   {
     "Observatoires": "Bohyunsan Optical Astronomical Observatory",
-    "Coordonnées": "36.16489030514635, 128.97715299618378"
+    "Coordonnées": "36.16489030514635, 128.97715299618378",
+    "Couleur": "rgb(0, 255, 0)"
   },
   {
     "Observatoires": "Calar Alto Observatory",
-    "Coordonnées": "37.22098681112704, -2.5467466749286922"
+    "Coordonnées": "37.22098681112704, -2.5467466749286922",
+    "Couleur": "rgb(0, 255, 255)"
   },
   {
     "Observatoires": "Cerro Tololo Inter-American Observatory",
-    "Coordonnées": "-30.172999195013897, -70.8035326040837"
+    "Coordonnées": "-30.172999195013897, -70.8035326040837",
+    "Couleur": "rgb(128, 0, 128)"
   },
   {
     "Observatoires": "European Southern Observatory",
-    "Coordonnées": "48.259718584205714, 11.670911781502792"
+    "Coordonnées": "48.259718584205714, 11.670911781502792",
+    "Couleur": "rgb(173, 216, 218)"
   },
   {
     "Observatoires": "Fred Lawrence Whipple Observatory",
-    "Coordonnées": "31.675331648422382, -110.9520540193643"
+    "Coordonnées": "31.675331648422382, -110.9520540193643",
+    "Couleur": "rgb(255, 0, 255)"
   },
   {
     "Observatoires": "Gemini Observatory",
-    "Coordonnées": "20.50068305856466, -155.67750595063137"
+    "Coordonnées": "20.50068305856466, -155.67750595063137",
+    "Couleur": "rgb(128, 128, 128)"
   },
   {
     "Observatoires": "Haleakala Observatory",
-    "Coordonnées": "20.708424037079833, -156.25671128907203"
+    "Coordonnées": "20.708424037079833, -156.25671128907203",
+    "Couleur": "rgb(192, 192, 192)"
   },
   {
     "Observatoires": "Haute-Provence Observatory",
-    "Coordonnées": "43.93477656826799, 5.710641367755971"
+    "Coordonnées": "43.93477656826799, 5.710641367755971",
+    "Couleur": "rgb(255, 192, 203)"
   },
   {
     "Observatoires": "Kitt Peak National Observatory",
-    "Coordonnées": "31.969728592802635, -111.6051084624401"
+    "Coordonnées": "31.969728592802635, -111.6051084624401",
+    "Couleur": "rgb(255, 140, 0)"
   },
   {
     "Observatoires": "La Silla Observatory",
-    "Coordonnées": "-29.256119310535677, -70.73802434644921"
+    "Coordonnées": "-29.256119310535677, -70.73802434644921",
+    "Couleur": "rgb(255, 69, 0)"
   },
   {
     "Observatoires": "Large Binocular Telescope Observatory",
-    "Coordonnées": "32.70147941313763, -109.88924877699137"
+    "Coordonnées": "32.70147941313763, -109.88924877699137",
+    "Couleur": "rgb(255, 20, 147)"
   },
   {
     "Observatoires": "Las Campanas Observatory",
-    "Coordonnées": "-29.017995207221226, -70.69148687449366"
+    "Coordonnées": "-29.017995207221226, -70.69148687449366",
+    "Couleur": "rgb(255, 215, 0)"
   },
   {
     "Observatoires": "Leoncito Astronomical Complex",
-    "Coordonnées": "-31.798433703992785, -69.29559944634372"
+    "Coordonnées": "-31.798433703992785, -69.29559944634372",
+    "Couleur": "rgb(124, 252, 0)"
   },
   {
     "Observatoires": "Lick Observatory",
-    "Coordonnées": "37.341592097745064, -121.64291020375863"
+    "Coordonnées": "37.341592097745064, -121.64291020375863",
+    "Couleur": "rgb(64, 224, 208)"
   },
   {
     "Observatoires": "Mauna Kea Observatory",
-    "Coordonnées": "19.82080711808954, -155.4680831089439"
+    "Coordonnées": "19.82080711808954, -155.4680831089439",
+    "Couleur": "rgb(0, 250, 154)"
   },
   {
     "Observatoires": "McDonald Observatory",
-    "Coordonnées": "30.672596411640605, -104.02214356452396"
+    "Coordonnées": "30.672596411640605, -104.02214356452396",
+    "Couleur": "rgb(138, 43, 226)"
   },
   {
     "Observatoires": "Okayama Astrophysical Observatory",
-    "Coordonnées": "34.57652567237642, 133.59540819742608"
+    "Coordonnées": "34.57652567237642, 133.59540819742608",
+    "Couleur": "rgb(255, 218, 185) "
   },
   {
     "Observatoires": "Palomar Observatory",
-    "Coordonnées": "33.35648490218383, -116.86503169045454"
+    "Coordonnées": "33.35648490218383, -116.86503169045454",
+    "Couleur": "rgb(255, 99, 71)"
   },
   {
     "Observatoires": "Paranal Observatory",
-    "Coordonnées": "-24.62648017504663, -70.40448978300905"
+    "Coordonnées": "-24.62648017504663, -70.40448978300905",
+    "Couleur": "rgb(255, 182, 193)"
   },
   {
     "Observatoires": "Parkes Observatory",
-    "Coordonnées": "-32.99835975367123, 148.26213301403266"
+    "Coordonnées": "-32.99835975367123, 148.26213301403266",
+    "Couleur": "rgb(255, 127, 80)"
   },
   {
     "Observatoires": "Roque de los Muchachos Observatory",
-    "Coordonnées": "28.75740324834593, -17.884985304140677"
+    "Coordonnées": "28.75740324834593, -17.884985304140677",
+    "Couleur": "rgb(46, 139, 87)"
   },
   {
     "Observatoires": "SPECULOOS Southern Observatory",
-    "Coordonnées": "48.259725726982495, 11.670954696846337"
+    "Coordonnées": "48.259725726982495, 11.670954696846337",
+    "Couleur": "rgb(72, 61, 139)"
   },
   {
     "Observatoires": "Teide Observatory",
-    "Coordonnées": "28.302256389039556, -16.511177039460286"
+    "Coordonnées": "28.302256389039556, -16.511177039460286",
+    "Couleur": "rgb(0, 128, 128)"
   },
   {
     "Observatoires": "Thueringer Landessternwarte Tautenburg",
-    "Coordonnées": "50.98181947138782, 11.711523297015688"
+    "Coordonnées": "50.98181947138782, 11.711523297015688",
+    "Couleur": "rgb(218, 165, 32)"
   },
   {
     "Observatoires": "University of Canterbury Mt John Observatory",
-    "Coordonnées": "-43.98507953770719, 170.46408948125116"
+    "Coordonnées": "-43.98507953770719, 170.46408948125116",
+    "Couleur": "rgb(128, 0, 0)"
   },
   {
     "Observatoires": "Very Long Baseline Array",
-    "Coordonnées": "19.801776864994302, -155.4555967044413"
+    "Coordonnées": "19.801776864994302, -155.4555967044413",
+    "Couleur": "rgb(210, 105, 30) "
   },
   {
     "Observatoires": "W. M. Keck Observatory",
-    "Coordonnées": "19.832051799599736, -155.47544302512094"
+    "Coordonnées": "19.832051799599736, -155.47544302512094",
+    "Couleur": "rgb(30, 144, 255)"
   },
   {
     "Observatoires": "Winer Observatory",
-    "Coordonnées": "34.15911004792921, -110.76784543577926"
+    "Coordonnées": "34.15911004792921, -110.76784543577926",
+    "Couleur": "(rgb255, 106, 106)"
   },
   {
     "Observatoires": "Xinglong Station",
-    "Coordonnées": "40.39894256347256, 117.5824500752723"
+    "Coordonnées": "40.39894256347256, 117.5824500752723",
+    "Couleur": "rgb(255, 69, 0)"
   },
   {
     "Observatoires": "Yunnan Astronomical Observatory",
-    "Coordonnées": "25.022429415012827, 102.78998780921367"
+    "Coordonnées": "25.022429415012827, 102.78998780921367",
+    "Couleur": "rgb(160, 82, 45)"
   }
 ]

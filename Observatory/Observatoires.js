@@ -10,17 +10,18 @@ const svg = d3.select('div#map').append("svg")
     .attr("class", "svg-content")
     .attr("viewbox", `0 0 ${width} ${height}`)
 
-document.body.onmousemove = (event) => {
-                    d3.select("#tooltip")
-                        .style("left", event.clientX + "px")
-                        .style("top", event.clientY + "px")
+// document.body.onmousemove = (event) => {
+//                     d3.select("#tooltip")
+//                         .style("left", event.clientX + "px")
+//                         .style("top", event.clientY + "px")
                     
-                        .style("opacity", 0.9)
+//                         .style("opacity", 0.9)
                     
-                             .text("X: " + event.clientX + ", Y:" + event.clientY)
-}
+//                              .text("X: " + event.clientX + ", Y:" + event.clientY)
+//}
 
 // load and display the World
+
 var g = svg.append("g");
 d3.json("world.json",).then((topology) => {
     const features = topology.features
@@ -39,15 +40,15 @@ d3.json("world.json",).then((topology) => {
                 .on("mouseover", (event,d) => {
                     d3.select(event.currentTarget)
                     
-                    // const coordinates = d3.pointer(event);
+                    const coordinates = d3.pointer(event);
                     
-                    // d3.select("#tooltip")
-                    //     .style("left", coordinates[0] + "px")
-                    //     .style("top", coordinates[1] + "px")
+                    d3.select("#tooltip")
+                        .style("left", coordinates[0] + "px")
+                        .style("top", coordinates[1] + "px")
                     
-                    //     .style("opacity", 0.9)
+                        .style("opacity", 0.9)
                     
-                    //     .text(coordinates)
+                        .text(coordinates)
                                 
                 })
                     
@@ -79,13 +80,14 @@ d3.json("world.json",).then((topology) => {
                 //cx = parseFloat(element.Coordonnées.split(", ")[0])
                 //cy = parseFloat(element.Coordonnées.split(", ")[1])
                 console.log(cx, cy)
+                color=element.Couleur
 
                 enter.append("circle")
                 
                 .attr("cx",cx)
                 .attr("cy",cy)
-                .attr("r", 5)
-                .style("fill", "red");
+                .attr("r", 3)
+                .style("fill", color)
 
             })  
         })
