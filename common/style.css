@@ -39,7 +39,7 @@ body {
     transition: all 0.2s;
     overflow: hidden;
 }
-.navigation a{
+.navigation a {
     vertical-align: middle;
     text-align: center;
     text-decoration: none;
@@ -48,20 +48,20 @@ body {
 .navigation a:hover {
     font-weight: bold;
     color: var(--textcolor);
-  }
-  
-  /* Add a color to the active/current link */
-  .navigation a.active {
-    
+}
+
+/* Add a color to the active/current link */
+.navigation a.active {
     color: rgb(12,150,160);
-  }
+}
+
 .navigation.hamburger {
     width: var(--navigationbarheight);
     height: var(--navigationbarheight);
 }
 .navigation.navmenu.open {
     width: 7.5em;
-    height: 11em;
+    height: 10em;
     border-radius: 1em;
 }
 .navigation.item {
@@ -85,86 +85,4 @@ body {
     width: 6.7px;
     transform-origin: -2px 2px;
     transform: rotate(-45deg);
-}
-
-/* Cards ------------------------------------------------- */
-.cardContainer {
-    display: flex;
-    wrap: nowrap;
-    width: 100%;
-    overflow-x: auto;
-    overflow: auto;
-    flex-direction: row;
-    justify-content: center;
-}
-.cardContainer.vertical {
-    flex-direction: column;
-}
-.card {
-    --closedWidth: 4em;
-    --openWidth: 24em;
-    --closedHeight: 24em;
-    --openHeight: 24em;
-    position: relative;
-    width: var(--closedWidth);
-    height: var(--closedHeight);
-    margin: 0.5em;
-    border-radius: var(--closedWidth);
-    background: var(--bgImage);
-    background-size: auto 120%;
-    background-position: center;
-    overflow: hidden;
-    box-shadow: inset 0px 0px 1em var(--color1);
-    transition: all 0.5s;
-}
-.card.vertical {
-    --closedWidth: 90%;
-    --openWidth: 90%;
-    --closedHeight: 3em;
-    --openHeight: 16em;
-    border-radius: var(--closedHeight);
-}
-.card.active {
-    width: var(--openWidth);
-    height: var(--openHeight);
-}
-.cardText {
-    width: var(--openWidth);
-    height: var(--openHeight);
-    opacity: 0;
-    top: 4em;
-    padding: 3em;
-    transition: all 0.5s ease;
-    transition-delay: 0s;
-}
-.cardText.vertical {
-    padding: 1em;
-}
-.card.active .cardText {
-    opacity: 1;
-    transition-delay: 0.3s;
-}
-.cardTitle {
-    width: var(--openWidth);
-    height: 1em;
-}
-.cardTitle h3 {
-    overflow: hidden;
-    font-size: 2em;
-    transform-origin: left top;
-    transform: rotate(90deg) translate(0, calc(var(--closedWidth) / -2 + 0.5em));
-    transition: all 0.5s ease;
-}
-.cardTitle h3.vertical {
-    font-size: 1em;
-    transform: rotate(0deg) translate(1em, 0);
-}
-.card.active .cardTitle > h3 {
-    font-size: 3em;
-    left: 3em;
-    transform: rotate(0deg) translate(1em, 0);
-}
-.card.active .cardTitle > h3.vertical {
-    font-size: 2em;
-    left: 0.7em;
 }
