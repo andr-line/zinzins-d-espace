@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Orbits visualiser</title>
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/table.css">
     
 </head>
 
@@ -17,34 +18,25 @@
         <input type="checkbox" class="button" id="asteroidsButton" />
     </div>
 
-    <div class="controls" class="table-container">
-        <table>
-          <thead>
-            <tr>
-              <th>Objet céleste</th>
-              <th>Excentricité</th>
-              <th>Période</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>Mars</td>
-              <td>0,0934</td>
-              <td>687 jours</td>
-            </tr>
-            <tr>
-              <td>Vénus</td>
-              <td>0,0068</td>
-              <td>225 jours</td>
-            </tr>
-            <tr>
-              <td>Mercure</td>
-              <td>0,2056</td>
-              <td>88 jours</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th colspan="2">Mars</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Excentricité</td>
+            <td>0,0934</td>
+          </tr>
+          <tr>
+            <td>Période</td>
+            <td>687 jours</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     
 <script src="https://d3js.org/d3.v7.min.js"></script>
 <script src="js/orbits.js"></script>
