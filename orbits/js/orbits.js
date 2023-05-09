@@ -61,7 +61,7 @@ function draw_orbit(d3_canvas, element, index) {
         classes += "isAsteroid hidden";
     }
     const ctx = d3.path()
-    const points = generate_orbit_points(100, e, a);
+    const points = generate_orbit_points(500, e, a);
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
@@ -120,3 +120,34 @@ asteroidsButton.addEventListener('change', toggleAsteroids)
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();
+
+
+//function to go through the json and isolate values
+
+function displayData(jsonData) {
+    let table = document.createElement('table');
+    jsonData.forEach((element) => {
+        for (const key in element) {
+            if (element.hasOwnProperty(key)) {
+                let row = document.createElement('tr');
+                let nameCell = document.createElement('td');
+                let valueCell = document.createElement('td');
+
+                nameCell.textContent = key;
+                valueCell.textContent = element[key];
+
+                row.appendChild(nameCell);
+                row.appendChild(valueCell);
+                table.appendChild(row);
+            }
+        }
+    });
+    document.body.appendChild(table);
+}
+
+// Exemple d'utilisation
+const jsonData = [
+    // Collez vos objets JSON ici
+];
+
+displayData(jsonData);
