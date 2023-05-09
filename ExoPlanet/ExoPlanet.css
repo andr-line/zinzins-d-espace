@@ -9,11 +9,9 @@ img {
     z-index: 1;
 }
 .controls {
-    background-color: white;
     position: relative;
     top: 0;
     left: 0;
-    color: black;
     z-index: 2;
 }
 .center {
