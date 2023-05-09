@@ -1,0 +1,17 @@
+.svg-container{
+position: relative;
+left: 200px;
+
+}
+.information{
+
+    position: relative;
+    left: 10px;
+    top: -585px;
+    width: 350px;
+    height: 550px;
+    background-color: #51c97d;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
