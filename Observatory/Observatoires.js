@@ -71,15 +71,15 @@ d3.json("world.json",).then((topology) => {
             g.selectAll("circle")
             .data(coordinates)
             .join((enter) => {
-            
+                //console.log(coordinates);  
             coordinates.forEach(element => {
             
-                console.log(element.Coordonnées.split(", "))
+                //console.log(element.Coordonnées.split(", "))
                 cx = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[0]
                 cy = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[1]
                 //cx = parseFloat(element.Coordonnées.split(", ")[0])
                 //cy = parseFloat(element.Coordonnées.split(", ")[1])
-                console.log(cx, cy)
+                
                 color=element.Couleur
 
                 enter.append("circle")
@@ -88,12 +88,26 @@ d3.json("world.json",).then((topology) => {
                 .attr("cy",cy)
                 .attr("r", 3)
                 .style("fill", color)
+                // var a=[]
+                // d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
+                //     ExoPlanet.forEach(element1 => {
+                //         var b=[]
+                //         if (element.Observatoires == element1.disc_facility){
+                //             b.push
+
+                //         } 
+
+
+
+                //     })
+
+                // });
 
             })  
         })
     
           });
-          
+           
 
             (update) => update,
             (exit) => exit.remove()
