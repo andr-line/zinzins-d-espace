@@ -6,7 +6,6 @@
   height: 40dvh;
   overflow: auto;
   z-index: 2;
-  background-color: #ccc;
 }
 
 table {
@@ -19,10 +18,11 @@ table {
   border-radius: 10px;
 }
 
-thead {
+.table-container > div {
   background-color: #222;
-  color: #fff;
   text-align: center;
+  color: white;
+  padding: 1em;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
@@ -34,6 +34,10 @@ th, td {
 
 th {
   font-weight: bold;
+}
+
+tr {
+    background-color: #ccc;
 }
 
 tbody tr:nth-child(even) {

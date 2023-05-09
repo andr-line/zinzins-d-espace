@@ -127,7 +127,7 @@ on_fully_loaded();
 function displayData(element) {
     let table = d3.select(".table-container")
     console.log(table)
-    d3.select("table > thead > tr").text(element["eName"])
+    d3.select(".table-container > div").text(element["eName"])
     for (const key in element) {
         console.log(key)
         if (element.hasOwnProperty(key) && key!="eName") {
