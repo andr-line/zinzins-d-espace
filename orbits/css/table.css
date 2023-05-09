@@ -2,9 +2,9 @@
   position: fixed;
   bottom: 10px;
   right: 10px;
-  padding: 20px;
   height: 40dvh;
   z-index: 2;
+  overflow: scroll;
 }
 
 table {
@@ -23,7 +23,7 @@ table {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-.table-content {overflow-y: scroll;}
+
 th, td {
   padding: 10px;
   border-bottom: 1px solid #ccc;
