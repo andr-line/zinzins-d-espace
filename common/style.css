@@ -2,8 +2,6 @@ html {
     display: table;
     margin: auto;
     height: 100%;
-    
-   /* <!-- horizontal centering -->*/
 }
 
 body {
@@ -89,4 +87,15 @@ body {
     width: 6.7px;
     transform-origin: -2px 2px;
     transform: rotate(-45deg);
+}
+
+/* Table ---------------------------------------- */
+table {
+    border-collapse: collapse;
+    background-color: black;
+}
+td {
+    padding: 0.5em;
+    border: 1px solid #999;
+    background-color: var(--color1);
 }
