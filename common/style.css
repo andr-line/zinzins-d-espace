@@ -23,6 +23,10 @@ body {
 }
 
 /* navigation bar ---------------------------------------- */
+.navigation {
+    z-index: 999;
+}
+
 .navigation.navmenu {
     height: var(--navigationbarheight);
     width: var(--navigationbarheight);
