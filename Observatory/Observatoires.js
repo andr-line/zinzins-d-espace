@@ -74,7 +74,7 @@ d3.json("world.json",).then((topology) => {
                     .attr("y1",cy)
                     .attr("x2",cxf)
                     .attr("y2",cyf)
-                    .attr("stroke-width", 1)
+                    .attr("stroke-width", 0.8)
                     .attr("stroke", color)
                 
                 }
@@ -83,8 +83,12 @@ d3.json("world.json",).then((topology) => {
                 
                 .attr("cx",cx)
                 .attr("cy",cy)
-                .attr("r", 5)
-                .style("fill", color);
+                .attr("r", 6)
+                .attr("id", element.Observatoires)
+                .style("fill", color)
+                .on("click", (event,d) => {
+                    d3.select(".information > .title").text(event.currentTarget.id)
+                })
 
                 
                 
