@@ -3,6 +3,10 @@
   bottom: 10px;
   right: 10px;
   padding: 20px;
+  height: 40dvh;
+  overflow: auto;
+  z-index: 2;
+  background-color: #ccc;
 }
 
 table {
@@ -18,12 +22,12 @@ table {
 thead {
   background-color: #222;
   color: #fff;
+  text-align: center;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
 
 th, td {
-  text-align: center;
   padding: 10px;
   border-bottom: 1px solid #ccc;
 }

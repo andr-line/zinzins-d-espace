@@ -17,7 +17,7 @@ const planetColors = [
     "#95B8D1", // Grey Blue
     "#6A994E", // Green
     "#F2E205"  // Bright Yellow
-  ];
+    ];
 
 // Convert polar coordinates to cartesian coordinates
 function polar_to_cartesian(angle, distance) {
@@ -124,30 +124,26 @@ on_fully_loaded();
 
 //function to go through the json and isolate values
 
-function displayData(jsonData) {
-    let table = document.createElement('table');
-    jsonData.forEach((element) => {
-        for (const key in element) {
-            if (element.hasOwnProperty(key)) {
-                let row = document.createElement('tr');
-                let nameCell = document.createElement('td');
-                let valueCell = document.createElement('td');
-
-                nameCell.textContent = key;
-                valueCell.textContent = element[key];
-
-                row.appendChild(nameCell);
-                row.appendChild(valueCell);
-                table.appendChild(row);
-            }
+function displayData(element) {
+    let table = d3.select(".table-container")
+    console.log(table)
+    d3.select("table > thead > tr").text(element["eName"])
+    for (const key in element) {
+        console.log(key)
+        if (element.hasOwnProperty(key) && key!="eName") {
+            console.log(element[key])
+            let row = table.append("tr")
+            let nameCell = row.append("td");
+            let valueCell = row.append("td");
+            
+            nameCell.text(key);
+            valueCell.text(element[key]);
         }
-    });
+    }
+    table.style("z-index: 2; border: 2px #f00; position: absolute; bottom: 0; right: 0;")
     document.body.appendChild(table);
 }
 
-// Exemple d'utilisation
-const jsonData = [
-    // Collez vos objets JSON ici
-];
-
-displayData(jsonData);
+d3.json("data/sol_data.json").then(function(data) {
+    displayData(data[0])
+})
