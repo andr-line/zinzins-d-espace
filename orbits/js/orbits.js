@@ -122,14 +122,11 @@ asteroidsButton.addEventListener('change', toggleAsteroids)
 on_fully_loaded();
 
 
-//function to go through the json and isolate values
-
+// Function to add values of json element to table
 function displayData(element) {
     let table = d3.select(".table-container")
-    console.log(table)
     d3.select(".table-container > div").text(element["eName"])
     for (const key in element) {
-        console.log(key)
         if (element.hasOwnProperty(key) && key!="eName") {
             console.log(element[key])
             let row = table.append("tr")

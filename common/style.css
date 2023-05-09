@@ -92,7 +92,8 @@ body {
 /* Table ---------------------------------------- */
 table {
     border-collapse: collapse;
-    background-color: black;
+    background-color: var(--color1);
+    border-radius: 10px;
 }
 td {
     padding: 0.5em;

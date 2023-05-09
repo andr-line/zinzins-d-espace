@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <title>Orbits visualiser</title>
+    <link rel="stylesheet" href="../common/style.css">
     <link rel="stylesheet" href="css/orbits.css">
     <link rel="stylesheet" href="css/table.css">
-	<link rel="stylesheet" href="../common/style.css">
     <link rel="icon" type="icon" href="..\logo\galaxy-50.png">
     
 </head>
@@ -37,17 +37,18 @@
         <input type="range" min="1" max="5000" value="1" class="slider" id="zoomSlider" />
         <input type="checkbox" class="button" id="asteroidsButton" />
     </div>
-
     <div class="table-container">
         <div class="tableTitle"></div>
-        <table>
-            <tbody>
-            </tbody>
-        </table>
+        <div class="table-content">
+            <table>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
     
 <script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="js/orbits.js"></script>
 <script src="../common/script.js"></script>
+<script src="js/orbits.js"></script>
 </body>
 </html>
