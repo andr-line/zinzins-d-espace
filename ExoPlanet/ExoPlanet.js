@@ -9,8 +9,6 @@ var yScale;
 var dataset = [];
 var dataset1 = [];
 var body=d3.select("body");
-//d3.csv("../data/PSCompPars_2023.04.25_07.07.02.csv")
-
 
 d3.csv("../data/exoplanet_data.csv")
 //Create SVG element
