@@ -8,7 +8,6 @@ body {
     wrap: nowrap;
     width: 100%;
     overflow-x: auto;
-    overflow: auto;
     flex-direction: row;
     justify-content: center;
 }
@@ -20,9 +19,9 @@ body {
     --openWidth: 24em;
     --closedHeight: 24em;
     --openHeight: 24em;
+    width: var(--openWidth);
+    height: var(--openHeight);
     position: relative;
-    width: var(--closedWidth);
-    height: var(--closedHeight);
     margin: 0.5em;
     border-radius: var(--closedWidth);
     background: var(--bgImage);
@@ -36,25 +35,26 @@ body {
     --closedWidth: 90%;
     --openWidth: 90%;
     --closedHeight: 3em;
-    --openHeight: 16em;
+    --openHeight: 12em;
+    background-size: auto var(--openHeight);
     border-radius: var(--closedHeight);
 }
-.card.active {
-    width: var(--openWidth);
-    height: var(--openHeight);
+.card.fold:not(.active) {
+    width: var(--closedWidth);
+    height: var(--closedHeight);
 }
-.cardText {
+.cardContent {
     width: calc( var(--openWidth) - 5em);
     height: var(--openHeight);
     opacity: 0;
-    margin: 3em;
+    margin: 1em;
     transition: all 0.5s ease;
     transition-delay: 0s;
 }
-.cardText.vertical {
+.cardContent.vertical {
     padding: 1em;
 }
-.card.active .cardText {
+.card.active .cardContent {
     opacity: 1;
     transition-delay: 0.3s;
 }

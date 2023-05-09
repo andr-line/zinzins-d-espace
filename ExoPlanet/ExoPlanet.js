@@ -125,7 +125,7 @@ d3.select("#method")
     d3.select("#year")
     .on("click", function() {
 
-        dataset = [];  						 				//Initialize empty array
+        dataset = [];  		 //Initialize empty array
         update_graph(dataset)
         
     
