@@ -8,7 +8,7 @@ const svg = d3.select('div#map').append("svg")
     .attr("width", width)
     .attr("height", height)
     .attr("class", "svg-content")
-    .attr("viewbox", `0 0 ${width} ${height}`)
+    .attr("viewbox", `500 500 ${width} ${height}`)
 
 // document.body.onmousemove = (event) => {
 //                     d3.select("#tooltip")
@@ -61,8 +61,6 @@ d3.json("world.json",).then((topology) => {
                 })
                  
         })
-    }) ;
-
         d3.json("../data/observatoires.json").then(function(coordinates) {
             // var projection = d3.geoMercator()
             // projection = projection.fitSize([width, height], coordinates)
@@ -74,7 +72,7 @@ d3.json("world.json",).then((topology) => {
                 //console.log(coordinates);  
             coordinates.forEach(element => {
             
-                //console.log(element.Coordonnées.split(", "))
+                console.log(element.Coordonnées.split(", "))
                 cx = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[0]
                 cy = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[1]
                 //cx = parseFloat(element.Coordonnées.split(", ")[0])
@@ -107,6 +105,9 @@ d3.json("world.json",).then((topology) => {
         })
     
           });
+        
+    }) ;
+
            
 
             (update) => update,
