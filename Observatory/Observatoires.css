@@ -10,8 +10,15 @@ left: 200px;
     top: -585px;
     width: 350px;
     height: 550px;
-    background-color: #51c97d;
+    background-color: rgb(12,150,100);
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+}
+
+.information1{
+
+    position: relative;
+    left: 180px;
+    top: -1165px;
 }

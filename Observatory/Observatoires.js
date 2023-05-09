@@ -10,17 +10,7 @@ const svg = d3.select('div#map').append("svg")
     .attr("class", "svg-content")
     .attr("viewbox", `500 500 ${width} ${height}`)
 
-// document.body.onmousemove = (event) => {
-//                     d3.select("#tooltip")
-//                         .style("left", event.clientX + "px")
-//                         .style("top", event.clientY + "px")
-                    
-//                         .style("opacity", 0.9)
-                    
-//                              .text("X: " + event.clientX + ", Y:" + event.clientY)
-//}
 
-// load and display the World
 
 var g = svg.append("g");
 d3.json("world.json",).then((topology) => {
@@ -62,30 +52,42 @@ d3.json("world.json",).then((topology) => {
                  
         })
         d3.json("../data/observatoires.json").then(function(coordinates) {
-            // var projection = d3.geoMercator()
-            // projection = projection.fitSize([width, height], coordinates)
-            // var path = d3.geoPath().projection(projection);
+           
             
             g.selectAll("circle")
             .data(coordinates)
             .join((enter) => {
-                //console.log(coordinates);  
+                 
             coordinates.forEach(element => {
             
                 console.log(element.Coordonnées.split(", "))
                 cx = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[0]
                 cy = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[1]
-                //cx = parseFloat(element.Coordonnées.split(", ")[0])
-                //cy = parseFloat(element.Coordonnées.split(", ")[1])
+                
                 
                 color=element.Couleur
+                if(element.hasOwnProperty("Flèche")) {
+                    cxf = projection([element.Flèche.split(", ")[1], element.Flèche.split(", ")[0]])[0]
+                    cyf = projection([element.Flèche.split(", ")[1], element.Flèche.split(", ")[0]])[1]
+                    enter.append("line")
+                    .attr("x1",cx)
+                    .attr("y1",cy)
+                    .attr("x2",cxf)
+                    .attr("y2",cyf)
+                    .attr("stroke-width", 1)
+                    .attr("stroke", color)
+                
+                }
 
                 enter.append("circle")
                 
                 .attr("cx",cx)
                 .attr("cy",cy)
-                .attr("r", 3)
-                .style("fill", color)
+                .attr("r", 5)
+                .style("fill", color);
+
+                
+                
                 // var a=[]
                 // d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
                 //     ExoPlanet.forEach(element1 => {
