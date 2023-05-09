@@ -4,7 +4,6 @@
   right: 10px;
   padding: 20px;
   height: 40dvh;
-  overflow: auto;
   z-index: 2;
 }
 
@@ -19,7 +18,7 @@ table {
   z-index: 2;
 }
 
-.table-container > div {
+.table-container > div.taboeTitle {
   background-color: #222;
   text-align: center;
   color: white;
@@ -27,7 +26,7 @@ table {
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
 }
-
+.table-content {overflow-y: scroll;}
 th, td {
   padding: 10px;
   border-bottom: 1px solid #ccc;
