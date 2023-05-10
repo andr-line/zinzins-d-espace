@@ -81,7 +81,12 @@ function on_fully_loaded() {
 
     const d3_canvas = d3.select("#d3_canvas");
 
-    // Draw the Sun
+    // Take a random position on the orbits to draw the objects 
+
+    function getRandomElement(points) {
+        const randomIndex = Math.floor(Math.random() * array.length);
+        return array[randomIndex];
+
     d3_canvas.append("circle")
         .attr("cx", 0)
         .attr("cy", 0)
@@ -122,11 +127,14 @@ asteroidsButton.addEventListener('change', toggleAsteroids)
 on_fully_loaded();
 
 
-// Function to add values of json element to table
+//function that create the table with json key and values
+
 function displayData(element) {
     let table = d3.select(".table-container")
+    console.log(table)
     d3.select(".table-container > div").text(element["eName"])
     for (const key in element) {
+        console.log(key)
         if (element.hasOwnProperty(key) && key!="eName") {
             console.log(element[key])
             let row = table.append("tr")
