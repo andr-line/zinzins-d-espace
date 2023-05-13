@@ -11,6 +11,7 @@ const svg = d3.select('div#map').append("svg")
     .attr("viewbox", `500 500 ${width} ${height}`);
 
 var g = svg.append("g");
+//Creation du monde:
 d3.json("world.json").then((topology) => {
     const features = topology.features
     projection = projection.fitSize([width, height], topology)
@@ -22,20 +23,10 @@ d3.json("world.json").then((topology) => {
                 .attr("d", path)
                 .attr("stroke", "black")
                 .attr("fill","rgb(12,150,160)")
-                .on("mouseover", (event,d) => {
-                    const coordinates = d3.pointer(event);
-                    d3.select("#tooltip")
-                        .style("left", coordinates[0] + "px")
-                        .style("top", coordinates[1] + "px")
-                        .style("opacity", 0.9)
-                        .text(coordinates);       
-                })   
-                .on("mouseout", (event,d) => {
-                    d3.select(event.currentTarget)
-                    .attr("stroke-width", 1);
-                    d3.select("#tooltip").style("opacity", 0);
-                })
+                
         })
+
+        //Points des observatoires:
         d3.json("../data/observatoires.json").then(function(coordinates) {
             
             g.selectAll("circle")
@@ -45,7 +36,8 @@ d3.json("world.json").then((topology) => {
             coordinates.forEach(element => {
                 cx = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[0]
                 cy = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[1]
-                
+                barch=[]
+               
                 
                 color=element.Couleur
                 if(element.hasOwnProperty("Flèche")) {
@@ -60,8 +52,7 @@ d3.json("world.json").then((topology) => {
                     .attr("stroke", color)
                 
                 }
-                var qplanete=[];
-                var listeObs=[];
+                
 
                 enter.append("circle")
                 
@@ -70,14 +61,19 @@ d3.json("world.json").then((topology) => {
                 .attr("r", 6)
                 .attr("id", element.Observatoires)
                 .style("fill", color)
+
+                //Structure avec observatoires et quantite d'exoplanetes (barch)
+                
                 .on("click", (event,d) => {
-                    d3.select(".information > .title").text(event.currentTarget.id)
-                    const Obs=event.currentTarget.id
+                  
+                    d3.select(".information > .title").text(event.currentTarget.id)//Pour ecrire le nom de l'observatoire
+                    var Obs=event.currentTarget.id //Pour recuperer le nom de l'observatoire, car si après on met event.currentTarget.id, ca ne marche pas  
                     d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
-                        g.selectAll("table")
+                        g.selectAll("barch")
                         .data(ExoPlanet)
                         
                         var c=0;
+                        //console.log(Obs,c)
                         ExoPlanet.forEach(element1 => {
 
                             if (Obs == element1.disc_facility){
@@ -86,17 +82,74 @@ d3.json("world.json").then((topology) => {
             
                             } 
                         })
-                        d3.select(".information > .content").text(c)
-                         qplanete.push(c)
-                         listeObs.push(Obs)
+                       
+
+                         barch.push({Observatory: Obs, Number: c});
                          
+                         //console.log(barch)
+                         
+                         
+                         //Création du graphique en barres
+
+                         var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                                width1 = 350,
+                                height1 =30* barch.length;
+
+
+                                var x = d3.scaleBand()
+                                .range([0, width1])
+                                        .padding(0.1);
+
+                        var y = d3.scaleLinear()
+                                    .range([height1, 0]);
+
+                        x.domain(barch.map(function(d) { return d.Observatory; }));
+                        y.domain([0, d3.max(barch, function(d) { return d.Number; })]);
+
+
+                        var svg = d3.select(".information").append("svg")
+                        .attr("class", "barch")
+                        .attr("width", width1 + margin.left + margin.right)
+                        .attr("height", height1 + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform",
+                                 "translate(" + margin.left + "," + margin.top + ")");
+
+                        svg.append("g")
+                            .attr("transform", "translate(0," + height1 + ")")
+                            .call(d3.axisBottom(x));
+
+                        svg.append("g")
+                        .call(d3.axisLeft(y));
+
+
+                        svg.selectAll(".bar")
+                            .data(barch)
+                            .enter().append("rect")
+                            .attr("class", "bar")
+                            .attr("x", function(d) { return x(d.Observatory); })
+                            .attr("y", function(d) { return y(d.Number); })
+                            .attr("width", x.bandwidth())
+                            .attr("height", function(d) { return height1 - y(d.Number); });
+
+                        });
+
+                          
+
+
+
+
+
+                          
+
                         
 
                     
 
 
-                    });
+                    
                 });
+               
                 
             
 
@@ -104,6 +157,89 @@ d3.json("world.json").then((topology) => {
         });
     });
 });
+
+d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
+    g.selectAll("circle")
+    .data(ExoPlanet1)
+    .join((enter) => {
+        count=[];
+        ExoPlanet1.forEach(element => {
+
+            count.push(element.discoverymethod)
+            
+        });
+        count=new Set(count);
+        barch1=[]
+        c=0;
+       
+
+            count.forEach(element1 => {
+                ExoPlanet1.forEach(element => {
+
+
+                if (element.discoverymethod==element1){
+                    c=c+1;
+                }
+            });
+            barch1.push({Method: element1, Number: c});
+
+            
+        });
+        console.log(barch1)
+        var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                                width1 = 1100,
+                                height1 =400;
+
+
+                                var x = d3.scaleBand()
+                                .range([0, width1])
+                                        .padding(0.1);
+
+                        var y = d3.scaleLinear()
+                                    .range([height1, 0]);
+
+                        x.domain(barch1.map(function(d) { return d.Method; }));
+                        y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
+
+
+                        var svg = d3.select(".information1").append("svg")
+                        .attr("class", "barch1")
+                        .attr("width", width1 + margin.left + margin.right)
+                        .attr("height", height1 + margin.top + margin.bottom)
+                        .append("g")
+                        .attr("transform",
+                                 "translate(" + margin.left + "," + margin.top + ")");
+
+                        svg.append("g")
+                            .attr("transform", "translate(0," + height1 + ")")
+                            .call(d3.axisBottom(x));
+
+                        svg.append("g")
+                        .call(d3.axisLeft(y));
+
+
+                        svg.selectAll(".bar")
+                            .data(barch)
+                            .enter().append("rect")
+                            .attr("class", "bar")
+                            .attr("x", function(d) { return x(d.Method); })
+                            .attr("y", function(d) { return y(d.Number); })
+                            .attr("width", x.bandwidth())
+                            attr("color", "red")
+                            .attr("height", function(d) { return height1 - y(d.Number); });
+
+                        });
+                    
+
+        
+        
+    });
+
+
+
+
+
+
 
 (update) => update,
 (exit) => exit.remove()
