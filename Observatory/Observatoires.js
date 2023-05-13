@@ -60,6 +60,8 @@ d3.json("world.json").then((topology) => {
                     .attr("stroke", color)
                 
                 }
+                var qplanete=[];
+                var listeObs=[];
 
                 enter.append("circle")
                 
@@ -70,17 +72,33 @@ d3.json("world.json").then((topology) => {
                 .style("fill", color)
                 .on("click", (event,d) => {
                     d3.select(".information > .title").text(event.currentTarget.id)
+                    const Obs=event.currentTarget.id
+                    d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
+                        g.selectAll("table")
+                        .data(ExoPlanet)
+                        
+                        var c=0;
+                        ExoPlanet.forEach(element1 => {
+
+                            if (Obs == element1.disc_facility){
+                                c=c+1; 
+                                 
+            
+                            } 
+                        })
+                        d3.select(".information > .content").text(c)
+                         qplanete.push(c)
+                         listeObs.push(Obs)
+                         
+                        
+
+                    
+
+
+                    });
                 });
                 
-                // var a=[]
-                // d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
-                //     ExoPlanet.forEach(element1 => {
-                //         var b=[]
-                //         if (element.Observatoires == element1.disc_facility){
-                //             b.push
-                //         } 
-                //     })
-                // });
+            
 
             });
         });
