@@ -141,19 +141,57 @@ d3.json("world.json").then((topology) => {
 
                         // svg.append("g")
                         // .call(d3.axisLeft(y));
-
+                        
 
                         svg.selectAll(".bar")
                             .data(barch)
-                            .enter().append("rect")
+                            //.enter().insert("rect")
+                            .join((enter) => enter.append("rect")
+                            
+                            .text(function(d) { return (d.Observatory + ": " + d.Number); })
+                            .style("fill", "black")
                             .attr("class", "bar")
-                            .attr("x", "5")// function(d) { return y(d.Observatory); })
+                            .attr("x", "0")
                             .attr("y", function(d) { return y(d.Observatory); })
-                            .attr("height", "25")
-                            .style("fill", function(d){return (d.Color);} )
-                            .attr("text", function(d) { return d.Observatory; })
-                            .attr("width", function(d) { return x(d.Number); });
 
+                            .attr("height", "25")
+                            .transition()        
+                            .duration(900)
+                            .style("fill", function(d){return (d.Color);} )
+                            //.attr("opacity", "0.5")
+                            .attr("width", function(d) { return x(d.Number); })
+                            
+                            
+
+                            
+                            );
+                            // .transition()
+							// 	.duration(1000)
+							// 	.attr("width", function(d) { return x(d.Number); });
+									
+
+                            //afficher le nom de l'observatoire sur chaque barre
+                        
+                        svg.selectAll("div")
+                            .data(barch)
+                            .enter().insert("text")
+                            
+                            .attr("class", "div")
+                            .attr("x", "10")
+                            .attr("y", function(d) { return y(d.Observatory)+7; })
+                            .attr("dy", ".75em")
+                            
+                            .text(function(d) { return (d.Observatory + ": " + d.Number); })
+                            .style("fill", "black")   
+                            .style("font-size", "5px")
+                            .transition()        
+                            .duration(900)
+                            .style("font-size", "15px")
+                            .style("font-weight", "bold");
+
+
+                            
+                            
                         });
 
                           
@@ -247,7 +285,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                             .attr("x", function(d) { return x(d.Method); })
                             .attr("y", function(d) { return y(d.Number); })
                             .attr("width", x.bandwidth())
-                            .attr("color", "red")
+                            .style("fill", "red")
                             .attr("height", function(d) { return height1 - y(d.Number); });
 
                         });
