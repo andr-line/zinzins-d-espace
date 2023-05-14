@@ -1,6 +1,8 @@
 .svg-container{
 position: relative;
-left: 200px;
+left: 230px;
+top: 5px;
+right: 5px;
 
 }
 .information{
@@ -8,7 +10,7 @@ left: 200px;
     position: relative;
     left: 5px;
     top: -650px;
-    width: 350px;
+    width: 400px;
     height: 610px;
     background-color: rgb(12,150,100);
     border-radius: 10px;
@@ -20,7 +22,7 @@ left: 200px;
 
     position: relative;
     left: 100px;
-    top: 600px;
+    top: -600px;
     width: 1200px;
     height: 500px;
     background-color: rgb(12,150,100);
