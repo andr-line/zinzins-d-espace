@@ -1,9 +1,5 @@
-// Distance to center as a function of the angle, exentricity and semi-major axis
-function distance_to_center(angle, e, a) {
-    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
-}
-
 //Array of 12 Arbitrary colors for planets
+
 const planetColors = [
     "#FFC857", // Yellow
     "#E9724C", // Coral
@@ -19,39 +15,47 @@ const planetColors = [
     "#F2E205"  // Bright Yellow
     ];
 
+    //new dictionnary for variable 
+
     const variableLabels = {
         eName: "Name",
-        isPlanet: "Is it a Planet",
-        semimajorAxis: "Semi-major Axis",
-        perihelion: "Perihelion",
-        aphelion: "Aphelion",
+        isPlanet: "Is Planet",
+        semimajorAxis: "Semi-major Axis [km]",
+        perihelion: "Perihelion [km]",
+        aphelion: "Aphelion [km]",
         eccentricity: "Eccentricity",
-        inclination: "Inclination",
-        density: "Density",
-        gravity: "Gravity",
-        escape: "Escape",
-        meanRadius: "Mean Radius",
-        equaRadius: "Equatorial Radius",
-        polarRadius: "Polar Radius",
+        inclination: "Inclination [°]",
+        density: "Density [g/cm³]",
+        gravity: "Gravity [m/s²]",
+        escape: "Escape Velocity [m/s]",
+        meanRadius: "Mean Radius [km]",
+        equaRadius: "Equatorial Radius [km]",
+        polarRadius: "Polar Radius [km]",
         flattening: "Flattening",
         dimension: "Dimensions",
-        sideralOrbit: "Sideral Orbit",
-        sideralRotation: "Sideral Rotation",
+        sideralOrbit: "Sideral Orbit Period [days]",
+        sideralRotation: "Sideral Rotation Period [hours]",
         discoveryDate: "Discovery Date",
-        mass_kg: "Mass (kg)",
-        volume: "Volume",
+        mass_kg: "Mass [kg]",
+        volume: "Volume [km³]",
         orbit_type: "Orbit Type",
         orbits: "Orbits",
         bondAlbido: "Bond Albedo",
         geomAlbido: "Geometric Albedo",
         RV_abs: "Absolute RV",
-        p_transit: "Transit Period",
-        transit_visibility: "Transit Visibility",
+        p_transit: "Transit Period [days]",
+        transit_visibility: "Transit Visibility [hours]",
         transit_depth: "Transit Depth",
-        massj: "Mass (j)",
-        semimajorAxis_AU: "Semi-major Axis (AU)",
-        grav_int: "Gravitational Intensity"
+        massj: "Mass [Jupiter masses]",
+        semimajorAxis_AU: "Semi-major Axis [AU]",
+        grav_int: "Gravitational Intensity [m/s²]"
       };
+
+// Distance to center as a function of the angle, exentricity and semi-major axis
+
+function distance_to_center(angle, e, a) {
+    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
+}
 
 // Convert polar coordinates to cartesian coordinates
 function polar_to_cartesian(angle, distance) {
@@ -89,8 +93,8 @@ function generate_orbit_points(num_point, e, a) {
     return points[randomIndex];
     }
 
-
 // Draw an orbit using D3.js
+
 function draw_orbit(d3_canvas, element, index, position) {
     const e = element.eccentricity;
     const a = element.semimajorAxis;
@@ -117,13 +121,14 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("fill", "none")
                     .attr("class", classes);
 
-    // Draw the planet at a random position on the orbit
+ // Draw the planet at a random position on the orbit
+
     if (element.isPlanet === "TRUE") {
         const randomPoint = getRandomElement(points);
         d3_canvas.append("circle")
                     .attr("cx", randomPoint.x)
                     .attr("cy", randomPoint.y)
-                    .attr("r", 4)
+                    .attr("r", 2)
                     .attr("fill", planetColors[index%12])
                     .attr("class", "planet")
                     .on("click", function() {
@@ -137,18 +142,11 @@ function on_fully_loaded() {
 
     const d3_canvas = d3.select("#d3_canvas");
 
-    d3_canvas.append("circle")
-        .attr("cx", 0)
-        .attr("cy", 0)
-        .attr("r",2 )
-        .attr("fill", "yellow");
-
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
         data.forEach((element, index) => {
     
-            // TODO: process moons
-            draw_orbit(d3_canvas, element, index);
+        draw_orbit(d3_canvas, element, index);
         });
     });
 }
