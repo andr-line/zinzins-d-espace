@@ -48,6 +48,14 @@ function generate_orbit_points(num_point, e, a) {
     return points;
 }
 
+ // Take a random position on the orbits to draw the objects 
+
+ function getRandomElement(points) {
+    const randomIndex = Math.floor(Math.random() * points.length);
+    return points[randomIndex];
+    }
+
+
 // Draw an orbit using D3.js
 function draw_orbit(d3_canvas, element, index) {
     const e = element.eccentricity;
@@ -73,19 +81,26 @@ function draw_orbit(d3_canvas, element, index) {
                     .attr("stroke", planetColors[index%12])
                     .attr("stroke-width", 1)
                     .attr("fill", "none")
-                    .attr("class", classes)
-}
+                    .attr("class", classes);
+
+    // Draw the planet at a random position on the orbit
+    if (element.isPlanet === "TRUE") {
+        const randomPoint = getRandomElement(points);
+        d3_canvas.append("circle")
+                    .attr("cx", randomPoint.x)
+                    .attr("cy", randomPoint.y)
+                    .attr("r", 4)
+                    .attr("fill", planetColors[index%12])
+                    .attr("class", "planet")
+                    .on("click", function() {
+                        d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
+                        d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
+})}}
 
 
 function on_fully_loaded() {
 
     const d3_canvas = d3.select("#d3_canvas");
-
-    // Take a random position on the orbits to draw the objects 
-
-    function getRandomElement(points) {
-        const randomIndex = Math.floor(Math.random() * array.length);
-        return array[randomIndex];
 
     d3_canvas.append("circle")
         .attr("cx", 0)
@@ -145,7 +160,11 @@ function displayData(element) {
             valueCell.text(element[key]);
         }
     }
-    table.style("z-index: 2; border: 2px #f00; position: absolute; bottom: 0; right: 0;")
+    table.style("z-index", "2")
+     .style("border", "2px #f00")
+     .style("position", "absolute")
+     .style("bottom", "0")
+     .style("right", "0");
     document.body.appendChild(table);
 }
 

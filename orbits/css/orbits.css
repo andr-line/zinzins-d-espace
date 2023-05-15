@@ -23,6 +23,7 @@
 
 path {
     stroke-width: 0.5;
+    transition: opacity 0.3s ease;
 }
 
 .controls {
@@ -32,10 +33,11 @@ path {
     z-index: 2;
 }
 
-path {
-    transition: opacity 0.3s ease;
-}
-
 .hidden {
     opacity: 0;
+}
+
+.highlighted {
+    stroke: #ffffff; /* ou toute autre couleur */
+    stroke-width: 2; /* ou toute autre largeur */
 }
