@@ -106,10 +106,6 @@ function draw_orbit(d3_canvas, element, index, position) {
     } else {
         classes += "isAsteroid hidden";
     }
-<<<<<<< HEAD
-=======
-    
->>>>>>> 055a922e6a8081ef81dcc501ce006f99265405e1
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a, position[element.orbits]);
     ctx.moveTo(points[0].x, points[0].y);
