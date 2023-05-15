@@ -29,6 +29,7 @@ table {
   padding: 1em;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  width: 100%;
 }
 
 th, td {
@@ -40,19 +41,16 @@ th {
   font-weight: bold;
 }
 
-tbody tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-
 @media (max-width: 767px) {
   .table-container {
-    width: 100%;
     left: 0;
     right: 0;
+    width: auto !important;
   }
   
   table {
-    max-width: none;
+    width: 767px !important;
+    max-width: none !important;
   }
 }
 

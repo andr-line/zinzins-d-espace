@@ -66,21 +66,21 @@ function polar_to_cartesian(angle, distance) {
 }
 
 // Project a point on the canvas. Center is at (0, 0)
-function project_on_canvas(point, scale) {
+function project_on_canvas(point, scale, offset) {
     return {
-        x: point.x * scale * 1e-6,
-        y: point.y * scale * 1e-6
+        x: point.x * scale * 1e-6 + offset.x,
+        y: point.y * scale * 1e-6 + offset.y
     };
 }
 
 // Generate a number of point of the orbit, given a and e
-function generate_orbit_points(num_point, e, a) {
+function generate_orbit_points(num_point, e, a, offset) {
     const points = [];
     for (let i = 0; i < num_point; i++) {
         const angle = 2 * Math.PI * i / num_point;
         const distance = distance_to_center(angle, e, a);
         const point = polar_to_cartesian(angle, distance);
-        const proj_point = project_on_canvas(point, 0.05);
+        const proj_point = project_on_canvas(point, 0.05, offset);
         points.push(proj_point);
     }
     return points;
@@ -101,13 +101,17 @@ function draw_orbit(d3_canvas, element, index, position) {
     var classes = ""
     if (element.isPlanet === "TRUE") {
         classes += "isPlanet";
-    //} else if (element.orbit_type === "Secondary") {
-        //classes += "isMoon";
+    } else if (element.orbit_type === "Secondary") {
+        classes += "isMoon";
     } else {
         classes += "isAsteroid hidden";
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 055a922e6a8081ef81dcc501ce006f99265405e1
     const ctx = d3.path()
-    const points = generate_orbit_points(500, e, a);
+    const points = generate_orbit_points(500, e, a, position[element.orbits]);
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
@@ -121,10 +125,9 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("fill", "none")
                     .attr("class", classes);
 
- // Draw the planet at a random position on the orbit
-
+    // Draw the planet at a random position on the orbit
     if (element.isPlanet === "TRUE") {
-        const randomPoint = getRandomElement(points);
+        const randomPoint = position[element.eName];
         d3_canvas.append("circle")
                     .attr("cx", randomPoint.x)
                     .attr("cy", randomPoint.y)
@@ -135,7 +138,9 @@ function draw_orbit(d3_canvas, element, index, position) {
                         d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
                         d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
                         displayData(element)
-})}}
+        })
+    }
+}
 
 
 function on_fully_loaded() {
@@ -144,9 +149,16 @@ function on_fully_loaded() {
 
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
+        let positions = {"NA": {x:0,y:0}}
+        data.forEach((element) => {
+            e = element.eccentricity;
+            a = element.semimajorAxis;
+            points = generate_orbit_points(500, e, a, {x:0,y:0});
+            randomPoint = getRandomElement(points);
+            positions[element.eName.toString()] = randomPoint
+        })
         data.forEach((element, index) => {
-    
-        draw_orbit(d3_canvas, element, index);
+            draw_orbit(d3_canvas, element, index, positions);
         });
     });
 }
