@@ -107,7 +107,7 @@ function draw_orbit(d3_canvas, element, index, position) {
         classes += "isAsteroid hidden";
     }
     const ctx = d3.path()
-    const points = generate_orbit_points(500, e, a, position[element.orbits]);
+    const points = generate_orbit_points(500, e, a, position[element.orbits]); // move orbit to parent
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
@@ -140,12 +140,12 @@ function draw_orbit(d3_canvas, element, index, position) {
 
 
 function on_fully_loaded() {
-
     const d3_canvas = d3.select("#d3_canvas");
 
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
         let positions = {"NA": {x:0,y:0}}
+        // generate object position
         data.forEach((element) => {
             e = element.eccentricity;
             a = element.semimajorAxis;
@@ -153,6 +153,7 @@ function on_fully_loaded() {
             randomPoint = getRandomElement(points);
             positions[element.eName.toString()] = randomPoint
         })
+        // draw orbit and object at its position
         data.forEach((element, index) => {
             draw_orbit(d3_canvas, element, index, positions);
         });
