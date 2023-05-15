@@ -19,6 +19,40 @@ const planetColors = [
     "#F2E205"  // Bright Yellow
     ];
 
+    const variableLabels = {
+        eName: "Name",
+        isPlanet: "Is it a Planet",
+        semimajorAxis: "Semi-major Axis",
+        perihelion: "Perihelion",
+        aphelion: "Aphelion",
+        eccentricity: "Eccentricity",
+        inclination: "Inclination",
+        density: "Density",
+        gravity: "Gravity",
+        escape: "Escape",
+        meanRadius: "Mean Radius",
+        equaRadius: "Equatorial Radius",
+        polarRadius: "Polar Radius",
+        flattening: "Flattening",
+        dimension: "Dimensions",
+        sideralOrbit: "Sideral Orbit",
+        sideralRotation: "Sideral Rotation",
+        discoveryDate: "Discovery Date",
+        mass_kg: "Mass (kg)",
+        volume: "Volume",
+        orbit_type: "Orbit Type",
+        orbits: "Orbits",
+        bondAlbido: "Bond Albedo",
+        geomAlbido: "Geometric Albedo",
+        RV_abs: "Absolute RV",
+        p_transit: "Transit Period",
+        transit_visibility: "Transit Visibility",
+        transit_depth: "Transit Depth",
+        massj: "Mass (j)",
+        semimajorAxis_AU: "Semi-major Axis (AU)",
+        grav_int: "Gravitational Intensity"
+      };
+
 // Convert polar coordinates to cartesian coordinates
 function polar_to_cartesian(angle, distance) {
     return {
@@ -57,7 +91,7 @@ function generate_orbit_points(num_point, e, a) {
 
 
 // Draw an orbit using D3.js
-function draw_orbit(d3_canvas, element, index) {
+function draw_orbit(d3_canvas, element, index, position) {
     const e = element.eccentricity;
     const a = element.semimajorAxis;
     var classes = ""
@@ -95,6 +129,7 @@ function draw_orbit(d3_canvas, element, index) {
                     .on("click", function() {
                         d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
                         d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
+                        displayData(element)
 })}}
 
 
