@@ -101,11 +101,13 @@ function draw_orbit(d3_canvas, element, index, position) {
     var classes = ""
     if (element.isPlanet === "TRUE") {
         classes += "isPlanet";
-    } else if (element.orbit_type === "Secondary") {
-        classes += "isMoon";
+    //} else if (element.orbit_type === "Secondary") {
+        //classes += "isMoon";
     } else {
         classes += "isAsteroid hidden";
     }
+
+    
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a);
     ctx.moveTo(points[0].x, points[0].y);
@@ -128,7 +130,7 @@ function draw_orbit(d3_canvas, element, index, position) {
         d3_canvas.append("circle")
                     .attr("cx", randomPoint.x)
                     .attr("cy", randomPoint.y)
-                    .attr("r", 2)
+                    .attr("r", 3)
                     .attr("fill", planetColors[index%12])
                     .attr("class", "planet")
                     .on("click", function() {
