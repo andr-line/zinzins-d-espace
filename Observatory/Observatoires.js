@@ -88,15 +88,14 @@ d3.json("world.json").then((topology) => {
                        
                         //demander si Obs est dans le tableau barch pour ne pas agrandir le svg.
                         var i=0;
-                        var j=0;
+                        
                         barch.forEach(element => {
                             if (element.Observatory == Obs){
-                                i=i+1;
-
+                                i=i+1
                             }
                             
                         })
-                        //console.log(i,j)
+                        
                         if (i==0){
                             if(barch.length==16){
                                 barch.shift()
@@ -139,13 +138,12 @@ d3.json("world.json").then((topology) => {
                             .attr("transform", "translate(0," + height1 + ")")
                             .call(d3.axisBottom(x));
 
-                        // svg.append("g")
-                        // .call(d3.axisLeft(y));
+                        
                         
 
                         svg.selectAll(".bar")
                             .data(barch)
-                            //.enter().insert("rect")
+                            
                             .join((enter) => enter.append("rect")
                             
                             .text(function(d) { return (d.Observatory + ": " + d.Number); })
@@ -158,20 +156,12 @@ d3.json("world.json").then((topology) => {
                             .transition()        
                             .duration(900)
                             .style("fill", function(d){return (d.Color);} )
-                            //.attr("opacity", "0.5")
+                          
                             .attr("width", function(d) { return x(d.Number); })
                             
-                            
-
-                            
+                                                       
                             );
-                            // .transition()
-							// 	.duration(1000)
-							// 	.attr("width", function(d) { return x(d.Number); });
-									
-
-                            //afficher le nom de l'observatoire sur chaque barre
-                        
+                            
                         svg.selectAll("div")
                             .data(barch)
                             .enter().insert("text")
@@ -225,23 +215,31 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
         count=[];
         ExoPlanet1.forEach(element => {
 
-            count.push(element.discoverymethod)
+            count.push(element.disc_year)
             
         });
+        console.log(count)
         count=new Set(count);
+        console.log(count)
+        count1=[...count]
+        //mettre les elements de count1 dans l'ordre croissant
+        count1.sort(function(a, b){return a - b});
+        console.log(count1)
+
         barch1=[]
         c=0;
        
 
-            count.forEach(element1 => {
+            count1.forEach(element1 => {
+                c=0;
                 ExoPlanet1.forEach(element => {
 
 
-                if (element.discoverymethod==element1){
+                if (element.disc_year==element1){
                     c=c+1;
                 }
             });
-            barch1.push({Method: element1, Number: c});
+            barch1.push({Year: element1, Number: c});
 
             
         });
@@ -258,7 +256,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                         var y = d3.scaleLinear()
                                     .range([height1, 0]);
 
-                        x.domain(barch1.map(function(d) { return d.Method; }));
+                        x.domain(barch1.map(function(d) { return d.Year; }));
                         y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
 
 
@@ -282,10 +280,10 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                             .data(barch1)
                             .enter().append("rect")
                             .attr("class", "barch1")
-                            .attr("x", function(d) { return x(d.Method); })
+                            .attr("x", function(d) { return x(d.Year); })
                             .attr("y", function(d) { return y(d.Number); })
                             .attr("width", x.bandwidth())
-                            .style("fill", "red")
+                            .style("fill", "rgb(173, 216, 218)")  
                             .attr("height", function(d) { return height1 - y(d.Number); });
 
                         });
