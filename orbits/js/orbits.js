@@ -19,7 +19,7 @@ const planetColors = [
 
     const variableLabels = {
         eName: "Name",
-        isPlanet: "Is Planet",
+        isPlanet: "Planet",
         semimajorAxis: "Semi-major Axis [km]",
         perihelion: "Perihelion [km]",
         aphelion: "Aphelion [km]",
@@ -106,8 +106,6 @@ function draw_orbit(d3_canvas, element, index, position) {
     } else {
         classes += "isAsteroid hidden";
     }
-
-    
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a);
     ctx.moveTo(points[0].x, points[0].y);
@@ -180,26 +178,28 @@ on_fully_loaded();
 //function that create the table with json key and values
 
 function displayData(element) {
-    let table = d3.select(".table-container")
-    console.log(table)
-    d3.select(".table-container > div").text(element["eName"])
+    let table = d3.select(".table-container");
+    table.classed("hidden", false); 
+    table.selectAll("tr").remove(); 
+    d3.select(".table-container > div").text(element["eName"]);
     for (const key in element) {
-        console.log(key)
         if (element.hasOwnProperty(key) && key!="eName") {
-            console.log(element[key])
-            let row = table.append("tr")
+            let row = table.append("tr");
             let nameCell = row.append("td");
             let valueCell = row.append("td");
-            
-            nameCell.text(key);
+
+            // Use the variableLabels dictionary to replace key if it exists
+            const label = variableLabels[key] ? variableLabels[key] : key;
+
+            nameCell.text(label);
             valueCell.text(element[key]);
         }
     }
     table.style("z-index", "2")
-     .style("border", "2px #f00")
-     .style("position", "absolute")
-     .style("bottom", "0")
-     .style("right", "0");
+         .style("border", "2px #f00")
+         .style("position", "absolute")
+         .style("bottom", "0")
+         .style("right", "0");
     document.body.appendChild(table);
 }
 

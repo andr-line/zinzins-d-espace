@@ -1,16 +1,23 @@
 .table-container {
-  position: fixed;
+  position: relative;
   bottom: 10px;
   right: 10px;
-  height: 40vh;
+  height: 30%;
+  width: 31%;
   z-index: 2;
-  overflow: scroll;
+  overflow: auto;
+  scrollbar-width: none; 
+  scrollbar-gutter: none; 
+}
+
+.table-container::-webkit-scrollbar { 
+  display: none;
 }
 
 table {
   width: 100%;
   max-width: 800px;
-  margin: 0 auto;
+  margin: auto;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
   z-index: 2;
 }
@@ -48,3 +55,5 @@ tbody tr:nth-child(even) {
     max-width: none;
   }
 }
+
+
