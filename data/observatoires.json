@@ -139,7 +139,7 @@
   {
     "Observatoires": "Roque de los Muchachos Observatory",
     "Coordonnées": "28.75740324834593, -27.884985304140677",
-    "Couleur": "rgb(46, 139, 87)",
+    "Couleur": "rgb(56, 119, 3)",
     "Flèche": "28.75740324834593, -17.884985304140677"
   },
   {
@@ -181,7 +181,7 @@
   {
     "Observatoires": "Winer Observatory",
     "Coordonnées": "42.15911004792921, -107.76784543577926",
-    "Couleur": "black",
+    "Couleur": "rgb(150, 200, 100)",
     "Flèche": "34.15911004792921, -110.76784543577926"
   },
   {

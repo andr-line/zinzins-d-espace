@@ -105,7 +105,7 @@ d3.json("world.json").then((topology) => {
 
                          barch.push({Observatory: Obs, Number: c, Color: color});
                         }
-                         console.log(barch)
+                         //console.log(barch)
                          
                          
                          //Création du graphique en barres
@@ -186,17 +186,6 @@ d3.json("world.json").then((topology) => {
 
                           
 
-
-
-
-
-                          
-
-                        
-
-                    
-
-
                     
                 });
                
@@ -218,13 +207,13 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
             count.push(element.disc_year)
             
         });
-        console.log(count)
+        //console.log(count)
         count=new Set(count);
-        console.log(count)
+        //console.log(count)
         count1=[...count]
         //mettre les elements de count1 dans l'ordre croissant
         count1.sort(function(a, b){return a - b});
-        console.log(count1)
+        //console.log(count1)
 
         barch1=[]
         barch2=[]
@@ -244,40 +233,12 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
             barch1.push({Year: element1, Number: c});
             barch2.push({Year: element1, Number: d});
 
+
+            
             
         });
-        console.log(barch1)
-        console.log(barch2)
-        // var margin = {top: 20, right: 20, bottom: 30, left: 40},
-        //                         width1 = 1100,
-        //                         height1 =400;
-
-
-        //                         var x = d3.scaleBand()
-        //                         .range([0, width1])
-        //                                 .padding(0.1);
-
-        //                 var y = d3.scaleLinear()
-        //                             .range([height1, 0]);
-
-        //                 x.domain(barch1.map(function(d) { return d.Year; }));
-        //                 y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
-
-
-        //                 var svg = d3.select(".information1").append("svg")
-        //                 .attr("class", "barch1")
-        //                 .attr("width", width1 + margin.left + margin.right)
-        //                 .attr("height", height1 + margin.top + margin.bottom)
-        //                 .append("g")
-        //                 .attr("transform",
-        //                          "translate(" + margin.left + "," + margin.top + ")");
-
-        //                 svg.append("g")
-        //                     .attr("transform", "translate(0," + height1 + ")")
-        //                     .call(d3.axisBottom(x));
-
-        //                 svg.append("g")
-        //                 .call(d3.axisLeft(y));
+        // console.log(barch1)
+        // console.log(barch2)
 
                         d3.select("#year")
 				            .on("click", function() {
@@ -292,11 +253,13 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                             update_graph(barch2);
 	
                         });
+
+                       
                 
 
                         function update_graph(data) {
 
-                            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                            var margin = {top: 0, right: 20, bottom: 45, left: 40},
                                 width1 = 1100,
                                 height1 =400;
 
@@ -342,16 +305,8 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                             .attr("y", function(d) { return y(d.Number); })
                             .attr("height", function(d) { return height1 - y(d.Number); })
                              
-                            ,
-                        // (year) => year.transition()
-						// 			.duration(1000)
-						// 			.attr("y", function(d) { return y(d.Number); })
-						// 			.attr("height", function(d) { return height1 - y(d.Number); }),
-                        // (total) => total.transition()
-						// 			.duration(1000)
-						// 			.attr("y", function(d) { return y(d.Number); })
-						// 			.attr("height", function(d) { return height1 - y(d.Number); }),
-									
+                            
+                       
                             )
                         };
                        
@@ -361,6 +316,114 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
 
         
         
+    });
+    d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
+        g.selectAll("circle")
+        .data(ExoPlanet1)
+        .join((enter) => {
+            methodes=[];
+            ExoPlanet1.forEach(element => {
+                                            
+                    methodes.push(element.discoverymethod)
+                    
+                }                                                                                               
+            );
+            
+            methodes=new Set(methodes);
+            methodes1=[...methodes]
+            console.log(methodes1)
+
+            barch3=[]
+
+            methodes1.forEach(element1 => {
+                c=0;
+                ExoPlanet1.forEach(element => {
+                    if (element.discoverymethod==element1){
+                        c=c+1;
+                    }
+                    
+
+
+                });
+                barch3.push({Method: element1, Number: c});
+            });
+            //console.log(barch3)
+
+
+            d3.select("#method")
+            .on("click", function() {
+                d3.selectAll(".barch1").remove()
+            update_graph1(barch3);
+
+
+
+        });
+
+        function update_graph1(data) {
+
+            var margin = {top: 0, right: 20, bottom: 45, left: 40},
+                width1 = 1100,
+                height1 =390;
+
+
+                var x = d3.scaleBand()
+                .range([0, width1])
+                        .padding(0.1);
+
+        var y = d3.scaleLog()
+                    .range([height1, 0]);
+        
+
+        x.domain(data.map(function(d) { return d.Method; }));
+        y.domain([0.1, d3.max(data, function(d) { return d.Number; }) ]);
+
+
+        var svg = d3.select(".information1").append("svg")
+        .attr("class", "barch1")
+        .attr("width", width1 + margin.left + margin.right)
+        .attr("height", height1 + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform",
+                 "translate(" + margin.left + "," + margin.top + ")");
+
+        // Add the bottom axis and add the line break for the labels
+        svg.append("g")
+            .attr("transform", "translate(0," + height1 + ")")
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("width", "10px")
+            .attr("transform", "translate(-10,6)rotate(-8)")
+
+        svg.append("g")
+        .call(d3.axisLeft(y));
+
+        svg.selectAll(".information1")
+            .data(data)
+            
+            .join((enter) => enter.append("rect")
+            .attr("class", "barh1")
+            .attr("x", function(d) { return x(d.Method); })
+            .attr("y", function(d) { return height1; })
+            .attr("width", x.bandwidth())
+            .style("fill", "rgb(173, 216, 218)") 
+            .attr("height", "0")
+            .transition()
+            .duration(1000)
+            .attr("y", function(d) { return y(d.Number); })
+            .attr("height", function(d) { return height1 - y(d.Number); })
+             
+            
+        )
+    };
+
+
+
+            
+
+            
+
+
+        });
     });
 
 
