@@ -23,6 +23,7 @@
 
 path {
     stroke-width: 0.5;
+    transition: opacity 0.3s ease;
 }
 
 .controls {
@@ -30,10 +31,6 @@ path {
     top: 0;
     left: 0;
     z-index: 2;
-}
-
-path {
-    transition: opacity 0.3s ease;
 }
 
 .hidden {

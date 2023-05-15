@@ -84,7 +84,7 @@ function on_fully_loaded() {
     // Take a random position on the orbits to draw the objects 
 
     function getRandomElement(points) {
-        const randomIndex = Math.floor(Math.random() * array.length);
+        const randomIndex = Math.floor(Math.random() * point.length);
         return array[randomIndex];
 
     d3_canvas.append("circle")
@@ -145,10 +145,14 @@ function displayData(element) {
             valueCell.text(element[key]);
         }
     }
-    table.style("z-index: 2; border: 2px #f00; position: absolute; bottom: 0; right: 0;")
+    table.style("z-index", "2")
+     .style("border", "2px #f00")
+     .style("position", "absolute")
+     .style("bottom", "0")
+     .style("right", "0");
     document.body.appendChild(table);
 }
 
 d3.json("data/sol_data.json").then(function(data) {
     displayData(data[0])
-})
+})}
