@@ -248,77 +248,55 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
         });
         console.log(barch1)
         console.log(barch2)
-        var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                                width1 = 1100,
-                                height1 =400;
+        // var margin = {top: 20, right: 20, bottom: 30, left: 40},
+        //                         width1 = 1100,
+        //                         height1 =400;
 
 
-                                var x = d3.scaleBand()
-                                .range([0, width1])
-                                        .padding(0.1);
+        //                         var x = d3.scaleBand()
+        //                         .range([0, width1])
+        //                                 .padding(0.1);
 
-                        var y = d3.scaleLinear()
-                                    .range([height1, 0]);
+        //                 var y = d3.scaleLinear()
+        //                             .range([height1, 0]);
 
-                        x.domain(barch1.map(function(d) { return d.Year; }));
-                        y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
+        //                 x.domain(barch1.map(function(d) { return d.Year; }));
+        //                 y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
 
 
-                        var svg = d3.select(".information1").append("svg")
-                        .attr("class", "barch1")
-                        .attr("width", width1 + margin.left + margin.right)
-                        .attr("height", height1 + margin.top + margin.bottom)
-                        .append("g")
-                        .attr("transform",
-                                 "translate(" + margin.left + "," + margin.top + ")");
+        //                 var svg = d3.select(".information1").append("svg")
+        //                 .attr("class", "barch1")
+        //                 .attr("width", width1 + margin.left + margin.right)
+        //                 .attr("height", height1 + margin.top + margin.bottom)
+        //                 .append("g")
+        //                 .attr("transform",
+        //                          "translate(" + margin.left + "," + margin.top + ")");
 
-                        svg.append("g")
-                            .attr("transform", "translate(0," + height1 + ")")
-                            .call(d3.axisBottom(x));
+        //                 svg.append("g")
+        //                     .attr("transform", "translate(0," + height1 + ")")
+        //                     .call(d3.axisBottom(x));
 
-                        svg.append("g")
-                        .call(d3.axisLeft(y));
+        //                 svg.append("g")
+        //                 .call(d3.axisLeft(y));
 
                         d3.select("#year")
 				            .on("click", function() {
-                                var margin = {top: 20, right: 20, bottom: 30, left: 40},
-                                width1 = 1100,
-                                height1 =400;
-
-
-                                var x = d3.scaleBand()
-                                .range([0, width1])
-                                        .padding(0.1);
-
-                        var y = d3.scaleLinear()
-                                    .range([height1, 0]);
-
-                        x.domain(barch1.map(function(d) { return d.Year; }));
-                        y.domain([0, d3.max(barch1, function(d) { return d.Number; })]);
-
-
-                        var svg = d3.select(".information1").append("svg")
-                        .attr("class", "barch1")
-                        .attr("width", width1 + margin.left + margin.right)
-                        .attr("height", height1 + margin.top + margin.bottom)
-                        .append("g")
-                        .attr("transform",
-                                 "translate(" + margin.left + "," + margin.top + ")");
-
-                        svg.append("g")
-                            .attr("transform", "translate(0," + height1 + ")")
-                            .call(d3.axisBottom(x));
-
-                        svg.append("g")
-                        .call(d3.axisLeft(y));
-
+                                d3.selectAll(".barch1").remove()
                             update_graph(barch1);
 	
                         });
 
                         d3.select("#total")
 				            .on("click", function() {
-                                var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                                d3.selectAll(".barch1").remove()
+                            update_graph(barch2);
+	
+                        });
+                
+
+                        function update_graph(data) {
+
+                            var margin = {top: 20, right: 20, bottom: 30, left: 40},
                                 width1 = 1100,
                                 height1 =400;
 
@@ -330,12 +308,12 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                         var y = d3.scaleLinear()
                                     .range([height1, 0]);
 
-                        x.domain(barch2.map(function(d) { return d.Year; }));
-                        y.domain([0, d3.max(barch2, function(d) { return d.Number; })]);
+                        x.domain(data.map(function(d) { return d.Year; }));
+                        y.domain([0, d3.max(data, function(d) { return d.Number; })]);
 
 
                         var svg = d3.select(".information1").append("svg")
-                        .attr("class", "barch2")
+                        .attr("class", "barch1")
                         .attr("width", width1 + margin.left + margin.right)
                         .attr("height", height1 + margin.top + margin.bottom)
                         .append("g")
@@ -349,33 +327,30 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
                         svg.append("g")
                         .call(d3.axisLeft(y));
 
-                            update_graph(barch2);
-	
-                        });
-                
-
-                        function update_graph(data) {
                         svg.selectAll(".information1")
                             .data(data)
-                            //.enter().append("rect")
+                            
                             .join((enter) => enter.append("rect")
-                            .attr("class", "barch1")
+                            .attr("class", "barh1")
                             .attr("x", function(d) { return x(d.Year); })
-                            .attr("y", function(d) { return y(d.Number); })
+                            .attr("y", function(d) { return height1; })
                             .attr("width", x.bandwidth())
                             .style("fill", "rgb(173, 216, 218)") 
-                            // .transition()
-                            // .duration(1000)
+                            .attr("height", "0")
+                            .transition()
+                            .duration(1000)
+                            .attr("y", function(d) { return y(d.Number); })
+                            .attr("height", function(d) { return height1 - y(d.Number); })
                              
-                            .attr("height", function(d) { return height1 - y(d.Number); }),
-                        (year) => year.transition()
-									.duration(1000)
-									.attr("y", function(d) { return y(d.Number); })
-									.attr("height", function(d) { return height1 - y(d.Number); }),
-                        (total) => total.transition()
-									.duration(1000)
-									.attr("y", function(d) { return y(d.Number); })
-									.attr("height", function(d) { return height1 - y(d.Number); }),
+                            ,
+                        // (year) => year.transition()
+						// 			.duration(1000)
+						// 			.attr("y", function(d) { return y(d.Number); })
+						// 			.attr("height", function(d) { return height1 - y(d.Number); }),
+                        // (total) => total.transition()
+						// 			.duration(1000)
+						// 			.attr("y", function(d) { return y(d.Number); })
+						// 			.attr("height", function(d) { return height1 - y(d.Number); }),
 									
                             )
                         };
