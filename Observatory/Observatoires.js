@@ -259,7 +259,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
 
                         function update_graph(data) {
 
-                            var margin = {top: 20, right: 20, bottom: 30, left: 40},
+                            var margin = {top: 0, right: 20, bottom: 45, left: 40},
                                 width1 = 1100,
                                 height1 =400;
 
@@ -361,7 +361,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
 
         function update_graph1(data) {
 
-            var margin = {top: 15, right: 20, bottom: 30, left: 40},
+            var margin = {top: 0, right: 20, bottom: 45, left: 40},
                 width1 = 1100,
                 height1 =390;
 
@@ -386,9 +386,13 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
         .attr("transform",
                  "translate(" + margin.left + "," + margin.top + ")");
 
+        // Add the bottom axis and add the line break for the labels
         svg.append("g")
             .attr("transform", "translate(0," + height1 + ")")
-            .call(d3.axisBottom(x));
+            .call(d3.axisBottom(x))
+            .selectAll("text")
+            .attr("width", "10px")
+            .attr("transform", "translate(-10,6)rotate(-8)")
 
         svg.append("g")
         .call(d3.axisLeft(y));
