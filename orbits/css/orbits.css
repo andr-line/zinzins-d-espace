@@ -39,5 +39,6 @@ path {
 
 .highlighted {
     stroke: #ffffff; /* ou toute autre couleur */
-    stroke-width: 2; /* ou toute autre largeur */
+    /* stroke-width is in the html document in a <style> tag for zoom adaptivity */
+    transition: stroke 0.3s ease-in-out;
 }

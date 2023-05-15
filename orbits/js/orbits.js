@@ -1,9 +1,5 @@
-// Distance to center as a function of the angle, exentricity and semi-major axis
-function distance_to_center(angle, e, a) {
-    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
-}
-
 //Array of 12 Arbitrary colors for planets
+
 const planetColors = [
     "#FFC857", // Yellow
     "#E9724C", // Coral
@@ -19,6 +15,48 @@ const planetColors = [
     "#F2E205"  // Bright Yellow
     ];
 
+    //new dictionnary for variable 
+
+    const variableLabels = {
+        eName: "Name",
+        isPlanet: "Planet",
+        semimajorAxis: "Semi-major Axis [km]",
+        perihelion: "Perihelion [km]",
+        aphelion: "Aphelion [km]",
+        eccentricity: "Eccentricity",
+        inclination: "Inclination [°]",
+        density: "Density [g/cm³]",
+        gravity: "Gravity [m/s²]",
+        escape: "Escape Velocity [m/s]",
+        meanRadius: "Mean Radius [km]",
+        equaRadius: "Equatorial Radius [km]",
+        polarRadius: "Polar Radius [km]",
+        flattening: "Flattening",
+        dimension: "Dimensions",
+        sideralOrbit: "Sideral Orbit Period [days]",
+        sideralRotation: "Sideral Rotation Period [hours]",
+        discoveryDate: "Discovery Date",
+        mass_kg: "Mass [kg]",
+        volume: "Volume [km³]",
+        orbit_type: "Orbit Type",
+        orbits: "Orbits",
+        bondAlbido: "Bond Albedo",
+        geomAlbido: "Geometric Albedo",
+        RV_abs: "Absolute RV",
+        p_transit: "Transit Period [days]",
+        transit_visibility: "Transit Visibility [hours]",
+        transit_depth: "Transit Depth",
+        massj: "Mass [Jupiter masses]",
+        semimajorAxis_AU: "Semi-major Axis [AU]",
+        grav_int: "Gravitational Intensity [m/s²]"
+      };
+
+// Distance to center as a function of the angle, exentricity and semi-major axis
+
+function distance_to_center(angle, e, a) {
+    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
+}
+
 // Convert polar coordinates to cartesian coordinates
 function polar_to_cartesian(angle, distance) {
     return {
@@ -28,21 +66,21 @@ function polar_to_cartesian(angle, distance) {
 }
 
 // Project a point on the canvas. Center is at (0, 0)
-function project_on_canvas(point, scale) {
+function project_on_canvas(point, scale, offset) {
     return {
-        x: point.x * scale * 1e-6,
-        y: point.y * scale * 1e-6
+        x: point.x * scale * 1e-6 + offset.x,
+        y: point.y * scale * 1e-6 + offset.y
     };
 }
 
 // Generate a number of point of the orbit, given a and e
-function generate_orbit_points(num_point, e, a) {
+function generate_orbit_points(num_point, e, a, offset) {
     const points = [];
     for (let i = 0; i < num_point; i++) {
         const angle = 2 * Math.PI * i / num_point;
         const distance = distance_to_center(angle, e, a);
         const point = polar_to_cartesian(angle, distance);
-        const proj_point = project_on_canvas(point, 0.05);
+        const proj_point = project_on_canvas(point, 0.05, offset);
         points.push(proj_point);
     }
     return points;
@@ -55,9 +93,9 @@ function generate_orbit_points(num_point, e, a) {
     return points[randomIndex];
     }
 
-
 // Draw an orbit using D3.js
-function draw_orbit(d3_canvas, element, index) {
+
+function draw_orbit(d3_canvas, element, index, position) {
     const e = element.eccentricity;
     const a = element.semimajorAxis;
     var classes = ""
@@ -69,7 +107,7 @@ function draw_orbit(d3_canvas, element, index) {
         classes += "isAsteroid hidden";
     }
     const ctx = d3.path()
-    const points = generate_orbit_points(500, e, a);
+    const points = generate_orbit_points(500, e, a, position[element.orbits]); // move orbit to parent
     ctx.moveTo(points[0].x, points[0].y);
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
@@ -85,35 +123,39 @@ function draw_orbit(d3_canvas, element, index) {
 
     // Draw the planet at a random position on the orbit
     if (element.isPlanet === "TRUE") {
-        const randomPoint = getRandomElement(points);
+        const randomPoint = position[element.eName];
         d3_canvas.append("circle")
                     .attr("cx", randomPoint.x)
                     .attr("cy", randomPoint.y)
-                    .attr("r", 4)
+                    .attr("r", 3)
                     .attr("fill", planetColors[index%12])
                     .attr("class", "planet")
                     .on("click", function() {
                         d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
                         d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
-})}}
+                        displayData(element)
+        })
+    }
+}
 
 
 function on_fully_loaded() {
-
     const d3_canvas = d3.select("#d3_canvas");
-
-    d3_canvas.append("circle")
-        .attr("cx", 0)
-        .attr("cy", 0)
-        .attr("r",2 )
-        .attr("fill", "yellow");
 
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
+        let positions = {"NA": {x:0,y:0}}
+        // generate object position
+        data.forEach((element) => {
+            e = element.eccentricity;
+            a = element.semimajorAxis;
+            points = generate_orbit_points(500, e, a, {x:0,y:0});
+            randomPoint = getRandomElement(points);
+            positions[element.eName.toString()] = randomPoint
+        })
+        // draw orbit and object at its position
         data.forEach((element, index) => {
-    
-            // TODO: process moons
-            draw_orbit(d3_canvas, element, index);
+            draw_orbit(d3_canvas, element, index, positions);
         });
     });
 }
@@ -121,8 +163,13 @@ function on_fully_loaded() {
 // Scale the SVG when scrolling
 function zoom() {
     const zoom = this.value;
-    const scale = 1 + zoom *1e-2;//* 1e-5;
-    d3.select("#d3_canvas").style("transform", "scale(" + scale + ") translate(50%, 50%)");
+    const scale = ((1 - zoom / 5000)**2);
+    d3.select("#d3_canvas").style("transform", "scale(" + 1/scale + ") translate(50%, 50%)");
+    d3.selectAll("path").style("stroke-width", 1 * scale)
+    d3.selectAll("circle").attr("r", 5 * scale)
+    d3.select("#selectionStyle").text(`.highlighted {
+        stroke-width: ${1.5 * scale};
+    }`)
 }
 
 function toggleAsteroids() {
@@ -145,27 +192,30 @@ on_fully_loaded();
 //function that create the table with json key and values
 
 function displayData(element) {
-    let table = d3.select(".table-container")
-    console.log(table)
-    d3.select(".table-container > div").text(element["eName"])
+    let table = d3.select(".table-container");
+    table.classed("hidden", false); 
+    table.selectAll("tr").remove(); 
+    d3.select(".table-container > div").text(element["eName"]);
     for (const key in element) {
-        console.log(key)
         if (element.hasOwnProperty(key) && key!="eName") {
-            console.log(element[key])
-            let row = table.append("tr")
+            let row = table.append("tr");
             let nameCell = row.append("td");
             let valueCell = row.append("td");
-            
-            nameCell.text(key);
-            valueCell.text(element[key]);
+
+            // Use the variableLabels dictionary to replace key if it exists
+            let label = variableLabels[key] ? variableLabels[key] : key;
+            label = label.toString();
+
+            nameCell.text(label);
+            valueCell.text(element[key].toString());
         }
     }
     table.style("z-index", "2")
-     .style("border", "2px #f00")
-     .style("position", "absolute")
-     .style("bottom", "0")
-     .style("right", "0");
-    document.body.appendChild(table);
+         .style("border", "2px #f00")
+         .style("position", "absolute")
+         .style("bottom", "0")
+         .style("right", "0");
+    document.body.appendChild(table.node());
 }
 
 d3.json("data/sol_data.json").then(function(data) {
