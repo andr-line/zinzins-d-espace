@@ -162,8 +162,13 @@ function on_fully_loaded() {
 // Scale the SVG when scrolling
 function zoom() {
     const zoom = this.value;
-    const scale = 1 + zoom *1e-2;//* 1e-5;
-    d3.select("#d3_canvas").style("transform", "scale(" + scale + ") translate(50%, 50%)");
+    const scale = ((1 - zoom / 5000)**2);
+    d3.select("#d3_canvas").style("transform", "scale(" + 1/scale + ") translate(50%, 50%)");
+    d3.selectAll("path").style("stroke-width", 1 * scale)
+    d3.selectAll("circle").attr("r", 5 * scale)
+    d3.select("#selectionStyle").text(`.highlighted {
+        stroke-width: ${1.5 * scale};
+    }`)
 }
 
 function toggleAsteroids() {
@@ -197,10 +202,11 @@ function displayData(element) {
             let valueCell = row.append("td");
 
             // Use the variableLabels dictionary to replace key if it exists
-            const label = variableLabels[key] ? variableLabels[key] : key;
+            let label = variableLabels[key] ? variableLabels[key] : key;
+            label = label.toString();
 
             nameCell.text(label);
-            valueCell.text(element[key]);
+            valueCell.text(element[key].toString());
         }
     }
     table.style("z-index", "2")
@@ -208,7 +214,7 @@ function displayData(element) {
          .style("position", "absolute")
          .style("bottom", "0")
          .style("right", "0");
-    document.body.appendChild(table);
+    document.body.appendChild(table.node());
 }
 
 d3.json("data/sol_data.json").then(function(data) {
