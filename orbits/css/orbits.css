@@ -17,7 +17,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: black;
+    background-color: rgb(0, 0, 0);
     z-index: 1;
 }
 
@@ -38,7 +38,6 @@ path {
 }
 
 .highlighted {
-    stroke: #ffffff; /* ou toute autre couleur */
-    /* stroke-width is in the html document in a <style> tag for zoom adaptivity */
+    stroke: #ffffff; 
     transition: stroke 0.3s ease-in-out;
 }
