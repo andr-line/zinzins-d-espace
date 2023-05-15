@@ -36,3 +36,8 @@ path {
 .hidden {
     opacity: 0;
 }
+
+.highlighted {
+    stroke: #ffffff; /* ou toute autre couleur */
+    stroke-width: 2; /* ou toute autre largeur */
+}
