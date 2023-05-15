@@ -73,7 +73,7 @@ function draw_orbit(d3_canvas, element, index) {
                     .attr("stroke", planetColors[index%12])
                     .attr("stroke-width", 1)
                     .attr("fill", "none")
-                    .attr("class", classes)
+                    .attr("class", classes);
 }
 
 
@@ -86,6 +86,7 @@ function on_fully_loaded() {
     function getRandomElement(points) {
         const randomIndex = Math.floor(Math.random() * array.length);
         return array[randomIndex];
+    }
 
     d3_canvas.append("circle")
         .attr("cx", 0)
