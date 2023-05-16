@@ -49,6 +49,8 @@ const variableLabels = {
     grav_int: "Gravitational Intensity [m/s²]"
 };
 
+var zoomTarget = [0, 0];
+
 // Distance to center as a function of the angle, exentricity and semi-major axis
 function distance_to_center(angle, e, a) {
     return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
@@ -116,32 +118,36 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("stroke", planetColors[index%12])
                     .attr("stroke-width", 1)
                     .attr("fill", "none")
-                    .attr("class", classes);
+                    .attr("class", classes)
+                    .attr("z-index", "2");
 
     // Hide moon circles but not orbits
+    classes += " body"
     if (element.orbit_type === "Secondary") {
-        classes += " body hidden";
+        classes += " hidden";
     }
     
     // Draw object circles
     const randomPoint = position[element.eName];
     d3_canvas.append("circle")
-                .attr("cx", randomPoint.x + position[element.orbits].x)
-                .attr("cy", randomPoint.y + position[element.orbits].y)
-                .attr("r", 5)
-                .attr("fill", planetColors[index%12])
-                .attr("class", "planet")
-                .attr("class", classes)
-                .on("click", function() {
-                    d3.selectAll("circle").classed("highlighted", false); // remove highlight from all planets
-                    d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
-                    displayData(element)
-    })
+        .attr("cx", randomPoint.x + position[element.orbits].x)
+        .attr("cy", randomPoint.y + position[element.orbits].y)
+        .attr("r", 5)
+        .attr("fill", planetColors[index%12])
+        .attr("class", "planet")
+        .attr("class", classes)
+        .attr("z-index", "3")
+        .on("click", function() {
+            d3.selectAll("circle").classed("highlighted", false); // Remove highlight from all planets
+            d3.select(this).classed("highlighted", true); // Add highlight to the clicked planet
+            displayData(element);
+            zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y];
+        });
 }
 
 // Draw the solar system
 function on_fully_loaded() {
-    const d3_canvas = d3.select("#d3_canvas");
+    const d3_canvas = d3.select("#d3_canvas_translated");
     d3.json("data/sol_data.json").then(function(data) {
         
         // Generate object positions
@@ -151,7 +157,7 @@ function on_fully_loaded() {
             a = element.semimajorAxis;
             points = generate_orbit_points(500, e, a, {x:0,y:0});
             randomPoint = getRandomElement(points);
-            positions[element.eName.toString()] = randomPoint
+            positions[element.eName.toString()] = randomPoint;
         })
         
         // draw orbit and object at its position
@@ -162,10 +168,16 @@ function on_fully_loaded() {
 }
 
 // Scale the SVG when scrolling
+var scale = 1;
 function zoom() {
-    const zoom = this.value;
-    const scale = ((1 - zoom / 5000)**2);
-    d3.select("#d3_canvas").style("transform", "scale(" + 1/scale + ") translate(50%, 50%)");
+    let zoom = this.value;
+    scale = 0.0001**(zoom);
+    console.log(1/scale)
+    let str1 = "scale(" + 1/scale + ") ";
+    let str2 = "calc(" + -zoomTarget[0] + "px + 50% * " + scale + ")";
+    let str3 = "calc(" + -zoomTarget[1] + "px + 50% * " + scale + ")";
+    let str = str1 + "translate(" + str2 + ", " + str3 + ")";
+    d3.select("#d3_canvas_translated").style("transform", str);
     d3.selectAll("path").style("stroke-width", 1 * scale)
     d3.selectAll("circle").attr("r", 5 * scale)
     d3.select("#selectionStyle").text(`.highlighted {
@@ -173,7 +185,7 @@ function zoom() {
     }`)
 }
 
-// Toggle asteroids and moons
+// Toggle asteroids and moon bodies
 function toggleAsteroids() {
     d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
     d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
@@ -184,8 +196,8 @@ var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
 
 // Add the asteroids check button event listener
-var asteroidsButton = document.getElementById("asteroidsButton")
-asteroidsButton.addEventListener('change', toggleAsteroids)
+var asteroidsButton = document.getElementById("asteroidsButton");
+asteroidsButton.addEventListener('change', toggleAsteroids);
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();
@@ -221,8 +233,5 @@ function displayData(element) {
          .style("position", "absolute")
          .style("bottom", "0")
          .style("right", "0");
-    document.body.appendChild(table.node());}
-
-//d3.json("data/sol_data.json").then(function(data) {
-    //displayData(data[0])
-//})
+    document.body.appendChild(table.node());
+}
