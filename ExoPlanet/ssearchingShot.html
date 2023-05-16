@@ -34,7 +34,7 @@
       for (i in arr){
         if (arr[i].id == theValue &&  counter<=30){ 
           counter = counter + 1; 
-          document.getElementById(cir[counter].circle1).setAttribute('cx',(arr[i].id/360)*40000); <!--arr.[i] will be the x pos in here and the y one down there -->
+          document.getElementById(cir[counter].circle1).setAttribute('cx',(arr[i].id/360)*40000); //arr.[i] will be the x pos in here and the y one down there
           document.getElementById(cir[counter].circle1).setAttribute('cy',(arr[i].id/360)*20000); 
           document.getElementById(cir[counter].circle1).setAttribute('opacity',0.5); 
           

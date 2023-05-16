@@ -36,7 +36,7 @@ body {
     height: var(--closedHeight);
 }
 .cardContent {
-    width: calc( var(--openWidth) - 2em);
+    width: calc( var(--openWidth) - 6em);
     height: var(--openHeight);
     opacity: 0;
     margin: 1.5em;
@@ -61,7 +61,7 @@ body {
 .card.active .cardTitle > h3 {
     font-size: 3em;
     left: 3em;
-    transform: rotate(0deg) translate(1em, 0);
+    transform: rotate(0deg) translate(1em, -0.3em);
 }
 
 @media (max-width: 767px) {
@@ -84,4 +84,9 @@ body {
         font-size: 2em;
         left: 0.7em;
     }
+}
+
+a {
+    color: white;
+    text-decoration: unset;
 }

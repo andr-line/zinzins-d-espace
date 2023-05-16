@@ -331,7 +331,6 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
             
             methodes=new Set(methodes);
             methodes1=[...methodes]
-            console.log(methodes1)
 
             barch3=[]
 
