@@ -122,20 +122,22 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("class", classes);
 
     // Draw the planet at a random position on the orbit
-    if (element.isPlanet === "TRUE") {
-        const randomPoint = position[element.eName];
-        d3_canvas.append("circle")
-                    .attr("cx", randomPoint.x)
-                    .attr("cy", randomPoint.y)
-                    .attr("r", 3)
-                    .attr("fill", planetColors[index%12])
-                    .attr("class", "planet")
-                    .on("click", function() {
-                        d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
-                        d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
-                        displayData(element)
-        })
+    if (element.orbit_type === "Secondary") {
+        classes += " body hidden";
     }
+    const randomPoint = position[element.eName];
+    d3_canvas.append("circle")
+                .attr("cx", randomPoint.x + position[element.orbits].x)
+                .attr("cy", randomPoint.y + position[element.orbits].y)
+                .attr("r", 5)
+                .attr("fill", planetColors[index%12])
+                .attr("class", "planet")
+                .attr("class", classes)
+                .on("click", function() {
+                    d3.selectAll("circle").classed("highlighted", false); // remove highlight from all planets
+                    d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
+                    displayData(element)
+    })
 }
 
 
@@ -174,8 +176,8 @@ function zoom() {
 }
 
 function toggleAsteroids() {
-    d3.selectAll(".isAsteroid")
-        .classed("hidden", !this.checked)
+    d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
+    d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
 }
 
 // Add the zoom slider event listener
