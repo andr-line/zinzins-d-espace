@@ -142,6 +142,7 @@ function draw_orbit(d3_canvas, element, index, position) {
 function on_fully_loaded() {
     const d3_canvas = d3.select("#d3_canvas");
 
+
     // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
         let positions = {"NA": {x:0,y:0}}
@@ -181,21 +182,29 @@ function toggleAsteroids() {
 var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
 
+
+
+
 // Add the asteroids check button event listener
 var asteroidsButton = document.getElementById("asteroidsButton")
 asteroidsButton.addEventListener('change', toggleAsteroids)
 
 // Wait for the page to load before starting the animation
+
 on_fully_loaded();
-
-
 //function that create the table with json key and values
 
 function displayData(element) {
     let table = d3.select(".table-container");
     table.classed("hidden", false); 
     table.selectAll("tr").remove(); 
-    d3.select(".table-container > div").text(element["eName"]);
+
+    // Add the title row
+    let titleRow = table.append("tr");
+    let titleCell = titleRow.append("th")
+                            .attr("colspan", 2)
+                            .text(element["eName"]);
+
     for (const key in element) {
         if (element.hasOwnProperty(key) && key!="eName") {
             let row = table.append("tr");
@@ -215,9 +224,8 @@ function displayData(element) {
          .style("position", "absolute")
          .style("bottom", "0")
          .style("right", "0");
-    document.body.appendChild(table.node());
-}
+    document.body.appendChild(table.node());}
 
-d3.json("data/sol_data.json").then(function(data) {
-    displayData(data[0])
-})
+//d3.json("data/sol_data.json").then(function(data) {
+    //displayData(data[0])
+//})
