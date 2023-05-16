@@ -67,8 +67,8 @@ function polar_to_cartesian(angle, distance) {
 // Project a point on the canvas. Center is at offset ={x,y}
 function project_on_canvas(point, scale, offset) {
     return {
-        x: point.x * scale * 1e-6 + offset.x,
-        y: point.y * scale * 1e-6 + offset.y
+        x: point.x * scale * 0.75e-6 + offset.x,
+        y: point.y * scale * 0.75e-6 + offset.y
     };
 }
 
