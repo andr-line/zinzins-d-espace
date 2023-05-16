@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Access Input Elements With JavaScript</title>
+    <meta charset="UTF-8" />
+  </head>
+
+  <body>
+    <h2>Access Input Elements With JavaScript</h2>
+    <h3>Using getElementById</h3>
+
+    <h3>Input:</h3>
+    <label for="textInput1">Input: </label>
+    
+
+    <button type="button" onclick="getInputValue()">
+      Get Value From Input
+    </button>
+
+    <h3>Output:</h3>
+    <p id="output"></p>
+    <script>
+      function getInputValue() {
+        let inputValue = document.getElementById("textInput1").value;
+        document.getElementById("output").innerHTML = inputValue;
+      }
+    </script>
+  </body>
+</html>
