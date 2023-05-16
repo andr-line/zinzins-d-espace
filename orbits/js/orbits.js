@@ -1,5 +1,4 @@
 //Array of 12 Arbitrary colors for planets
-
 const planetColors = [
     "#FFC857", // Yellow
     "#E9724C", // Coral
@@ -16,7 +15,6 @@ const planetColors = [
 ];
 
 //new dictionnary for variable 
-
 const variableLabels = {
     eName: "Name",
     isPlanet: "Planet",
@@ -52,7 +50,6 @@ const variableLabels = {
 };
 
 // Distance to center as a function of the angle, exentricity and semi-major axis
-
 function distance_to_center(angle, e, a) {
     return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
 }
@@ -65,7 +62,7 @@ function polar_to_cartesian(angle, distance) {
     };
 }
 
-// Project a point on the canvas. Center is at (0, 0)
+// Project a point on the canvas. Center is at offset ={x,y}
 function project_on_canvas(point, scale, offset) {
     return {
         x: point.x * scale * 1e-6 + offset.x,
@@ -86,15 +83,13 @@ function generate_orbit_points(num_point, e, a, offset) {
     return points;
 }
 
- // Take a random position on the orbits to draw the objects 
-
- function getRandomElement(points) {
+// Take a random position on the orbits to draw the objects 
+function getRandomElement(points) {
     const randomIndex = Math.floor(Math.random() * points.length);
     return points[randomIndex];
-    }
+}
 
 // Draw an orbit using D3.js
-
 function draw_orbit(d3_canvas, element, index, position) {
     const e = element.eccentricity;
     const a = element.semimajorAxis;
@@ -106,6 +101,8 @@ function draw_orbit(d3_canvas, element, index, position) {
     } else {
         classes += "isAsteroid hidden";
     }
+    
+    // draw orbits
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a, position[element.orbits]); // move orbit to parent
     ctx.moveTo(points[0].x, points[0].y);
@@ -121,32 +118,34 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("fill", "none")
                     .attr("class", classes);
 
-    // Draw the planet at a random position on the orbit
-    if (element.isPlanet === "TRUE") {
-        const randomPoint = position[element.eName];
-        d3_canvas.append("circle")
-                    .attr("cx", randomPoint.x)
-                    .attr("cy", randomPoint.y)
-                    .attr("r", 3)
-                    .attr("fill", planetColors[index%12])
-                    .attr("class", "planet")
-                    .on("click", function() {
-                        d3.selectAll(".planet").classed("highlighted", false); // remove highlight from all planets
-                        d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
-                        displayData(element)
-        })
+    // Hide moon circles but not orbits
+    if (element.orbit_type === "Secondary") {
+        classes += " body hidden";
     }
+    
+    // Draw object circles
+    const randomPoint = position[element.eName];
+    d3_canvas.append("circle")
+                .attr("cx", randomPoint.x + position[element.orbits].x)
+                .attr("cy", randomPoint.y + position[element.orbits].y)
+                .attr("r", 5)
+                .attr("fill", planetColors[index%12])
+                .attr("class", "planet")
+                .attr("class", classes)
+                .on("click", function() {
+                    d3.selectAll("circle").classed("highlighted", false); // remove highlight from all planets
+                    d3.select(this).classed("highlighted", true); // add highlight to the clicked planet
+                    displayData(element)
+    })
 }
 
-
+// Draw the solar system
 function on_fully_loaded() {
     const d3_canvas = d3.select("#d3_canvas");
-
-
-    // Draw everything
     d3.json("data/sol_data.json").then(function(data) {
+        
+        // Generate object positions
         let positions = {"NA": {x:0,y:0}}
-        // generate object position
         data.forEach((element) => {
             e = element.eccentricity;
             a = element.semimajorAxis;
@@ -154,6 +153,7 @@ function on_fully_loaded() {
             randomPoint = getRandomElement(points);
             positions[element.eName.toString()] = randomPoint
         })
+        
         // draw orbit and object at its position
         data.forEach((element, index) => {
             draw_orbit(d3_canvas, element, index, positions);
@@ -173,25 +173,24 @@ function zoom() {
     }`)
 }
 
+// Toggle asteroids and moons
 function toggleAsteroids() {
-    d3.selectAll(".isAsteroid")
-        .classed("hidden", !this.checked)
+    d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
+    d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
 }
 
 // Add the zoom slider event listener
 var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
 
-
 // Add the asteroids check button event listener
 var asteroidsButton = document.getElementById("asteroidsButton")
 asteroidsButton.addEventListener('change', toggleAsteroids)
 
 // Wait for the page to load before starting the animation
-
 on_fully_loaded();
-//function that create the table with json key and values
 
+//function that creates the table with json key and value pairs
 function displayData(element) {
     let table = d3.select(".table-container");
     table.classed("hidden", false); 
