@@ -172,7 +172,7 @@ var scale = 1;
 function zoom() {
     let zoom = this.value;
     scale = 0.0001**(zoom);
-    console.log(1/scale)
+    console.log(1/scale);
     let str1 = "scale(" + 1/scale + ") ";
     let str2 = "calc(" + -zoomTarget[0] + "px + 50% * " + scale + ")";
     let str3 = "calc(" + -zoomTarget[1] + "px + 50% * " + scale + ")";
