@@ -141,7 +141,7 @@ function draw_orbit(d3_canvas, element, index, position) {
 
 // Draw the solar system
 function on_fully_loaded() {
-    const d3_canvas = d3.select("#d3_canvas");
+    const d3_canvas = d3.select("#d3_canvas_translated");
     d3.json("data/sol_data.json").then(function(data) {
         
         // Generate object positions
@@ -163,9 +163,11 @@ function on_fully_loaded() {
 
 // Scale the SVG when scrolling
 function zoom() {
-    const zoom = this.value;
-    const scale = ((1 - zoom / 5000)**2);
-    d3.select("#d3_canvas").style("transform", "scale(" + 1/scale + ") translate(50%, 50%)");
+    let zoom = this.value;
+    let scale = ((1 - zoom / 5000)**2);
+    let str1 = "scale(" + 1/scale + ") ";
+    let str2 = "calc(50% * " + scale + ")";
+    d3.select("#d3_canvas_translated").style("transform", str1 + "translate(" + str2 + ", " + str2 + ")");
     d3.selectAll("path").style("stroke-width", 1 * scale)
     d3.selectAll("circle").attr("r", 5 * scale)
     d3.select("#selectionStyle").text(`.highlighted {
@@ -173,7 +175,7 @@ function zoom() {
     }`)
 }
 
-// Toggle asteroids and moons
+// Toggle asteroids and moon bodies
 function toggleAsteroids() {
     d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
     d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
@@ -183,9 +185,20 @@ function toggleAsteroids() {
 var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
 
+// Move the canvas with the mouse
+var clicked = false;
+var offset = [0, 0]
+var canvas = document.getElementById("d3_canvas");
+canvas.addEventListener("mousedown", e => {
+    clicked = true;
+    offset = [e.clientX, e.clientY];
+    console.log(offset)
+});
+
+
 // Add the asteroids check button event listener
-var asteroidsButton = document.getElementById("asteroidsButton")
-asteroidsButton.addEventListener('change', toggleAsteroids)
+var asteroidsButton = document.getElementById("asteroidsButton");
+asteroidsButton.addEventListener('change', toggleAsteroids);
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();
@@ -221,8 +234,5 @@ function displayData(element) {
          .style("position", "absolute")
          .style("bottom", "0")
          .style("right", "0");
-    document.body.appendChild(table.node());}
-
-//d3.json("data/sol_data.json").then(function(data) {
-    //displayData(data[0])
-//})
+    document.body.appendChild(table.node());
+}
