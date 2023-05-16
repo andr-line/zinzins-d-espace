@@ -13,43 +13,43 @@ const planetColors = [
     "#95B8D1", // Grey Blue
     "#6A994E", // Green
     "#F2E205"  // Bright Yellow
-    ];
+];
 
-    //new dictionnary for variable 
+//new dictionnary for variable 
 
-    const variableLabels = {
-        eName: "Name",
-        isPlanet: "Planet",
-        semimajorAxis: "Semi-major Axis [km]",
-        perihelion: "Perihelion [km]",
-        aphelion: "Aphelion [km]",
-        eccentricity: "Eccentricity",
-        inclination: "Inclination [°]",
-        density: "Density [g/cm³]",
-        gravity: "Gravity [m/s²]",
-        escape: "Escape Velocity [m/s]",
-        meanRadius: "Mean Radius [km]",
-        equaRadius: "Equatorial Radius [km]",
-        polarRadius: "Polar Radius [km]",
-        flattening: "Flattening",
-        dimension: "Dimensions",
-        sideralOrbit: "Sideral Orbit Period [days]",
-        sideralRotation: "Sideral Rotation Period [hours]",
-        discoveryDate: "Discovery Date",
-        mass_kg: "Mass [kg]",
-        volume: "Volume [km³]",
-        orbit_type: "Orbit Type",
-        orbits: "Orbits",
-        bondAlbido: "Bond Albedo",
-        geomAlbido: "Geometric Albedo",
-        RV_abs: "Absolute RV",
-        p_transit: "Transit Period [days]",
-        transit_visibility: "Transit Visibility [hours]",
-        transit_depth: "Transit Depth",
-        massj: "Mass [Jupiter masses]",
-        semimajorAxis_AU: "Semi-major Axis [AU]",
-        grav_int: "Gravitational Intensity [m/s²]"
-      };
+const variableLabels = {
+    eName: "Name",
+    isPlanet: "Planet",
+    semimajorAxis: "Semi-major Axis [km]",
+    perihelion: "Perihelion [km]",
+    aphelion: "Aphelion [km]",
+    eccentricity: "Eccentricity",
+    inclination: "Inclination [°]",
+    density: "Density [g/cm³]",
+    gravity: "Gravity [m/s²]",
+    escape: "Escape Velocity [m/s]",
+    meanRadius: "Mean Radius [km]",
+    equaRadius: "Equatorial Radius [km]",
+    polarRadius: "Polar Radius [km]",
+    flattening: "Flattening",
+    dimension: "Dimensions",
+    sideralOrbit: "Sideral Orbit Period [days]",
+    sideralRotation: "Sideral Rotation Period [hours]",
+    discoveryDate: "Discovery Date",
+    mass_kg: "Mass [kg]",
+    volume: "Volume [km³]",
+    orbit_type: "Orbit Type",
+    orbits: "Orbits",
+    bondAlbido: "Bond Albedo",
+    geomAlbido: "Geometric Albedo",
+    RV_abs: "Absolute RV",
+    p_transit: "Transit Period [days]",
+    transit_visibility: "Transit Visibility [hours]",
+    transit_depth: "Transit Depth",
+    massj: "Mass [Jupiter masses]",
+    semimajorAxis_AU: "Semi-major Axis [AU]",
+    grav_int: "Gravitational Intensity [m/s²]"
+};
 
 // Distance to center as a function of the angle, exentricity and semi-major axis
 
@@ -181,8 +181,6 @@ function toggleAsteroids() {
 // Add the zoom slider event listener
 var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
-
-
 
 
 // Add the asteroids check button event listener
