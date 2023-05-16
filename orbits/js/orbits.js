@@ -235,3 +235,4 @@ function displayData(element) {
          .style("right", "0");
     document.body.appendChild(table.node());
 }
+
