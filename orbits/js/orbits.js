@@ -119,6 +119,7 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("class", classes);
 
     // Hide moon circles but not orbits
+    
     if (element.orbit_type === "Secondary") {
         classes += " body hidden";
     }
