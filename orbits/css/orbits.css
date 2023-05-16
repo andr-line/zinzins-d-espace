@@ -3,11 +3,11 @@
     width: 100%;
     overflow: visible;
     z-index: 1;
-    border: 1px solid #0f0;
 }
 
 g {
     transform: translate(50%, 50%);
+    scale: 1;
 } 
 
 #container {
@@ -23,7 +23,6 @@ g {
     align-items: center;
     background-color: rgb(0, 0, 0);
     z-index: 1;
-    border: 1px solid #f00;
 }
 
 path {
@@ -34,7 +33,7 @@ path {
     position: absolute;
     top: 0;
     left: 0;
-    z-index: 2;
+    z-index: 10;
 }
 
 .hidden {
