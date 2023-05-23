@@ -32,13 +32,13 @@ d3.json("world.json").then((topology) => {
             g.selectAll("circle")
             .data(coordinates)
             .join((enter) => {
-                 
+              //Transofmation des coordonnées en coordonnées de la carte   
             coordinates.forEach(element => {
                 cx = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[0]
                 cy = projection([element.Coordonnées.split(", ")[1], element.Coordonnées.split(", ")[0]])[1]
                 barch=[]
                
-                
+                //Implentation des flèches pour les observatoires qui ont des positions très proches 
                 color=element.Couleur
                 if(element.hasOwnProperty("Flèche")) {
                     cxf = projection([element.Flèche.split(", ")[1], element.Flèche.split(", ")[0]])[0]
@@ -53,7 +53,7 @@ d3.json("world.json").then((topology) => {
                 
                 }
                 
-
+                //Implentation des points pour les observatoires
                 enter.append("circle")
                 
                 .attr("cx",cx)
@@ -62,9 +62,46 @@ d3.json("world.json").then((topology) => {
                 .attr("id", element.Observatoires)
                 .style("fill", color)
 
+
+
+
                 //Structure avec observatoires et quantite d'exoplanetes (barch)
                 
                 .on("click", (event,d) => {
+
+                    d3.selectAll(".BigCircle").remove()
+                       
+                          enter.append("circle")
+                          
+                          .attr("cx",event.currentTarget.attributes.cx.value)
+                          .attr("cy",event.currentTarget.attributes.cy.value)
+                          .attr("class", "BigCircle")
+                          .style("fill", event.currentTarget.style.fill)
+                        
+                          .transition()
+                          .duration(600)
+                          .attr("r", 10)
+                          
+
+                        .transition()
+                        .duration(600)
+                        .attr("r", 6)
+                        
+                       
+
+                        .transition()
+                        .duration(500)
+                        .attr("r", 20)
+                        
+                       
+
+                        
+                  
+          
+          
+
+
+
                     //reemplacer le graphique par le nouveau
                     d3.selectAll(".barch").remove()
                     color=event.currentTarget.style.fill
@@ -97,7 +134,7 @@ d3.json("world.json").then((topology) => {
                         })
                         
                         if (i==0){
-                            if(barch.length==16){
+                            if(barch.length==15){
                                 barch.shift()
 
                                 
@@ -106,10 +143,22 @@ d3.json("world.json").then((topology) => {
                          barch.push({Observatory: Obs, Number: c, Color: color});
                         }
                          //console.log(barch)
-                         
-                         
-                         //Création du graphique en barres
+                         barchObs(barch);
+                        });
+                        //button pour supprimer le dernier observatoire ajouté
+                        d3.select("#supprimer")
+				            .on("click", function() {
+                                d3.selectAll(".barch").remove()
+                                
+                                barch.pop()
+                            barchObs(barch);
+                            d3.selectAll(".BigCircle").remove()
+                            
+                            
+                            });
 
+                         //Création du graphique en barres
+                         function barchObs(barch) {
                          var margin = {top: 20, right: 20, bottom: 30, left: 5},
                                 width1 = 400,
                                 height1 =30* barch.length;
@@ -179,7 +228,7 @@ d3.json("world.json").then((topology) => {
                             .style("font-size", "15px")
                             .style("font-weight", "bold");
 
-
+                         }
                             
                             
                         });
@@ -187,7 +236,7 @@ d3.json("world.json").then((topology) => {
                           
 
                     
-                });
+                
                
                 
             
@@ -385,7 +434,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
         .attr("transform",
                  "translate(" + margin.left + "," + margin.top + ")");
 
-        // Add the bottom axis and add the line break for the labels
+        
         svg.append("g")
             .attr("transform", "translate(0," + height1 + ")")
             .call(d3.axisBottom(x))

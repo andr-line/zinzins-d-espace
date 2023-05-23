@@ -81,7 +81,7 @@
   },
   {
     "Observatoires": "Large Binocular Telescope Observatory",
-    "Coordonnées": "42.70147941313763, -119.88924877699137",
+    "Coordonnées": "45.70147941313763, -119.88924877699137",
     "Couleur": "rgb(255, 20, 147)",
     "Flèche": "32.70147941313763, -109.88924877699137"
   },
@@ -99,7 +99,7 @@
   },
   {
     "Observatoires": "Lick Observatory",
-    "Coordonnées": "37.341592097745064, -121.64291020375863",
+    "Coordonnées": "39.341592097745064, -123.64291020375863",
     "Couleur": "rgb(64, 224, 208)"
   },
   {
@@ -116,7 +116,7 @@
   },
   {
     "Observatoires": "Okayama Astrophysical Observatory",
-    "Coordonnées": "34.57652567237642, 133.59540819742608",
+    "Coordonnées": "38.57652567237642, 140.59540819742608",
     "Couleur": "rgb(255, 218, 185) "
   },
   {
