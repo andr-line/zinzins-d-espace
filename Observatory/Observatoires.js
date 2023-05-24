@@ -77,21 +77,20 @@ d3.json("world.json").then((topology) => {
                           .attr("cy",event.currentTarget.attributes.cy.value)
                           .attr("class", "BigCircle")
                           .style("fill", event.currentTarget.style.fill)
-                        
-                          .transition()
-                          .duration(600)
-                          .attr("r", 10)
                           
-
-                        .transition()
-                        .duration(600)
-                        .attr("r", 6)
-                        
-                       
-
-                        .transition()
-                        .duration(500)
-                        .attr("r", 20)
+                          function repeatAnimation() {
+                            d3.select(".BigCircle")
+                              .transition()
+                              .duration(500)
+                              .attr("r", 12)
+                              .transition()
+                              .duration(500)
+                              .attr("r", 6)
+                              .on("end", repeatAnimation);
+                          }
+                          
+                          repeatAnimation();
+                          
                         
                        
 
@@ -146,13 +145,18 @@ d3.json("world.json").then((topology) => {
                          barchObs(barch);
                         });
                         //button pour supprimer le dernier observatoire ajouté
-                        d3.select("#supprimer")
+                        d3.select("#remove")
 				            .on("click", function() {
                                 d3.selectAll(".barch").remove()
                                 
                                 barch.pop()
-                            barchObs(barch);
+                                if (barch.length==0){
+                                    d3.selectAll(".BigCircle").remove()
+                                }
+                                else {
+                                    barchObs(barch);
                             d3.selectAll(".BigCircle").remove()
+                                }
                             
                             
                             });
