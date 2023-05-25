@@ -20,17 +20,17 @@ const categoryNames = {
     "pl_radeerr1": "Radius error plus",
     "pl_radeerr2": "Radius error minus",
     "pl_radelim": "Radius limit",
-    "pl_radj": "Radius (Jupiter radii)",
-    "pl_radjerr1": "Radius error plus",
-    "pl_radjerr2": "Radius error minus",
+    // "pl_radj": "Radius (Jupiter radii)",
+    // "pl_radjerr1": "Radius error plus",
+    // "pl_radjerr2": "Radius error minus",
     "pl_radjlim": "Radius limit",
     "pl_bmasse": "Mass (Earth masses)",
     "pl_bmasseerr1": "Mass error plus",
     "pl_bmasseerr2": "Mass error minus",
     "pl_bmasselim": "Mass limit",
-    "pl_bmassj": "Mass (Jupiter masses)",
-    "pl_bmassjerr1": "Mass error plus",
-    "pl_bmassjerr2": "Mass error minus",
+    // "pl_bmassj": "Mass (Jupiter masses)",
+    // "pl_bmassjerr1": "Mass error plus",
+    // "pl_bmassjerr2": "Mass error minus",
     "pl_bmassjlim": "Mass limit",
     "pl_bmassprov": "Mass provenance",
     "pl_orbeccen": "Orbital eccentricity",
@@ -69,9 +69,9 @@ const categoryNames = {
     "st_loggerr2": "Stellar surface gravity error minus",
     "st_logglim": "Stellar surface gravity limit",
     "rastr": "Right Ascension (string)",
-    "ra": "Right Ascension (decimal degrees)",
+    // "ra": "Right Ascension (decimal degrees)",
     "decstr": "Declination (string)",
-    "dec": "Declination (decimal degrees)",
+    // "dec": "Declination (decimal degrees)",
     "sy_dist": "Distance from Sun (parsecs)",
     "sy_disterr1": "Distance error plus",
     "sy_disterr2": "Distance error minus",
@@ -84,6 +84,14 @@ const categoryNames = {
     "sy_gaiamag": "Gaia magnitude",
     "sy_gaiamagerr1": "Gaia magnitude error plus",
     "sy_gaiamagerr2": "Gaia magnitude error minus"
+}
+
+// filter unwanted categories
+for (const key in categoryNames) {
+    if (key.includes("err") || key.includes("lim")) {
+        console.log(key);
+        delete categoryNames[key];
+    }
 }
 
 // Add categories to table
@@ -122,8 +130,10 @@ function displayData(id) {
     let body = d3.select("#tableBody");
     // Get the desired planet using its id
     element = dataset[id];
-    head.append("td").text(element.pl_name).attr("class", "id" + element.id).append("div").text("[X]").attr("onclick", "removeData(" + element.id + ")");
-    for (const key in element) {
+    // Add the title with a close button
+    head.append("td").text(element.pl_name).attr("class", "id" + element.id).append("div").text("[close]").attr("onclick", "removeData(" + element.id + ")");
+    // Add the values
+    for (const key in categoryNames) {
         if (element.hasOwnProperty(key) && key!="pl_name") {
             d3.select("#" + key).append("td").text(element[key]).attr("class", "id" + element.id);
         }
