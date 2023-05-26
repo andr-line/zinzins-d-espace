@@ -1,0 +1,17 @@
+#svg-container {
+    width: 100%;
+}
+
+#svg-canvas-container {
+/*    position: absolute;*/
+    top: 0pt;
+    width: 100%;
+}
+
+body {
+    width: 100dvw;
+}
+
+table {
+    z-index: 999;
+}

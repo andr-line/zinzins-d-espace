@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Home</title>
+    <link rel="stylesheet" href="../../common/style.css" type="text/css" />
+    <link rel="stylesheet" href="exoplanet.css" type="text/css" />
+    <link rel="icon" type="icon" href="../../logo/galaxy-50.png">
+    <script src="https://d3js.org/d3.v7.min.js"></script> 
+</head>
+
+<body>
+    <div class="navigation navmenu" id="navMenu">
+        <div class="navigation button" id="hamburgerButton">
+            <svg class="navigation hamburger" id="hamburgerGraphic" viewBox="-4.5 -4.5 9 9" xmlns="http://www.w3.org/2000/svg">
+                <rect x="-2.5" y="-2.5" width="5" height="1" rx="0.5" ry="0.5" fill="white" class="line top" />
+                <rect x="-2.5" y="-0.5" width="5" height="1" rx="0.5" ry="0.5" fill="white" class="line middle" />
+                <rect x="-2.5" y="1.5" width="5" height="1" rx="0.5" ry="0.5" fill="white" class="line bottom" />
+            </svg>
+        </div>
+        <div class="navigation menu">
+            <a class="active" href="../home/index.html">Home</a> <br>
+            <a href="../Observatory/Observatoires.html">Observatory</a> <br>
+            <a href="../orbits/orbits.html">Solar system</a> <br>
+            <a href="../ExoPlanet/ExoPlanet.html">Exoplanets</a> <br>
+            <a href="../presentation/presentation.html">About</a> <br>
+        </div>
+    </div>
+    
+    <div id="svg-canvas-container">
+        <svg viewbox="0 -90 360 180" xmlns="http://www.w3.org/2000/svg">
+            <image xlink:href="images/Background_original.jpg" x="0" y="-90" width="100%" height="100%" />
+            <g id="svg-canvas">
+                <circle fill="f00"></circle>
+            </g>
+        </svg>
+    </div>
+    
+    <table id="table">
+        <thead>
+            <tr id="tableHeadRow">
+                <td>Category</td>
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+    
+    <script type="text/javascript" src="../../common/script.js"></script>
+    <script src="exoplanet.js"></script>
+</body>
+</html>
