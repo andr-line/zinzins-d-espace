@@ -185,10 +185,14 @@ function zoom() {
     }`)
 }
 
-// Toggle asteroids and moon bodies
+// Toggle asteroids
 function toggleAsteroids() {
     d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
-    d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
+}
+
+// Toggle moon bodies
+function toggleMoons() {
+    d3.selectAll(".isMoon").classed("hidden", !this.checked);
 }
 
 // Add the zoom slider event listener
@@ -197,34 +201,43 @@ zoomSlider.addEventListener('input', zoom);
 
 // Add the asteroids check button event listener
 var asteroidsButton = document.getElementById("asteroidsButton");
-asteroidsButton.addEventListener('change', toggleAsteroids);
+asteroidsButton.addEventListener("change", toggleAsteroids);
+var moonsButton = document.getElementById("moonsButton");
+moonsButton.addEventListener("change", toggleMoons)
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();
 
-//function that creates the table with json key and value pairs
+//function that creates the table with planet infos
+function createTable() {
+    let table = d3.select(".table-container");
+    for (const key in variableLabels) {
+        let row = table.append("tr").attr("id", key);
+        let label = variableLabels[key] ? variableLabels[key] : key;
+        label = label.toString();
+        if (key == "eName") {
+            row.append("td")
+                    .text(label);
+        } else {
+            row.append("td").text(label);
+        }
+    }
+}
+createTable()
+
+//function that adds the planet info to the table
 function displayData(element) {
     let table = d3.select(".table-container");
-    table.classed("hidden", false); 
-    table.selectAll("tr").remove(); 
-
-    // Add the title row
-    let titleRow = table.append("tr");
-    let titleCell = titleRow.append("th")
-                            .attr("colspan", 2)
-                            .text(element["eName"]);
+    if (table.select("tr").selectAll("td").size() >= 3) {
+        table.selectAll("tr").each(function() {
+            d3.select(this).selectAll("td").filter((d, i) => i == 1).remove()
+        })
+    }
 
     for (const key in element) {
-        if (element.hasOwnProperty(key) && key!="eName") {
-            let row = table.append("tr");
-            let nameCell = row.append("td");
+        if (element.hasOwnProperty(key)) {
+            let row = table.select("#" + key);
             let valueCell = row.append("td");
-
-            // Use the variableLabels dictionary to replace key if it exists
-            let label = variableLabels[key] ? variableLabels[key] : key;
-            label = label.toString();
-
-            nameCell.text(label);
             valueCell.text(element[key].toString());
         }
     }
