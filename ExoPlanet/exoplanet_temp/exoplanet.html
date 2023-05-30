@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="exoplanet.css" type="text/css" />
     <link rel="icon" type="icon" href="../../logo/galaxy-50.png">
     <script src="https://d3js.org/d3.v7.min.js"></script> 
+    <script src="d3-main"></script>
 </head>
 
 <body>
@@ -31,15 +32,34 @@
         <svg viewbox="0 -90 360 180" xmlns="http://www.w3.org/2000/svg">
             <image xlink:href="images/Background_original.jpg" x="0" y="-90" width="100%" height="100%" />
             <g id="svg-canvas">
-                <circle fill="f00"></circle>
             </g>
         </svg>
     </div>
     
+    <div id="charts">
+        
+    </div>
+    
+    <table id="controls">
+        <thead>
+            <tr>
+                <td colspan="2">Only display exoplanets where:</td>
+            </tr>
+        </thead>
+        <tbody id="criteriaTableBody">
+            <tr>
+                <td id="addCriteriaCell" colspan="2">
+                    <select name="Select criteria" id="addCriteriaSelection"></select>
+                    <button id="addCriteriaButton">Add</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    
     <table id="table">
         <thead>
             <tr id="tableHeadRow">
-                <td>Category</td>
+                <td>Planet name</td>
             </tr>
         </thead>
         <tbody id="tableBody">

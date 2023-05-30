@@ -1,5 +1,5 @@
 // Names of categories
-const categoryNames = {
+const allCategoryNames = {
     "pl_name": "Planet name",
     "hostname": "Star name",
     "sy_snum": "Number of stars",
@@ -86,10 +86,11 @@ const categoryNames = {
     "sy_gaiamagerr2": "Gaia magnitude error minus"
 }
 
+let categoryNames = allCategoryNames;
+
 // filter unwanted categories
 for (const key in categoryNames) {
     if (key.includes("err") || key.includes("lim")) {
-        console.log(key);
         delete categoryNames[key];
     }
 }
@@ -102,12 +103,17 @@ for (const key in categoryNames) {
     }
 }
 
+// Add categories to criteria selection dropdown
+let criteriaDropdown = d3.select("#addCriteriaSelection");
+for (const key in categoryNames) {
+    criteriaDropdown.append("option").attr("value", key).text(categoryNames[key]);
+}
+
 let dataset = [];
 
 // Add planets to svg
 let canvas = d3.select("#svg-canvas")
 d3.json("data/dataset.json").then((data, index) => {
-    console.log(data.length)
     data.forEach((planet, index) => {
         data[index].id = index;
         // draw planet circle
@@ -117,30 +123,92 @@ d3.json("data/dataset.json").then((data, index) => {
             .attr("r", 0.2)
             .attr("fill", "#afa")
             // Assign index as uuid of planets to easily find them
-            .attr("id", index)
-            .attr("class", "planet")
+            .attr("id", "svg" + index)
+            .attr("class", "svgPlanet")
             .attr("onclick", "displayData(" + index + ")");
     })
     dataset = data;
-    //displayData(data[0]);
 })
 
+// Add criteria button functionality
+let criteriaButton = d3.select("#addCriteriaButton");
+let criteriaSelection = d3.select("#addCriteriaSelection");
+criteriaButton.on("click", e => {
+    let tbody = d3.select("#criteriaTableBody").node();
+    let newRow = tbody.insertRow(1)
+    // Insert row with the key as attribute
+    newRow = d3.select(newRow).attr("data-key", criteriaSelection.property("value")).attr("class", "criteriaRow");
+    // Display the value for the key
+    newRow.append("td").text(categoryNames[newRow.attr("data-key")]);
+    // Add controls
+    let newCell = newRow.append("td");
+    let opMenu = newCell.append("select").attr("class", "opSel");
+    opMenu.append("option").attr("value", "=").text("is");
+    opMenu.append("option").attr("value", ">").text("is greater than");
+    opMenu.append("option").attr("value", "<").text("is less than");
+    let textField = newCell.append("input").attr("type", "text").attr("class", "opVal")
+    // Update the planets visibility
+        .on("input", event => {
+            // Hide all non-relevant planets
+            // console.log(newRow.attr("data-key"))
+            setTimeout(() => {
+        console.log(d3.selectAll(".criteriaRow"));
+    }, 0);
+            // d3.selectAll(".criteriaRow")
+            //     .each(row => {
+            //         console.log(row)
+                // let key = row.attr("data-key");
+                // let input = row.select(".opVal").property("value");
+                // let operation = row.select(".opSel").property("value");
+                // for (const element in dataset) {
+                //     let hidden = true
+                //     if (isNaN(input)){
+                //         if (eval(input == element[key])) {
+                //             hidden = false
+                //         }
+                //     } else {
+                //         if (eval(element[key] + operation + input)) {
+                //             hidden = false
+                //         }
+                //     }
+                //     if (hidden) {
+                //         d3.select("#svg" + element.id).attr("opacity", "0")
+                //     } else {
+                //         d3.select("#svg" + element.id).attr("opacity", "1")
+                //     }
+                // }
+            // })
+        });
+    newCell.append("button").text("Remove criteria").on("click", e => {
+        newRow.remove();
+    });
+});
+
+// Add display criteria
+function addCriteriaCell(criteria) {
+    
+}
+
+// Add data of clicked planet to bottom table
 function displayData(id) {
     let head = d3.select("#tableHeadRow");
     let body = d3.select("#tableBody");
     // Get the desired planet using its id
     element = dataset[id];
-    // Add the title with a close button
-    head.append("td").text(element.pl_name).attr("class", "id" + element.id).append("div").text("[close]").attr("onclick", "removeData(" + element.id + ")");
-    // Add the values
-    for (const key in categoryNames) {
-        if (element.hasOwnProperty(key) && key!="pl_name") {
-            d3.select("#" + key).append("td").text(element[key]).attr("class", "id" + element.id);
+    if (d3.select("#table" + id).empty()) {
+        // Add the title with a close button
+        head.append("td").text(element.pl_name).attr("id", "table" + element.id).append("div").text("[close]").attr("onclick", "removeData(" + element.id + ")");
+        // Add the values
+        for (const key in categoryNames) {
+            if (element.hasOwnProperty(key) && key!="pl_name") {
+                d3.select("#" + key).append("td").text(element[key]).attr("id", "table" + element.id);
+            }
         }
+        d3.select("#svg" + id).attr("fill", "#aaf");
     }
 }
 
+// Remove planet from bottom table
 function removeData(id) {
-    console.log(id)
     table = d3.select("#table").selectAll(".id" + id).remove();
 }
