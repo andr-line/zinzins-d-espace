@@ -42,7 +42,7 @@
     </style>
     
     <div class="controls">
-        <table>
+        <table id="controlTable">
             <tr>
                 <td>Asteroids and moons</td>
                 <td>Moons</td>
@@ -57,6 +57,11 @@
                 </td>
                 <td>
                     <input type="range" min="0" max="1" step="0.0001" value="0" class="slider" id="zoomSlider" />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3">
+                    <input type="text" id="searchBar" />
                 </td>
             </tr>
         </table>

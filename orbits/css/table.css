@@ -44,3 +44,8 @@ th {
     max-width: none !important;
   }
 }
+
+
+tr.hiddenCell {
+    display: none;
+}
