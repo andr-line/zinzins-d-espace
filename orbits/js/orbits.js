@@ -145,11 +145,12 @@ function draw_orbit(d3_canvas, element, index, position) {
         });
 }
 
+let dataSet = [];
 // Draw the solar system
 function on_fully_loaded() {
     const d3_canvas = d3.select("#d3_canvas_translated");
     d3.json("data/sol_data.json").then(function(data) {
-        
+        dataSet = data;
         // Generate object positions
         let positions = {"NA": {x:0,y:0}}
         data.forEach((element) => {
@@ -199,10 +200,41 @@ var slider = document.getElementById("zoomSlider");
 zoomSlider.addEventListener('input', zoom);
 
 // Add the asteroids check button event listener
-var asteroidsButton = document.getElementById("asteroidsButton");
-asteroidsButton.addEventListener("change", toggleAsteroids);
-var moonsButton = document.getElementById("moonsButton");
-moonsButton.addEventListener("change", toggleMoons)
+document.getElementById("asteroidsButton").addEventListener("change", toggleAsteroids);
+document.getElementById("moonsButton").addEventListener("change", toggleMoons)
+
+// The search bar
+let searchBar = document.getElementById("searchBar");
+searchBar.addEventListener("input", function() {
+    // Hide all irrelevant search results
+    let input = this.value.toLowerCase();
+    d3.selectAll(".searchResult").each(function() {
+        result = d3.select(this)
+        if (result.select("td").text().toLowerCase().includes(input)) {
+            result.classed("hiddenCell", false)
+        } else {
+            result.classed("hiddenCell", true)
+        }
+    })
+});
+searchBar.addEventListener("focus", function() {
+    // Add all possible search results
+    dataSet.forEach(element => {
+        d3.select("#controlTable")
+            .append("tr").classed("searchResult", true)
+            .append("td").attr("colspan", "3").text(element.eName)
+            .on("click", e => {
+                displayData(element)
+            })
+    })
+});
+// Remove search results when clicking outside table
+d3.select(document).on("click", function(event) {
+    if (!d3.select("#controlTable").node().contains(event.target)) {
+        d3.selectAll(".searchResult").remove()
+        d3.select("#searchBar").property("value", "")
+    }
+})
 
 // Wait for the page to load before starting the animation
 on_fully_loaded();
