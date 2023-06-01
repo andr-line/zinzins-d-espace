@@ -132,29 +132,36 @@ function draw_orbit(d3_canvas, element, index, position) {
 
     let highlightedElements = []; 
 
-    const randomPoint = position[element.eName];
-    d3_canvas.append("circle")
-        .attr("cx", randomPoint.x + position[element.orbits].x)
-        .attr("cy", randomPoint.y + position[element.orbits].y)
-        .attr("r", 5)
-        .attr("fill", planetColors[index%12])
-        .attr("class", "planet")
-        .attr("class", classes)
-        .attr("z-index", "3")
-        .on("click", function() {
-            displayData(element);
-            let selected = d3.select(this);
-        
-            if (!selected.classed("highlighted")) { 
-                if (highlightedElements.length == 2) { 
-                    let toRemove = highlightedElements.shift(); 
-                    toRemove.classed("highlighted", false); 
-                }
-                
-                selected.classed("highlighted", true);
-                highlightedElements.push(selected);}
-            zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y];
-        });
+const randomPoint = position[element.eName];
+d3_canvas.append("circle")
+    .attr("cx", randomPoint.x + position[element.orbits].x)
+    .attr("cy", randomPoint.y + position[element.orbits].y)
+    .attr("r", 5)
+    .attr("fill", planetColors[index%12])
+    .classed("planet", true)
+    .classed(classes, true)
+    .attr("z-index", "200")
+    .on("click", function() {
+        displayData(element);
+        let selected = d3.select(this);
+
+        if (!selected.classed("highlighted")) { 
+            if (highlightedElements.length >= 2) { 
+                let toRemove = highlightedElements.shift();  
+                d3.select(toRemove).classed("highlighted", false);  
+            }
+            selected.classed("highlighted", true);  
+            highlightedElements.push(this); 
+        } else {
+           
+            selected.classed("highlighted", false); 
+            let index = highlightedElements.indexOf(this);
+            if (index > -1) {
+                highlightedElements.splice(index, 1);
+            }
+        }
+        zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y];
+    });
 
 
 
@@ -204,7 +211,7 @@ function zoom() {
 
 // Toggle asteroids
 function toggleAsteroids() {
-    d3.selectAll(".isAsteroid").classed("hidden", !this.checked);
+    d3.selectAll(".isAsteroid.body").classed("hidden", !this.checked);
 }
 
 // Toggle moon bodies
