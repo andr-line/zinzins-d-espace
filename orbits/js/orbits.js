@@ -49,11 +49,11 @@ const variableLabels = {
     grav_int: "Gravitational Intensity [m/s²]"
 };
 
-var zoomTarget = [0, 0];
+var zoomTarget = [0, 0]
 
 // Distance to center as a function of the angle, exentricity and semi-major axis
 function distance_to_center(angle, e, a) {
-    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;    
+    return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;   
 }
 
 // Convert polar coordinates to cartesian coordinates
@@ -76,10 +76,10 @@ function project_on_canvas(point, scale, offset) {
 function generate_orbit_points(num_point, e, a, offset) {
     const points = [];
     for (let i = 0; i < num_point; i++) {
-        const angle = 2 * Math.PI * i / num_point;
-        const distance = distance_to_center(angle, e, a);
-        const point = polar_to_cartesian(angle, distance);
-        const proj_point = project_on_canvas(point, 0.05, offset);
+        const angle = 2 * Math.PI * i / num_point
+        const distance = distance_to_center(angle, e, a)
+        const point = polar_to_cartesian(angle, distance)
+        const proj_point = project_on_canvas(point, 0.05, offset)
         points.push(proj_point);
     }
     return points;
@@ -87,30 +87,30 @@ function generate_orbit_points(num_point, e, a, offset) {
 
 // Take a random position on the orbits to draw the objects 
 function getRandomElement(points) {
-    const randomIndex = Math.floor(Math.random() * points.length);
-    return points[randomIndex];
+    const randomIndex = Math.floor(Math.random() * points.length)
+    return points[randomIndex]
 }
 
 // Draw an orbit using D3.js
 function draw_orbit(d3_canvas, element, index, position) {
-    const e = element.eccentricity;
-    const a = element.semimajorAxis;
+    const e = element.eccentricity
+    const a = element.semimajorAxis
     var classes = ""
     if (element.isPlanet === "TRUE") {
-        classes += "isPlanet";
+        classes += "isPlanet"
     } else if (element.orbit_type === "Secondary") {
-        classes += "isMoon";
+        classes += "isMoon"
     } else {
-        classes += "isAsteroid hidden";
+        classes += "isAsteroid hidden"
     }
     
     // draw orbits
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a, position[element.orbits]); // move orbit to parent
-    ctx.moveTo(points[0].x, points[0].y);
+    ctx.moveTo(points[0].x, points[0].y)
     for (let i = 1; i < points.length; i++) {
         const point = points[i];
-        ctx.lineTo(point.x, point.y);
+        ctx.lineTo(point.x, point.y)
     }
     ctx.closePath();
     d3_canvas.append("path")
@@ -119,7 +119,7 @@ function draw_orbit(d3_canvas, element, index, position) {
                     .attr("stroke-width", 1)
                     .attr("fill", "none")
                     .attr("class", classes)
-                    .attr("z-index", "2");
+                    .attr("z-index", "2")
 
     // Hide moon circles but not orbits
     classes += " body"
@@ -130,9 +130,9 @@ function draw_orbit(d3_canvas, element, index, position) {
     
     // Draw object circles
 
-    let highlightedElements = []; 
+    let highlightedElements = []
 
-const randomPoint = position[element.eName];
+const randomPoint = position[element.eName]
 d3_canvas.append("circle")
     .attr("cx", randomPoint.x + position[element.orbits].x)
     .attr("cy", randomPoint.y + position[element.orbits].y)
@@ -143,25 +143,25 @@ d3_canvas.append("circle")
     .attr("z-index", "200")
     .on("click", function() {
         displayData(element);
-        let selected = d3.select(this);
+        let selected = d3.select(this)
 
         if (!selected.classed("highlighted")) { 
             if (highlightedElements.length >= 2) { 
                 let toRemove = highlightedElements.shift();  
-                d3.select(toRemove).classed("highlighted", false);  
+                d3.select(toRemove).classed("highlighted", false)  
             }
-            selected.classed("highlighted", true);  
+            selected.classed("highlighted", true)
             highlightedElements.push(this); 
         } else {
            
             selected.classed("highlighted", false); 
-            let index = highlightedElements.indexOf(this);
+            let index = highlightedElements.indexOf(this)
             if (index > -1) {
-                highlightedElements.splice(index, 1);
+                highlightedElements.splice(index, 1)
             }
         }
-        zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y];
-    });
+        zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y]
+    })
 
 
 
@@ -172,36 +172,36 @@ d3_canvas.append("circle")
 
 // Draw the solar system
 function on_fully_loaded() {
-    const d3_canvas = d3.select("#d3_canvas_translated");
+    const d3_canvas = d3.select("#d3_canvas_translated")
     d3.json("data/sol_data.json").then(function(data) {
         
         // Generate object positions
         let positions = {"NA": {x:0,y:0}}
         data.forEach((element) => {
-            e = element.eccentricity;
-            a = element.semimajorAxis;
-            points = generate_orbit_points(500, e, a, {x:0,y:0});
-            randomPoint = getRandomElement(points);
-            positions[element.eName.toString()] = randomPoint;
+            e = element.eccentricity
+            a = element.semimajorAxis
+            points = generate_orbit_points(500, e, a, {x:0,y:0})
+            randomPoint = getRandomElement(points)
+            positions[element.eName.toString()] = randomPoint
         })
         
         // draw orbit and object at its position
         data.forEach((element, index) => {
-            draw_orbit(d3_canvas, element, index, positions);
-        });
-    });
+            draw_orbit(d3_canvas, element, index, positions)
+        })
+    })
 }
 
 // Scale the SVG when scrolling
-var scale = 1;
+var scale = 1
 function zoom() {
     let zoom = this.value;
     scale = 0.000001**(zoom);
-    let str1 = "scale(" + 1/scale + ") ";
-    let str2 = "calc(" + -zoomTarget[0] + "px + 50% * " + scale + ")";
-    let str3 = "calc(" + -zoomTarget[1] + "px + 50% * " + scale + ")";
-    let str = str1 + "translate(" + str2 + ", " + str3 + ")";
-    d3.select("#d3_canvas_translated").style("transform", str);
+    let str1 = "scale(" + 1/scale + ") "
+    let str2 = "calc(" + -zoomTarget[0] + "px + 50% * " + scale + ")"
+    let str3 = "calc(" + -zoomTarget[1] + "px + 50% * " + scale + ")"
+    let str = str1 + "translate(" + str2 + ", " + str3 + ")"
+    d3.select("#d3_canvas_translated").style("transform", str)
     d3.selectAll("path").style("stroke-width", 1 * scale)
     d3.selectAll("circle").attr("r", 5 * scale)
     d3.select("#selectionStyle").text(`.highlighted {
@@ -211,39 +211,39 @@ function zoom() {
 
 // Toggle asteroids
 function toggleAsteroids() {
-    d3.selectAll(".isAsteroid.body").classed("hidden", !this.checked);
+    d3.selectAll(".isAsteroid.body").classed("hidden", !this.checked)
 }
 
 // Toggle moon bodies
 function toggleMoons() {
-    d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
+    d3.selectAll(".isMoon.body").classed("hidden", !this.checked)
 }
 
 // Add the zoom slider event listener
-var slider = document.getElementById("zoomSlider");
-zoomSlider.addEventListener('input', zoom);
+var slider = document.getElementById("zoomSlider")
+zoomSlider.addEventListener('input', zoom)
 
 // Add the asteroids check button event listener
-var asteroidsButton = document.getElementById("asteroidsButton");
-asteroidsButton.addEventListener("change", toggleAsteroids);
-var moonsButton = document.getElementById("moonsButton");
+var asteroidsButton = document.getElementById("asteroidsButton")
+asteroidsButton.addEventListener("change", toggleAsteroids)
+var moonsButton = document.getElementById("moonsButton")
 moonsButton.addEventListener("change", toggleMoons)
 
 // Wait for the page to load before starting the animation
-on_fully_loaded();
+on_fully_loaded()
 
 //function that creates the table with planet infos
 function createTable() {
-    let table = d3.select(".table-container");
+    let table = d3.select(".table-container")
     for (const key in variableLabels) {
-        let row = table.append("tr").attr("id", key);
-        let label = variableLabels[key] ? variableLabels[key] : key;
-        label = label.toString();
+        let row = table.append("tr").attr("id", key)
+        let label = variableLabels[key] ? variableLabels[key] : key
+        label = label.toString()
         if (key == "eName") {
             row.append("td")
-                    .text(label);
+                    .text(label)
         } else {
-            row.append("td").text(label);
+            row.append("td").text(label)
         }
     }
 }
@@ -260,26 +260,26 @@ function displayData(element) {
 
     for (const key in element) {
         if (element.hasOwnProperty(key)) {
-            let row = table.select("#" + key);
-            let valueCell = row.append("td");
-            valueCell.text(element[key].toString());
+            let row = table.select("#" + key)
+            let valueCell = row.append("td")
+            valueCell.text(element[key].toString())
         }
     }
     table.style("z-index", "2")
          .style("border", "2px #f00")
          .style("position", "absolute")
          .style("bottom", "0")
-         .style("right", "0");
-    document.body.appendChild(table.node());
+         .style("right", "0")
+    document.body.appendChild(table.node())
 }
 
 
 document.getElementById('toggleTableButton').addEventListener('click', function() {
-    let table = document.querySelector('.table-container');
+    let table = document.querySelector('.table-container')
     if (table.style.display === 'none') {
-        table.style.display = 'block';
+        table.style.display = 'block'
     } else {
-        table.style.display = 'none';
+        table.style.display = 'none'
     }
 })
 
