@@ -135,24 +135,26 @@ let criteriaButton = d3.select("#addCriteriaButton");
 let criteriaSelection = d3.select("#addCriteriaSelection");
 criteriaButton.on("click", e => {
     let tbody = d3.select("#criteriaTableBody");
-
     let newRow = tbody.append("tr");
-    
-    // Insert row with the key as attribute
-    newRow.attr("data-key", criteriaSelection.property("value")).attr("class", "criteriaRow");
-    
     // Display the value for the key
-    newRow.append("td").text(categoryNames[newRow.attr("data-key")]);
+    newRow.append("td").text(criteriaSelection.property("value"));
     // Add controls
     let newCell = newRow.append("td").attr("data-key", criteriaSelection.property("value")).classed("criteriaCell", true);
-    console.log(newCell.attr("data-key"))
-    let opMenu = newCell.append("select").attr("class", "opSel");
+    let opMenu = newCell.append("select").attr("class", "opSel").on("input", updatePlanets);
     opMenu.append("option").attr("value", "=").text("is");
     opMenu.append("option").attr("value", ">").text("is greater than");
     opMenu.append("option").attr("value", "<").text("is less than");
     let textField = newCell.append("input").attr("type", "text").attr("class", "opVal")
     // Update the planets visibility
-    .on("input", function() {
+    .on("input", updatePlanets);
+    newCell.append("button").text("Remove criteria").on("click", e => {
+        newRow.remove();
+        updatePlanets();
+    });
+});
+
+// Update the planets visibility based on the criteria
+function updatePlanets() {
         d3.selectAll(".svgPlanet").classed("hidden", false)
         // Hide all non-relevant planets
         d3.selectAll(".criteriaCell")
@@ -190,11 +192,7 @@ criteriaButton.on("click", e => {
                     }
                 })
             })
-        });
-    newCell.append("button").text("Remove criteria").on("click", e => {
-        newRow.remove();
-    });
-});
+        }
 
 // Add display criteria
 function addCriteriaCell(criteria) {
