@@ -163,11 +163,6 @@ d3_canvas.append("circle")
         zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y]
     })
 
-
-
-        
-       
-
 }
 
 let dataSet = [];
