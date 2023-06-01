@@ -144,7 +144,8 @@ criteriaButton.on("click", e => {
     // Display the value for the key
     newRow.append("td").text(categoryNames[newRow.attr("data-key")]);
     // Add controls
-    let newCell = newRow.append("td").attr("data-key", newRow.attr("data-key")).classed("criteriaCell", true);
+    let newCell = newRow.append("td").attr("data-key", criteriaSelection.property("value")).classed("criteriaCell", true);
+    console.log(newCell.attr("data-key"))
     let opMenu = newCell.append("select").attr("class", "opSel");
     opMenu.append("option").attr("value", "=").text("is");
     opMenu.append("option").attr("value", ">").text("is greater than");
@@ -152,30 +153,42 @@ criteriaButton.on("click", e => {
     let textField = newCell.append("input").attr("type", "text").attr("class", "opVal")
     // Update the planets visibility
     .on("input", function() {
+        d3.selectAll(".svgPlanet").classed("hidden", false)
         // Hide all non-relevant planets
-            d3.selectAll(".criteriaCell")
-                .each(function(row) {
-                    console.log(this)
-                // let key = row.attr("data-key");
-                // let input = row.select(".opVal").property("value");
-                // let operation = row.select(".opSel").property("value");
-                // for (const element in dataset) {
-                //     let hidden = true
-                //     if (isNaN(input)){
-                //         if (eval(input == element[key])) {
-                //             hidden = false
-                //         }
-                //     } else {
-                //         if (eval(element[key] + operation + input)) {
-                //             hidden = false
-                //         }
-                //     }
-                //     if (hidden) {
-                //         d3.select("#svg" + element.id).attr("opacity", "0")
-                //     } else {
-                //         d3.select("#svg" + element.id).attr("opacity", "1")
-                //     }
-                // }
+        d3.selectAll(".criteriaCell")
+            .each(function() {
+                let cell = d3.select(this);
+                let key = cell.attr("data-key");
+                let input = cell.select(".opVal").property("value");
+                let operation = cell.select(".opSel").property("value");
+                dataset.forEach(e => {
+                    let element = e;
+                    let show = false;
+                    if (input == "") {
+                        show = true;
+                    } else if (isNaN(input)){
+                        if (String(element[key]).toLowerCase().includes(input.toLowerCase())) {
+                            show = true;
+                        }
+                    } else {
+                        switch (operation) {
+                            case ">":
+                                show = Number(element[key]) > input;
+                                break;
+                            case "<":
+                                show = Number(element[key]) < input;
+                                break;
+                            case "=":
+                                show = Number(element[key]) == input;
+                                break;
+                            default:
+                                show = false;
+                        }
+                    }
+                    if (!show) {
+                        d3.select("#svg" + element.id).classed("hidden", true);
+                    }
+                })
             })
         });
     newCell.append("button").text("Remove criteria").on("click", e => {
