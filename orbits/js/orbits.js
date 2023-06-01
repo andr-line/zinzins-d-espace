@@ -127,7 +127,11 @@ function draw_orbit(d3_canvas, element, index, position) {
         classes += " hidden";
     }
     
+    
     // Draw object circles
+
+    let highlightedElements = []; 
+
     const randomPoint = position[element.eName];
     d3_canvas.append("circle")
         .attr("cx", randomPoint.x + position[element.orbits].x)
@@ -138,11 +142,25 @@ function draw_orbit(d3_canvas, element, index, position) {
         .attr("class", classes)
         .attr("z-index", "3")
         .on("click", function() {
-            d3.selectAll("circle").classed("highlighted", false); // Remove highlight from all planets
-            d3.select(this).classed("highlighted", true); // Add highlight to the clicked planet
             displayData(element);
+            let selected = d3.select(this);
+        
+            if (!selected.classed("highlighted")) { 
+                if (highlightedElements.length == 2) { 
+                    let toRemove = highlightedElements.shift(); 
+                    toRemove.classed("highlighted", false); 
+                }
+                
+                selected.classed("highlighted", true);
+                highlightedElements.push(selected);}
             zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y];
         });
+
+
+
+        
+       
+
 }
 
 // Draw the solar system
@@ -191,7 +209,7 @@ function toggleAsteroids() {
 
 // Toggle moon bodies
 function toggleMoons() {
-    d3.selectAll(".isMoon").classed("hidden", !this.checked);
+    d3.selectAll(".isMoon.body").classed("hidden", !this.checked);
 }
 
 // Add the zoom slider event listener
@@ -247,4 +265,14 @@ function displayData(element) {
          .style("right", "0");
     document.body.appendChild(table.node());
 }
+
+
+document.getElementById('toggleTableButton').addEventListener('click', function() {
+    let table = document.querySelector('.table-container');
+    if (table.style.display === 'none') {
+        table.style.display = 'block';
+    } else {
+        table.style.display = 'none';
+    }
+})
 
