@@ -134,29 +134,28 @@ d3.json("data/dataset.json").then((data, index) => {
 let criteriaButton = d3.select("#addCriteriaButton");
 let criteriaSelection = d3.select("#addCriteriaSelection");
 criteriaButton.on("click", e => {
-    let tbody = d3.select("#criteriaTableBody").node();
-    let newRow = tbody.insertRow(1)
+    let tbody = d3.select("#criteriaTableBody");
+
+    let newRow = tbody.append("tr");
+    
     // Insert row with the key as attribute
-    newRow = d3.select(newRow).attr("data-key", criteriaSelection.property("value")).attr("class", "criteriaRow");
+    newRow.attr("data-key", criteriaSelection.property("value")).attr("class", "criteriaRow");
+    
     // Display the value for the key
     newRow.append("td").text(categoryNames[newRow.attr("data-key")]);
     // Add controls
-    let newCell = newRow.append("td");
+    let newCell = newRow.append("td").attr("data-key", newRow.attr("data-key")).classed("criteriaCell", true);
     let opMenu = newCell.append("select").attr("class", "opSel");
     opMenu.append("option").attr("value", "=").text("is");
     opMenu.append("option").attr("value", ">").text("is greater than");
     opMenu.append("option").attr("value", "<").text("is less than");
     let textField = newCell.append("input").attr("type", "text").attr("class", "opVal")
     // Update the planets visibility
-        .on("input", event => {
-            // Hide all non-relevant planets
-            // console.log(newRow.attr("data-key"))
-            setTimeout(() => {
-        console.log(d3.selectAll(".criteriaRow"));
-    }, 0);
-            // d3.selectAll(".criteriaRow")
-            //     .each(row => {
-            //         console.log(row)
+    .on("input", function() {
+        // Hide all non-relevant planets
+            d3.selectAll(".criteriaCell")
+                .each(function(row) {
+                    console.log(this)
                 // let key = row.attr("data-key");
                 // let input = row.select(".opVal").property("value");
                 // let operation = row.select(".opSel").property("value");
@@ -177,7 +176,7 @@ criteriaButton.on("click", e => {
                 //         d3.select("#svg" + element.id).attr("opacity", "1")
                 //     }
                 // }
-            // })
+            })
         });
     newCell.append("button").text("Remove criteria").on("click", e => {
         newRow.remove();
