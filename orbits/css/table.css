@@ -3,11 +3,12 @@
   bottom: 10px;
   right: 10px;
   height: 30%;
-  width: 32%;
+  width: 50%;
   z-index: 2;
   overflow: auto;
   scrollbar-width: none; 
   scrollbar-gutter: none; 
+  display:none
 }
 
 .table-container::-webkit-scrollbar { 
