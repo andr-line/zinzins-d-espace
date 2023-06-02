@@ -27,8 +27,19 @@
         </div>
     </div>
     
-    <div id="svg-canvas-container">
-        <svg viewbox="0 -90 360 180" xmlns="http://www.w3.org/2000/svg">
+    <div id="localHead">
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+
+    <div id="svg-canvas-container" style="text-align:center;">
+        <svg viewbox="0 -90 360 180" xmlns="http://www.w3.org/2000/svg" >
             <defs>
                 <filter id="grayscale">
                     <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0
@@ -50,14 +61,14 @@
     <table id="controls">
         <thead>
             <tr>
-                <td colspan="2">Chose criterions below to narrow down the search</td>
+                <td colspan="2">Chose criteria below to narrow down the search</td>
             </tr>
         </thead>
         <tbody id="criteriaTableBody">
             <tr>
                 <td id="addCriteriaCell" colspan="2">
                     <select name="Select criteria" id="addCriteriaSelection"></select>
-                    <button id="addCriteriaButton">Add</button>
+                    <button id="addCriteriaButton">Add the criterion</button>
                 </td>
             </tr>
         </tbody>
