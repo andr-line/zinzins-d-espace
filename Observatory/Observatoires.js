@@ -107,7 +107,7 @@ d3.json("world.json").then((topology) => {
                   
                     d3.select(".information > .title").text(event.currentTarget.id)//Pour ecrire le nom de l'observatoire
                     var Obs=event.currentTarget.id //Pour recuperer le nom de l'observatoire, car si après on met event.currentTarget.id, ca ne marche pas  
-                    d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet) {
+                    d3.json("../ExoPlanet/data/dataset.json").then(function(ExoPlanet) {
                         g.selectAll("barch")
                         .data(ExoPlanet)
                         
@@ -250,7 +250,7 @@ d3.json("world.json").then((topology) => {
     });
 });
 
-d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
+d3.json("../ExoPlanet/data/dataset.json").then(function(ExoPlanet1) {
     g.selectAll("circle")
     .data(ExoPlanet1)
     .join((enter) => {
@@ -370,7 +370,7 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
         
         
     });
-    d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
+    d3.json("../ExoPlanet/data/dataset.json").then(function(ExoPlanet1) {
         g.selectAll("circle")
         .data(ExoPlanet1)
         .join((enter) => {
@@ -467,13 +467,6 @@ d3.json("../ExoPlanet/ExoPlanet.json").then(function(ExoPlanet1) {
             
         )
     };
-
-
-
-            
-
-            
-
 
         });
     });

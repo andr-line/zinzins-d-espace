@@ -1,64 +1,64 @@
 .svg-container{
-position: relative;
-left: 230px;
-top: 5px;
-right: 5px;
-
-}
-.information{
-
     position: relative;
-    left: 5px;
-    top: -650px;
-    width: 400px;
-    height: 615px;
-    background-color: rgb(12,150,100);
-    border-radius: 10px;
-    padding: 20px;
-    opacity: 0.8;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-}
-
-.information1{
-
-    position: relative;
-    left: 100px;
-    top: -600px;
-    width: 1200px;
-    height: 500px;
-    /* background with image */
-    background-image: url(../home/images/etoiles.jpg);
-    background-size: cover;
-    background-repeat: no-repeat;
-    /* background-color: rgb(12,150,100); */
-    border-radius: 10px;
-    padding: 20px;
+    left: 230px;
+    top: 5px;
+    right: 5px;
     
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-
-}
-.information2{
-
+    }
+    .information{
+    
         position: relative;
-        left: 1000px;
-        top: -1850px;
+        left: 5px;
+        top: -650px;
         width: 400px;
-        height: 200px;
-        
-        background-color: rgb(12,150,100); 
+        height: 615px;
+        background-color: rgb(12,150,100);
         border-radius: 10px;
         padding: 20px;
-        opacity: 0.9;
+        opacity: 0.8;
         box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-}
-.bouton{
-    position: relative;
-    left: 5px;
-    top: -650px;
-    width: 400px;
-    height: 610px;
-    background-color: rgb(12,150,100);
-    border-radius: 10px;
-    padding: 20px;
-    box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
-}
+    }
+    
+    .information1{
+    
+        position: relative;
+        left: 100px;
+        top: -600px;
+        width: 1200px;
+        height: 500px;
+        /* background with image */
+        background-image: url(../home/images/etoiles.jpg);
+        background-size: cover;
+        background-repeat: no-repeat;
+        /* background-color: rgb(12,150,100); */
+        border-radius: 10px;
+        padding: 20px;
+        
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    
+    }
+    .information2{
+    
+            position: relative;
+            left: 1000px;
+            top: -1850px;
+            width: 400px;
+            height: 200px;
+            
+            background-color: rgb(12,150,100); 
+            border-radius: 10px;
+            padding: 20px;
+            opacity: 0.9;
+            box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    }
+    .bouton{
+        position: relative;
+        left: 5px;
+        top: -650px;
+        width: 400px;
+        height: 610px;
+        background-color: rgb(12,150,100);
+        border-radius: 10px;
+        padding: 20px;
+        box-shadow: 0 0 10px 0 rgba(0,0,0,0.2);
+    }
