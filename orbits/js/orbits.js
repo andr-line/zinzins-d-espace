@@ -51,6 +51,8 @@ const variableLabels = {
 
 var zoomTarget = [0, 0]
 
+var positions = {"NA": {x:0,y:0}}
+
 // Distance to center as a function of the angle, exentricity and semi-major axis
 function distance_to_center(angle, e, a) {
     return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;   
@@ -114,12 +116,12 @@ function draw_orbit(d3_canvas, element, index, position) {
     }
     ctx.closePath();
     d3_canvas.append("path")
-                    .attr("d", ctx)
-                    .attr("stroke", planetColors[index%12])
-                    .attr("stroke-width", 1)
-                    .attr("fill", "none")
-                    .attr("class", classes)
-                    .attr("z-index", "2")
+        .attr("d", ctx)
+        .attr("stroke", planetColors[index%12])
+        .attr("stroke-width", 1)
+        .attr("fill", "none")
+        .attr("class", classes)
+        .attr("z-index", "2")
 
     // Hide moon circles but not orbits
     classes += " body"
@@ -127,13 +129,11 @@ function draw_orbit(d3_canvas, element, index, position) {
         classes += " hidden";
     }
     
+
     
     // Draw object circles
-
-    let highlightedElements = []
-
-const randomPoint = position[element.eName]
-d3_canvas.append("circle")
+    const randomPoint = position[element.eName]
+    d3_canvas.append("circle")
     .attr("cx", randomPoint.x + position[element.orbits].x)
     .attr("cy", randomPoint.y + position[element.orbits].y)
     .attr("r", 5)
@@ -141,28 +141,27 @@ d3_canvas.append("circle")
     .classed("planet", true)
     .classed(classes, true)
     .attr("z-index", "200")
-    .on("click", function() {
+    .attr("data-eName", element.eName)
+    .on("click", e => selectPlanet(element, position))
+}
+
+function selectPlanet(element, position) {
+    console.log(position)
+    const randomPoint = position[element.eName]
+    let selected = d3.select(`[data-eName="${element.eName}"]`)
+    if (!selected.classed("highlighted")) {
         displayData(element);
-        let selected = d3.select(this)
-
-        if (!selected.classed("highlighted")) { 
-            if (highlightedElements.length >= 2) { 
-                let toRemove = highlightedElements.shift();  
-                d3.select(toRemove).classed("highlighted", false)  
-            }
-            selected.classed("highlighted", true)
-            highlightedElements.push(this); 
-        } else {
-           
-            selected.classed("highlighted", false); 
-            let index = highlightedElements.indexOf(this)
-            if (index > -1) {
-                highlightedElements.splice(index, 1)
-            }
-        }
-        zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y]
-    })
-
+        d3.select(".highlighted1").classed("highlighted1", false)
+        d3.select(".highlighted").classed("highlighted", false).classed("highlighted1", true);
+        d3.selectAll(".body").classed("highlighted", false);
+        selected.classed("highlighted", true);
+    } else {
+        // selected.classed("highlighted", false);
+        // d3.select(".highlighted1").classed("highlighted1", false).classed("highlighted", true);
+    }
+    console.log(position)
+    console.log(randomPoint)
+    zoomTarget = [randomPoint.x + position[element.orbits].x, randomPoint.y + position[element.orbits].y]
 }
 
 let dataSet = [];
@@ -172,7 +171,6 @@ function on_fully_loaded() {
     d3.json("data/sol_data.json").then(function(data) {
         dataSet = data;
         // Generate object positions
-        let positions = {"NA": {x:0,y:0}}
         data.forEach((element) => {
             e = element.eccentricity
             a = element.semimajorAxis
@@ -200,18 +198,14 @@ function zoom() {
     d3.select("#d3_canvas_translated").style("transform", str)
     d3.selectAll("path").style("stroke-width", 1 * scale)
     d3.selectAll("circle").attr("r", 5 * scale)
-    d3.select("#selectionStyle").text(`.highlighted {
+    d3.select("#selectionStyle").text(`.highlighted, .highlighted1 {
         stroke-width: ${1.5 * scale};
     }`)
 }
 
-// Toggle asteroids
+// Toggle asteroids and moon bodies
 function toggleAsteroids() {
-    d3.selectAll(".isAsteroid.body").classed("hidden", !this.checked)
-}
-
-// Toggle moon bodies
-function toggleMoons() {
+    d3.selectAll(".isAsteroid").classed("hidden", !this.checked)
     d3.selectAll(".isMoon.body").classed("hidden", !this.checked)
 }
 
@@ -236,17 +230,18 @@ searchBar.addEventListener("input", function() {
         }
     })
 });
-searchBar.addEventListener("focus", function() {
-    // Add all possible search results
-    dataSet.forEach(element => {
-        d3.select("#controlTable")
-            .append("tr").classed("searchResult", true)
-            .append("td").attr("colspan", "3").text(element.eName)
-            .on("click", e => {
-                displayData(element)
-            })
-    })
+searchBar.addEventListener("focus", function () {
+  // Add all possible search results
+  dataSet.forEach(element => {
+    d3.select("#controlTable")
+      .append("tr").classed("searchResult", true)
+      .append("td").attr("colspan", "3").text(element.eName)
+      .on("click", function (e) {
+        selectPlanet(element, positions); // Pass the position variable to the selectPlanet function
+      });
+  });
 });
+
 // Remove search results when clicking outside table
 d3.select(document).on("click", function(event) {
     if (!d3.select("#controlTable").node().contains(event.target)) {
