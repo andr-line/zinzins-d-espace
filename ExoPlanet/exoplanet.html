@@ -29,7 +29,15 @@
     
     <div id="svg-canvas-container">
         <svg viewbox="0 -90 360 180" xmlns="http://www.w3.org/2000/svg">
-            <image xlink:href="images/Background_original.jpg" x="0" y="-90" width="100%" height="100%" />
+            <defs>
+                <filter id="grayscale">
+                    <feColorMatrix type="matrix" values="0.33 0.33 0.33 0 0
+                                                         0.33 0.33 0.33 0 0
+                                                         0.33 0.33 0.33 0 0
+                                                         0    0    0    1 0" />
+                </filter>
+            </defs>
+            <image xlink:href="images/Background_original.jpg" x="0" y="-90" width="100%" height="100%" filter="url(#grayscale)" />
             <g id="svg-canvas">
             </g>
         </svg>

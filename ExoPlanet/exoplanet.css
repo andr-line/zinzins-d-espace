@@ -19,3 +19,13 @@ table {
 .hidden {
     display: none;
 }
+
+.svgPlanet {
+    fill: #7f7;
+}
+
+.selectedPlanet {
+    fill: #77f;
+    stroke: #77f;
+    stroke-width: 0.5px;
+}
