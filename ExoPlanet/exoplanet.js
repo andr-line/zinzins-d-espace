@@ -138,7 +138,7 @@ criteriaButton.on("click", e => {
     let tbody = d3.select("#criteriaTableBody");
     let newRow = tbody.append("tr");
     // Display the value for the key
-    newRow.append("td").text(criteriaSelection.property("value"));
+    newRow.append("td").text(categoryNames[criteriaSelection.property("value")]);
     // Add controls
     let newCell = newRow.append("td").attr("data-key", criteriaSelection.property("value")).classed("criteriaCell", true);
     let opMenu = newCell.append("select").classed("opSel", true).on("input", updatePlanets);
@@ -193,6 +193,44 @@ function updatePlanets() {
             }
         })
     })
+}
+
+// The search bar
+let searchBar = document.getElementById("searchBar");
+searchBar.addEventListener("input", function() {
+    // Hide all irrelevant search results
+    let input = this.value.toLowerCase();
+    d3.selectAll(".searchResult").each(function() {
+        result = d3.select(this)
+        if (result.select("td").text().toLowerCase().includes(input)) {
+            result.classed("hidden", false)
+        } else {
+            result.classed("hidden", true)
+        }
+    })
+});
+searchBar.addEventListener("focus", function () {
+  // Add all possible search results
+  dataset.forEach(element => {
+    d3.select("#criteriaTableBody")
+      .append("tr").classed("searchResult", true)
+      .append("td").attr("colspan", "2").text(element.pl_name)
+      .on("click", function () {
+        displayData(element.id);
+        resetSearchBar()
+      });
+  });
+});
+// Remove search results when clicking outside table
+d3.select(document).on("click", function(event) {
+    if (!d3.select("#criteriaTableBody").node().contains(event.target)) {
+        resetSearchBar()
+    }
+})
+
+function resetSearchBar() {
+    d3.selectAll(".searchResult").remove()
+    d3.select("#searchBar").property("value", "")
 }
         
 // Add data of clicked planet to bottom table
