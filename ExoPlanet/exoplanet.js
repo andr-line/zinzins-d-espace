@@ -121,11 +121,12 @@ d3.json("data/dataset.json").then((data, index) => {
             .attr("cx", planet.ra)
             .attr("cy", planet.dec)
             .attr("r", 0.2)
-            .attr("fill", "#afa")
             // Assign index as uuid of planets to easily find them
             .attr("id", "svg" + index)
-            .attr("class", "svgPlanet")
-            .attr("onclick", "displayData(" + index + ")");
+            .classed("svgPlanet", true)
+            .on("click", e => {
+                displayData(index)
+            });
     })
     dataset = data;
 })
@@ -140,11 +141,11 @@ criteriaButton.on("click", e => {
     newRow.append("td").text(criteriaSelection.property("value"));
     // Add controls
     let newCell = newRow.append("td").attr("data-key", criteriaSelection.property("value")).classed("criteriaCell", true);
-    let opMenu = newCell.append("select").attr("class", "opSel").on("input", updatePlanets);
+    let opMenu = newCell.append("select").classed("opSel", true).on("input", updatePlanets);
     opMenu.append("option").attr("value", "=").text("is");
     opMenu.append("option").attr("value", ">").text("is greater than");
     opMenu.append("option").attr("value", "<").text("is less than");
-    let textField = newCell.append("input").attr("type", "text").attr("class", "opVal")
+    let textField = newCell.append("input").attr("type", "text").classed("opVal", true)
     // Update the planets visibility
     .on("input", updatePlanets);
     newCell.append("button").text("Remove criteria").on("click", e => {
@@ -155,73 +156,71 @@ criteriaButton.on("click", e => {
 
 // Update the planets visibility based on the criteria
 function updatePlanets() {
-        d3.selectAll(".svgPlanet").classed("hidden", false)
-        // Hide all non-relevant planets
-        d3.selectAll(".criteriaCell")
-            .each(function() {
-                let cell = d3.select(this);
-                let key = cell.attr("data-key");
-                let input = cell.select(".opVal").property("value");
-                let operation = cell.select(".opSel").property("value");
-                dataset.forEach(e => {
-                    let element = e;
-                    let show = false;
-                    if (input == "") {
-                        show = true;
-                    } else if (isNaN(input)){
-                        if (String(element[key]).toLowerCase().includes(input.toLowerCase())) {
-                            show = true;
-                        }
-                    } else {
-                        switch (operation) {
-                            case ">":
-                                show = Number(element[key]) > input;
-                                break;
-                            case "<":
-                                show = Number(element[key]) < input;
-                                break;
-                            case "=":
-                                show = Number(element[key]) == input;
-                                break;
-                            default:
-                                show = false;
-                        }
-                    }
-                    if (!show) {
-                        d3.select("#svg" + element.id).classed("hidden", true);
-                    }
-                })
-            })
-        }
-
-// Add display criteria
-function addCriteriaCell(criteria) {
-    
+    d3.selectAll(".svgPlanet").classed("hidden", false)
+    // Hide all non-relevant planets
+    d3.selectAll(".criteriaCell")
+    .each(function() {
+        let cell = d3.select(this);
+        let key = cell.attr("data-key");
+        let input = cell.select(".opVal").property("value");
+        let operation = cell.select(".opSel").property("value");
+        dataset.forEach(e => {
+            let element = e;
+            let show = false;
+            if (input == "") {
+                show = true;
+            } else if (isNaN(input)){
+                if (String(element[key]).toLowerCase().includes(input.toLowerCase())) {
+                    show = true;
+                }
+            } else {
+                switch (operation) {
+                    case ">":
+                        show = Number(element[key]) > input;
+                        break;
+                    case "<":
+                        show = Number(element[key]) < input;
+                        break;
+                    case "=":
+                        show = Number(element[key]) == input;
+                        break;
+                    default:
+                        show = false;
+                }
+            }
+            if (!show) {
+                d3.select("#svg" + element.id).classed("hidden", true);
+            }
+        })
+    })
 }
-
+        
 // Add data of clicked planet to bottom table
 function displayData(id) {
     let head = d3.select("#tableHeadRow");
     let body = d3.select("#tableBody");
     // Get the desired planet using its id
     element = dataset[id];
-    if (d3.select("#table" + id).empty()) {
+    if (d3.select(".table" + id).empty()) {
         // Add the title with a close button
-        head.append("td").text(element.pl_name).attr("class", "table" + element.id).append("div").text("[close]").attr("onclick", (e) => {
-            console.log("close " + element.id)
-            table = d3.select(".table").selectAll(".id" + element.id).remove();
+        head.append("td").text(element.pl_name).classed("table" + element.id, true)
+        .append("button").text("close").attr("data-id", id).on("click", function() {
+            let id = d3.select(this).attr("data-id");
+            console.log(id)
+            removeData(id)
+            d3.select("#svg" + id).classed("selectedPlanet", false);
         });
         // Add the values
         for (const key in categoryNames) {
             if (element.hasOwnProperty(key) && key!="pl_name") {
-                d3.select("#" + key).append("td").text(element[key]).attr("id", "table" + element.id);
+                d3.select("#" + key).append("td").text(element[key]).classed("table" + element.id, true);
             }
         }
-        d3.select("#svg" + id).attr("fill", "#aaf");
+        d3.select("#svg" + id).classed("selectedPlanet", true);
     }
 }
 
 // Remove planet from bottom table
 function removeData(id) {
-    table = d3.select("#table").selectAll(".id" + id).remove();
+    table = d3.select("#table").selectAll(".table" + id).remove();
 }
