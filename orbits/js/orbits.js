@@ -1,4 +1,5 @@
 //Array of 12 Arbitrary colors for planets
+
 const planetColors = [
     "#FFC857", // Yellow
     "#E9724C", // Coral
@@ -15,6 +16,7 @@ const planetColors = [
 ];
 
 //new dictionnary for variable 
+
 const variableLabels = {
     eName: "Name",
     isPlanet: "Planet",
@@ -54,11 +56,13 @@ var zoomTarget = [0, 0]
 var positions = {"NA": {x:0,y:0}}
 
 // Distance to center as a function of the angle, exentricity and semi-major axis
+
 function distance_to_center(angle, e, a) {
     return (1 - Math.pow(e, 2)) / (1 + e * Math.cos(angle)) * a;   
 }
 
 // Convert polar coordinates to cartesian coordinates
+
 function polar_to_cartesian(angle, distance) {
     return {
         x: distance * Math.cos(angle),
@@ -67,6 +71,7 @@ function polar_to_cartesian(angle, distance) {
 }
 
 // Project a point on the canvas. Center is at offset ={x,y}
+
 function project_on_canvas(point, scale, offset) {
     return {
         x: point.x * scale * 0.75e-6 + offset.x,
@@ -75,6 +80,7 @@ function project_on_canvas(point, scale, offset) {
 }
 
 // Generate a number of point of the orbit, given a and e
+
 function generate_orbit_points(num_point, e, a, offset) {
     const points = [];
     for (let i = 0; i < num_point; i++) {
@@ -88,12 +94,14 @@ function generate_orbit_points(num_point, e, a, offset) {
 }
 
 // Take a random position on the orbits to draw the objects 
+
 function getRandomElement(points) {
     const randomIndex = Math.floor(Math.random() * points.length)
     return points[randomIndex]
 }
 
 // Draw an orbit using D3.js
+
 function draw_orbit(d3_canvas, element, index, position) {
     const e = element.eccentricity
     const a = element.semimajorAxis
@@ -107,6 +115,7 @@ function draw_orbit(d3_canvas, element, index, position) {
     }
     
     // draw orbits
+
     const ctx = d3.path()
     const points = generate_orbit_points(500, e, a, position[element.orbits]); // move orbit to parent
     ctx.moveTo(points[0].x, points[0].y)
@@ -124,6 +133,7 @@ function draw_orbit(d3_canvas, element, index, position) {
         .attr("z-index", "2")
 
     // Hide moon circles but not orbits
+
     classes += " body"
     if (element.orbit_type === "Secondary") {
         classes += " hidden";
@@ -131,7 +141,8 @@ function draw_orbit(d3_canvas, element, index, position) {
     
 
     
-    // Draw object circles
+    // Draw clickable svg objects as circles
+
     const randomPoint = position[element.eName]
     d3_canvas.append("circle")
     .attr("cx", randomPoint.x + position[element.orbits].x)
@@ -165,12 +176,16 @@ function selectPlanet(element, position) {
 }
 
 let dataSet = [];
+
 // Draw the solar system
+
 function on_fully_loaded() {
     const d3_canvas = d3.select("#d3_canvas_translated")
     d3.json("data/sol_data.json").then(function(data) {
         dataSet = data;
+
         // Generate object positions
+
         data.forEach((element) => {
             e = element.eccentricity
             a = element.semimajorAxis
@@ -180,6 +195,7 @@ function on_fully_loaded() {
         })
         
         // draw orbit and object at its position
+
         data.forEach((element, index) => {
             draw_orbit(d3_canvas, element, index, positions)
         })
@@ -187,6 +203,7 @@ function on_fully_loaded() {
 }
 
 // Scale the SVG when scrolling
+
 var scale = 1
 function zoom() {
     let zoom = this.value;
@@ -204,22 +221,28 @@ function zoom() {
 }
 
 // Toggle asteroids and moon bodies
+
 function toggleAsteroids() {
     d3.selectAll(".isAsteroid").classed("hidden", !this.checked)
     d3.selectAll(".isMoon.body").classed("hidden", !this.checked)
 }
 
 // Add the zoom slider event listener
+
 var slider = document.getElementById("zoomSlider")
 zoomSlider.addEventListener('input', zoom)
 
 // Add the asteroids check button event listener
+
 document.getElementById("asteroidsButton").addEventListener("change", toggleAsteroids);
 
 // The search bar
+
 let searchBar = document.getElementById("searchBar");
 searchBar.addEventListener("input", function() {
+
     // Hide all irrelevant search results
+
     let input = this.value.toLowerCase();
     d3.selectAll(".searchResult").each(function() {
         result = d3.select(this)
@@ -231,7 +254,9 @@ searchBar.addEventListener("input", function() {
     })
 });
 searchBar.addEventListener("focus", function () {
+
   // Add all possible search results
+
   dataSet.forEach(element => {
     d3.select("#controlTable")
       .append("tr").classed("searchResult", true)
@@ -243,6 +268,7 @@ searchBar.addEventListener("focus", function () {
 });
 
 // Remove search results when clicking outside table
+
 d3.select(document).on("click", function(event) {
     if (!d3.select("#controlTable").node().contains(event.target)) {
         d3.selectAll(".searchResult").remove()
@@ -251,9 +277,11 @@ d3.select(document).on("click", function(event) {
 })
 
 // Wait for the page to load before starting the animation
+
 on_fully_loaded()
 
 //function that creates the table with planet infos
+
 function createTable() {
     let table = d3.select(".table-container")
     for (const key in variableLabels) {
@@ -271,6 +299,7 @@ function createTable() {
 createTable()
 
 //function that adds the planet info to the table
+
 function displayData(element) {
     let table = d3.select(".table-container");
     if (table.select("tr").selectAll("td").size() >= 3) {
@@ -294,6 +323,7 @@ function displayData(element) {
     document.body.appendChild(table.node())
 }
 
+//Button to hide and show the table
 
 document.getElementById('toggleTableButton').addEventListener('click', function() {
     let table = document.querySelector('.table-container')
